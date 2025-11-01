@@ -1,0 +1,229 @@
+/* --- BULK ENCRYPTIE TAB --- */
+#tab-bulk-encrypt {
+  font-family: Arial, sans-serif;
+}
+
+/* Sectie layout */
+#tab-bulk-encrypt h1 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: #303030;
+}
+
+/* Upload veld */
+#tab-bulk-encrypt .file-upload {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-top: 1.2rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+#tab-bulk-encrypt .file-upload input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+#tab-bulk-encrypt .file-upload .file-label {
+  background: #777;
+  color: #fff;
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+#tab-bulk-encrypt .file-upload .file-label:hover {
+  background: #888;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.25);
+}
+
+#tab-bulk-encrypt .file-upload .file-name {
+  font-size: 0.9rem;
+  color: #555;
+  font-style: italic;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 250px;
+}
+
+/* Dropdowns en knoppen */
+#tab-bulk-encrypt .row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+#tab-bulk-encrypt select {
+  min-width: 180px;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  font-size: 0.95rem;
+  height: 40px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%23666' stroke-width='2' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#tab-bulk-encrypt select:hover {
+  border-color: #609942;
+  transform: translateY(-1px);
+}
+
+/* Primaire knop */
+#tab-bulk-encrypt .btn.generate {
+  background: #609942;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.6rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+#tab-bulk-encrypt .btn.generate:hover {
+  background: #40652c;
+  transform: translateY(-1px);
+}
+
+/* Secundaire knop (rood) */
+#tab-bulk-encrypt .btn.btn-clear {
+  background: #ff6347;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.6rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+#tab-bulk-encrypt .btn.btn-clear:hover {
+  background: #e43b24;
+  transform: translateY(-1px);
+}
+
+/* Resultaten tabel */
+#tab-bulk-encrypt #bulk-table table {
+  width: 80%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+#tab-bulk-encrypt #bulk-table th,
+#tab-bulk-encrypt #bulk-table td {
+  border: 1px solid #eee;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+#tab-bulk-encrypt #bulk-table th {
+  background: #f5f5f5;
+  font-weight: 600;
+}
+
+#tab-bulk-encrypt #bulk-table tr:nth-child(even) {
+  background: #fcfcfc;
+}
+
+/* Log sectie */
+#tab-bulk-encrypt .logArea {
+  margin-top: 2rem;
+}
+
+#tab-bulk-encrypt .logArea h3 {
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+  color: #303030;
+}
+
+#tab-bulk-encrypt .log {
+  width: 80%;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  max-height: 250px;
+  overflow-y: auto;
+  box-shadow: 0 0 6px rgba(0,0,0,0.05);
+}
+
+#tab-bulk-encrypt .log-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f7f7f7;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 0.7rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Copy knop in log */
+#tab-bulk-encrypt .btn-copy {
+  margin: 0;
+  background: #febd15;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.25rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+
+#tab-bulk-encrypt .btn-copy:hover {
+  background: #dba810;
+  transform: translateY(-1px);
+}
+
+/* Responsiveness */
+@media (max-width: 600px) {
+  #tab-bulk-encrypt .row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  #tab-bulk-encrypt select {
+    width: 100%;
+  }
+
+  #tab-bulk-encrypt .btn.generate,
+  #tab-bulk-encrypt .btn.btn-clear {
+    width: 100%;
+  }
+}

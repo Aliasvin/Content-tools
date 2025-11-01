@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Content tools</title>
+    <link rel="icon" type="image/png" href="Favicon html editor.png">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/tabs.css">
+  <link rel="stylesheet" href="css/url.css">
+  <link rel="stylesheet" href="css/giftcards.css">
+  <link rel="stylesheet" href="css/bulk-encrypt.css">
+  <link rel="stylesheet" href="css/brands.css">
+</head>
+<body>
+  <h1>Content tools</h1>
+
+  <div class="tab-buttons">
+    <button class="tab-button active" data-tab="product">Producttekst</button>
+    <button class="tab-button" data-tab="url">URL generator</button>
+    <button class="tab-button" data-tab="blog">Blog generator</button>
+    <button class="tab-button" data-tab="steps">Blog stappenplan</button>
+    <button class="tab-button" data-tab="brands">Populaire merken</button>
+    <button class="tab-button" data-tab="giftcards">Cadeaukaarten</button>
+    <button class="tab-button" data-tab="bulk-encrypt">Bulk encryptie</button>
+  </div>
+
+  <!-- TAB: Producttekst -->
+  <div id="tab-product" class="tab-content active">
+    <h2>Producttekst generator</h2>
+    <label>Intro</label>
+    <textarea id="prod-intro" rows="3" placeholder="Korte intro..."></textarea>
+
+    <label>Bijzondere kenmerken (enter of komma gescheiden)</label>
+    <textarea id="prod-bk" rows="4" placeholder="Krachtige motor, Compact ontwerp...&#10;of op aparte regels"></textarea>
+
+    <label>Technische gegevens (herkent 'gegevens' per regel, of komma/enter)</label>
+    <textarea id="prod-tech" rows="6" placeholder="Inhoud 18,4 l&#10;Max. draagvermogen 22,6 kg&#10;Afm. lxbxh 562x387x162 mm"></textarea>
+
+    <label>Standaard meegeleverd (enter of komma gescheiden)</label>
+    <textarea id="prod-std" rows="4" placeholder="Handgreep, Koffer, Handleiding..."></textarea>
+
+    <div class="btn-row">
+      <button class="btn generate">Genereer</button>
+      <button class="btn-copy" onclick="copyProductText()">Kopieer</button>
+      <button class="btn-clear" onclick="clearProductFields()">Leegmaken</button>
+    </div>
+
+    <h3>Output</h3>
+    <pre id="productResult" class="previewArea"></pre>
+  </div>
+
+  <!-- TAB: URL generator -->
+  <div id="tab-url" class="tab-content">
+    <h2>URL generator</h2>
+    <input id="inputField" type="text" placeholder="Typ je tekst...">
+
+    <div class="btn-row">
+      <button class="btn btn-copy" id="copyButton1" style="display:none" onclick="copyToClipboardAlle('result')">Copy bestandsnaam</button>
+      <button class="btn btn-copy" id="copyButton2" style="display:none" onclick="copyToClipboardAlle('resultURL')">Copy URL</button>
+      <button class="btn-clear" onclick="clearFields3()">Leegmaken</button>
+    </div>
+
+    <div class="result-container">
+      <div class="result">
+        <p id="result"></p>
+      </div>
+      <div class="result">
+        <p id="resultURL"></p>
+      </div>
+    </div>
+
+    <!-- Bulk URL -->
+    <div id="bulk-url-generator">
+      <h2>Bulk URL generator</h2>
+      <div class="row">
+        <label class="file-upload">
+          <input type="file" id="bulkFile" accept=".xlsx,.xls,.csv">
+          <span class="file-label">Bestand kiezen</span>
+          <span id="fileName-url"></span>
+        </label>
+        </div>
+        <div>
+        <button class="btn generate" onclick="generateBulkURLs()">Genereer</button>
+        <button class="btn btn-clear" onclick="clearBulkURLs()">Leegmaken</button>
+        <button class="btn btn-copy" onclick="exportBulkURLs()">Exporteer</button>
+      </div>
+      <div id="bulk-url-table"></div>
+    </div>
+  </div>
+
+
+  <!-- TAB: Blog generator -->
+  <div id="tab-blog" class="tab-content">
+    <h2>Blog generator</h2>
+    <label>Intro</label>
+    <textarea id="intro" rows="3" placeholder="Korte intro van je blog..."></textarea>
+
+    <div id="sections-container">
+      <button class="add" onclick="addSection()">+ Sectie toevoegen</button>
+    </div>
+
+    <div id="faq-container">
+      <button class="add" onclick="addFAQ()">+ Vraag toevoegen</button>
+    </div>
+
+    <label>CTA tekst</label>
+    <input id="ctaText" placeholder="Bekijk alle ...">
+
+    <label>CTA link</label>
+    <input id="ctaLink" placeholder="https://www.toolmax.nl/..." />
+
+    <div class="btn-row">
+      <button class="generate" onclick="generateBlog()">Genereer</button>
+      <button class="btn-copy" onclick="copyBlog()">Kopieer</button>
+      <button class="btn-clear" onclick="clearBlogFields()">Leegmaken</button>
+    </div>
+
+    <h3>Output</h3>
+    <pre id="blogResult" class="previewArea"></pre>
+  </div>
+
+  <!-- TAB: Stappenplan -->
+  <div id="tab-steps" class="tab-content">
+    <h2>Blog stappenplan generator</h2>
+
+    <label>Intro</label>
+    <textarea id="intro-steps" rows="3" placeholder="Introductie van je stappenplan..."></textarea>
+
+    <div id="opt-sections" class="opt-sections">
+      <button class="add" onclick="addWaarom()">+ Sectie "Waarom?"</button>
+      <button class="add" onclick="addBenodigd()">+ Benodigd gereedschap</button>
+      <button class="add" onclick="addMaterialen()">+ Materialen</button>
+    </div>
+
+    <div id="steps-container">
+      <button class="add" onclick="addStep()">+ Stap toevoegen</button>
+    </div>
+
+    <div id="faq-steps-container">
+      <button class="add" onclick="addFAQStep()">+ FAQ vraag</button>
+    </div>
+
+    <label>CTA tekst</label>
+    <input id="ctaText-steps" placeholder="Bekijk alle ...">
+
+    <label>CTA link</label>
+    <input id="ctaLink-steps" placeholder="https://www.toolmax.nl/...">
+
+    <div class="btn-row">
+      <button class="generatesteps" onclick="generateStepsBlog()">Genereer</button>
+      <button class="btn-copy" onclick="copySteps()">Kopieer</button>
+      <button class="btn-clear" onclick="clearStepsFields()">Leegmaken</button>
+    </div>
+
+    <h3>Output</h3>
+    <pre id="stepsResult" class="previewArea"></pre>
+  </div>
+
+  <!-- TAB: Populaire merken -->
+  <div id="tab-brands" class="tab-content">
+    <h2>Populaire merken</h2>
+
+    <div id="merken-container" class="merken-container">
+      <button class="add" onclick="addMerk()">+ Merk toevoegen</button>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-copy" onclick="copyMerken()">Kopieer</button>
+      <button class="btn-clear" onclick="clearMerkenFields()">Leegmaken</button>
+    </div>
+
+    <h3>Output</h3>
+    <pre id="merkenResult" class="previewArea"></pre>
+  </div>
+
+  <!-- TAB: Cadeaukaarten -->
+  <div id="tab-giftcards" class="tab-content">
+    <h2>Cadeaukaart codes encrypten & decrypten</h2>
+
+    <textarea class="input-tab5" id="inputText" rows="3" placeholder="Cadeaukaart code"></textarea>
+    <div class="btn-row">
+      <button class="generate" onclick="encryptText()">Encrypt</button>
+      <button class="generate" onclick="decryptText()">Decrypt</button>
+      <button class="btn-clear" onclick="clearFields5()">Leegmaken</button>
+      <button class="btn-copy" onclick="copyOutput()">Copy output</button>
+    </div>
+
+    <h3>Resultaat</h3>
+    <div class="output-tab5" id="outputText"></div>
+
+    <h3>Encryption log</h3>
+    <ul id="logList" class="log-list"></ul>
+    <button class="generate" onclick="exportCadeauLog()">Exporteer log</button>
+    <button class="btn-clear" onclick="clearLog()">Log leegmaken</button>
+  </div>
+
+  <!-- TAB: Bulk encryptie -->
+<div id="tab-bulk-encrypt" class="tab-content">
+  <h2>Bulk encryptie (cadeaucodes)</h2>
+
+  <div class="file-upload">
+    <!-- Belangrijk: dit ID gebruiken we in JS én in het label's for= -->
+    <input type="file" id="fileInput-bulk" accept=".xlsx,.xls,.csv">
+    <label for="fileInput-bulk" class="file-label">
+      Kies bestand
+    </label>
+    <span id="fileName-bulk" class="file-name">Geen bestand gekozen</span>
+  </div>
+
+  <div class="row">
+    <div>
+      <label for="sheetSelect">Sheet</label>
+      <select id="sheetSelect"></select>
+    </div>
+    <div>
+      <label for="columnSelect">Kolom met codes</label>
+      <select id="columnSelect"></select>
+    </div>
+    <button id="encryptAll" class="btn generate" type="button">Encrypt alles</button>
+  </div>
+
+  <div id="bulk-table" style="margin-top:1rem;"></div>
+
+  <div class="logArea">
+    <h3>Log</h3>
+    <div id="bulk-log" class="log"></div>
+    <div style="margin-top:.6rem; display:flex; gap:.6rem; flex-wrap:wrap;">
+      <button id="downloadExcel" class="btn generate" type="button" style="display:none;">Download Excel</button>
+      <button class="btn btn-clear" type="button" onclick="clearBulkLog()">Log wissen</button>
+    </div>
+  </div>
+</div>
+
+<!-- Zorg dat SheetJS vóór jouw bulk-encrypt script geladen is -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.19.3/dist/xlsx.full.min.js"></script>
+
+
+  <!-- libs -->
+  <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+  <!-- scripts -->
+  <script src="js/common.js"></script>
+  <script src="js/product.js"></script>
+  <script src="js/blog.js"></script>
+  <script src="js/steps.js"></script>
+  <script src="js/url.js"></script>
+  <script src="js/brands.js"></script>
+  <script src="js/giftcards.js"></script>
+  <script src="js/bulk-encrypt.js"></script>
+</body>
+</html>
