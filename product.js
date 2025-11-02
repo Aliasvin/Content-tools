@@ -14,7 +14,7 @@ function keyValueToBullet(input){
   const bullets = [];
   lines.forEach(line=>{
     const m = line.match(/^([^:]+)\s*[:\-]?\s*(.+)$/);
-    if(m){ bullets.push(m[1].trim()+': '+m[2].trim()); }
+    if(m){ bullets.push(m[1].trim()+m[2].trim()); }
     else{
       // fallback: split op komma's in dezelfde regel
       const parts=line.split(',').map(s=>s.trim()).filter(Boolean);
