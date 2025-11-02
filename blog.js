@@ -124,11 +124,80 @@ function generateBlog(){
   });
   html += `</section>\n`;
   // style+script minimal (anchors smooth scroll)
-  html += '<style> .cta-box{margin:2em 0;padding:1.5em;background:#f5f5f5;border-radius:12px;text-align:center} .cta-wrapper{display:flex;flex-wrap:wrap;justify-content:center;gap:.8rem} .cta-button{display:inline-block;background:#febd15;color:#303030;padding:1.1rem 1.8rem;border-radius:8px;text-decoration:none;font-weight:bold;min-width:150px;text-align:center;white-space:nowrap;transition:.2s} .cta-button:hover{background:#dba810} .toc-container{background:#f4f4f4;padding:20px;border:1px solid #ddd;border-radius:8px;margin:20px auto;max-width:100%} .toc{list-style:none;padding:0;margin:0} </style>\n';
-  html += '<script>document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll(".toc a").forEach(a=>{a.addEventListener("click",e=>{e.preventDefault();const id=a.getAttribute("href").substring(1);const el=document.getElementById(id);const off=(el?el.offsetTop:0)-130;window.scrollTo({top:off,behavior:"smooth"});});});});<\/script>';
+  html += '<style>\n' +
+'   .cta-box{\n' +
+'   margin:2em 0;\n' +
+'   padding:1.5em;\n' +
+'   background:#f5f5f5;\n' +
+'   border-radius:12px;\n' +
+'   text-align:center\n' +
+'   }\n' +
+'\n' +
+'   .cta-wrapper{\n' +
+'   display:flex;\n' +
+'   flex-wrap:wrap;\n' +
+'   justify-content:center;\n' +
+'   gap:.8rem\n' +
+'   }\n' +
+'\n' +
+'   .cta-button{\n' +
+'   display:inline-block;\n' +
+'   background:#febd15;\n' +
+'   color:#303030;\n' +
+'   padding:1.1rem 1.8rem;\n' +
+'   border-radius:8px;\n' +
+'   text-decoration:none;\n' +
+'   font-weight:bold;\n' +
+'   min-width:150px;\n' +
+'   text-align:center;\n' +
+'   white-space:nowrap;\n' +
+'   transition:.2s\n' +
+'   }\n' +
+'\n' +
+'   .cta-button:hover{\n' +
+'   background:#dba810\n' +
+'   }\n' +
+'\n' +
+'   .cta-button:visited{\n' +
+'   color:#303030}\n' +
+'\n' +
+'   @media(max-width:425px){\n' +
+'   .cta-button{\n' +
+'   padding:.9rem 1.2rem;\n' +
+'   min-width:120px}\n' +
+'   }\n' +
+'\n' +
+'   .toc-container{\n' +
+'   background:#f4f4f4;\n' +
+'   padding:20px;\n' +
+'   border:1px solid #ddd;\n' +
+'   border-radius:8px;\n' +
+'   margin:20px auto;\n' +
+'   max-width:100%\n' +
+'   }\n' + 
+'\n' + 
+'   .toc{list-style:none;\n' +
+'   padding:0;\n' +
+'   margin:0\n' +
+'   }\n' +
+'\n' +
+'   </style>\n';
+  html += '\n' + '<script>\n' +
+'   document.addEventListener("DOMContentLoaded",()=>{\n' +
+'   document.querySelectorAll(".toc a").forEach(a=>{\n' +
+'   a.addEventListener("click",e=>{\n' +
+'   e.preventDefault();\n' +
+'   const id=a.getAttribute("href").substring(1);\n' +
+'   const el=document.getElementById(id);\n' +
+'   const off=(el?el.offsetTop:0)-130;\n' +
+'   window.scrollTo({top:off,behavior:"smooth"});\n' +
+'      });\n' +
+'    });\n' +
+'  });\n' +
+'<\/script>';
   document.getElementById('blogResult').textContent = html;
 }
-function copyBlog(){navigator.clipboard.writeText(document.getElementById('blogResult').textContent); alert('✅ HTML gekopieerd!');}
+function copyBlog(){navigator.clipboard.writeText(document.getElementById('blogResult').textContent); alert('HTML gekopieerd!');}
 function clearBlogFields(){
   ['intro','ctaText','ctaLink'].forEach(id=>{const el=document.getElementById(id); if(el) el.value='';});
   document.querySelectorAll('#sections-container .section-block').forEach(b=>b.remove());

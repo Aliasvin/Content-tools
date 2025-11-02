@@ -1,15 +1,100 @@
 /* URL generator */
-.result-container{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1rem}
-.result{flex:1 1 280px;background:#fafafa;border:1px solid #ddd;border-radius:8px;padding:.8rem;position:relative}
-.result p{margin:0;font-family:monospace}
-#bulk-url-generator{margin-top:2rem;background:#fafafa;padding:1.2rem 1.5rem;border-radius:10px;border:1px solid #ddd;box-shadow:0 1px 4px rgba(0,0,0,.05)}
-#bulk-url-generator h2{margin:0 0 .6rem}
-#bulk-url-table table{width:100%;border-collapse:collapse;margin-top:.5rem;border-radius:8px;overflow:hidden}
-#bulk-url-table th,#bulk-url-table td{border:1px solid #eee;padding:8px 10px;font-size:.9rem;text-align:left}
-#bulk-url-table th{background:#f5f5f5;font-weight:600}
+.result-container {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1rem
+}
+
+.result {
+    flex: 1 1 280px;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: .8rem;
+    position: relative
+}
+
+.result p {
+    margin: 0;
+    font-family: monospace
+}
+
+#bulk-url-generator {
+    margin-top: 2rem;
+    background: #fafafa;
+    padding: 1.2rem 1.5rem;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .05)
+}
+
+#bulk-url-generator h2 {
+    margin: 0 0 .6rem
+}
+
+#bulk-url-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: .5rem;
+    border-radius: 8px;
+    overflow: hidden
+}
+
+#bulk-url-table th,
+#bulk-url-table td {
+    border: 1px solid #eee;
+    padding: 8px 10px;
+    font-size: .9rem;
+    text-align: left
+}
+
+#bulk-url-table th {
+    background: #f5f5f5;
+    font-weight: 600
+}
+
 /* bulk url file upload like bulk-encrypt */
-#bulk-url-generator .file-upload input[type=file]{display:none}
-#bulk-url-generator .file-upload{display:flex;align-items:center;flex-wrap:wrap;gap:.8rem;margin-top:1.2rem;margin-bottom:1rem}
-#bulk-url-generator .file-upload .file-label{background:#777;color:#fff;padding:.5rem 1.2rem;border-radius:999px;cursor:pointer;font-weight:600;font-size:.95rem;transition:.2s;display:inline-flex;align-items:center;gap:.4rem;box-shadow:0 1px 2px rgba(0,0,0,.15)}
-#bulk-url-generator .file-upload .file-label:hover{background:#888;transform:translateY(-1px);box-shadow:0 2px 4px rgba(0,0,0,.25)}
-#bulk-url-generator .file-upload #fileName-url{font-size:.9rem;color:#555;font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:250px}
+#bulk-url-generator .file-upload input[type=file] {
+    display: none
+}
+
+#bulk-url-generator .file-upload {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .8rem;
+    margin-top: 1.2rem;
+    margin-bottom: 1rem
+}
+
+#bulk-url-generator .file-upload .file-label {
+    background: #777;
+    color: #fff;
+    padding: .5rem 1.2rem;
+    border-radius: 999px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: .95rem;
+    transition: .2s;
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .15)
+}
+
+#bulk-url-generator .file-upload .file-label:hover {
+    background: #888;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .25)
+}
+
+#bulk-url-generator .file-upload #fileName-url {
+    font-size: .9rem;
+    color: #555;
+    font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px
+}
