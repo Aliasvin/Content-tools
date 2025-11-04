@@ -5,22 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Content tools</title>
   <link rel="icon" type="image/png" href="Favicon html editor.png">
-  <link rel="stylesheet" href="base.css">
-  <link rel="stylesheet" href="tabs.css">
-  <link rel="stylesheet" href="url.css">
-  <link rel="stylesheet" href="giftcards.css">
-  <link rel="stylesheet" href="bulk-encrypt.css">
-  <link rel="stylesheet" href="brands.css">
-  <link rel="stylesheet" href="category.css">
-  <link rel="stylesheet" href="preview.css">
-  <link rel="stylesheet" href="compare.css">
-  <link rel="stylesheet" href="dropdown.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/tabs.css">
+  <link rel="stylesheet" href="css/url.css">
+  <link rel="stylesheet" href="css/giftcards.css">
+  <link rel="stylesheet" href="css/bulk-encrypt.css">
+  <link rel="stylesheet" href="css/brands.css">
+  <link rel="stylesheet" href="css/category.css">
+  <link rel="stylesheet" href="css/preview.css">
+  <link rel="stylesheet" href="css/compare.css">
+  <link rel="stylesheet" href="css/dropdown.css">
 </head>
 <body>
   <h1>Content tools</h1>
 
 <div class="tab-buttons">
-  <button class="tab-button active" data-tab="product">Producttekst</button>
+  <button class="tab-button active" data-tab="home">Home</button>
+  <button class="tab-button" data-tab="product">Producttekst</button>
   <button class="tab-button" data-tab="url">URL generator</button>
   <button class="tab-button" data-tab="blog">Blog generator</button>
   <button class="tab-button" data-tab="steps">Stappenplan</button>
@@ -38,9 +40,58 @@
   </div>
 </div>
 
+<!-- Home grid -->
+<div id="tab-home" class="tab-content active">
+  <h2>Content Tools</h2>
+  <p>Kies een tool hieronder:</p>
+
+  <div class="tool-grid">
+    <div class="tool-card" data-tab="product">
+      <h3>Producttekst</h3>
+      <p>Genereer geoptimaliseerde productbeschrijvingen.</p>
+    </div>
+    <div class="tool-card" data-tab="url">
+      <h3>URL generator</h3>
+      <p>Maak nette URL-slugs of bulk-URLs.</p>
+    </div>
+    <div class="tool-card" data-tab="blog">
+      <h3>Blog generator</h3>
+      <p>Schrijf blogsecties en FAQ’s automatisch.</p>
+    </div>
+    <div class="tool-card" data-tab="steps">
+      <h3>Stappenplan</h3>
+      <p>Maak stap-voor-stap blogs met CTA’s.</p>
+    </div>
+    <div class="tool-card" data-tab="brands">
+      <h3>Populaire merken</h3>
+      <p>Genereer snel HTML met merklinks.</p>
+    </div>
+    <div class="tool-card" data-tab="category">
+      <h3>Categorie tekst</h3>
+      <p>Maak complete SEO-categorie teksten.</p>
+    </div>
+    <div class="tool-card" data-tab="giftcards">
+      <h3>Cadeaukaarten</h3>
+      <p>Encrypt/decrypt codes en logs exporteren.</p>
+    </div>
+    <div class="tool-card" data-tab="bulk-encrypt">
+      <h3>Bulk encrypt</h3>
+      <p>Encrypt/decrypt codes in bulk.</p>
+    </div>
+    <div class="tool-card" data-tab="compare">
+      <h3>Excel vergelijking</h3>
+      <p>Vergelijk kolommen uit twee bestanden.</p>
+    </div>
+    <div class="tool-card" data-tab="html">
+      <h3>HTML invoer</h3>
+      <p>Zie hoe je HTML eruit komt te zien.</p>
+    </div>
+  </div>
+</div>
+
 
   <!-- TAB: Producttekst -->
-  <div id="tab-product" class="tab-content active">
+  <div id="tab-product" class="tab-content">
     <h2>Producttekst generator</h2>
     <label>Intro</label>
     <textarea id="prod-intro" rows="3" placeholder="Korte intro..."></textarea>
@@ -323,17 +374,18 @@
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
   <!-- scripts -->
-  <script src="common.js"></script>
-  <script src="product.js"></script>
-  <script src="blog.js"></script>
-  <script src="steps.js"></script>
-  <script src="url.js"></script>
-  <script src="brands.js"></script>
-  <script src="category.js"></script>
-  <script src="giftcards.js"></script>
-  <script src="bulk-encrypt.js"></script>
-  <script src="preview.js"></script>
-  <script src="compare.js"></script>
-  <script src="dropdown.js"></script>
+  <script src="js/home.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/product.js"></script>
+  <script src="js/blog.js"></script>
+  <script src="js/steps.js"></script>
+  <script src="js/url.js"></script>
+  <script src="js/brands.js"></script>
+  <script src="js/category.js"></script>
+  <script src="js/giftcards.js"></script>
+  <script src="js/bulk-encrypt.js"></script>
+  <script src="js/preview.js"></script>
+  <script src="js/compare.js"></script>
+  <script src="js/dropdown.js"></script>
 </body>
 </html>
