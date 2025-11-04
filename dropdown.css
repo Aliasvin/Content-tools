@@ -153,4 +153,6 @@
 .tab-dropdown.has-active .dropdown-toggle {
   background: #609942;
   padding: calc(0.4rem - 2px) calc(1rem - 2px);
+  font-weight: 600;
 }
+
