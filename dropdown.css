@@ -148,3 +148,9 @@
     display: block;
   }
 }
+
+/* Groene rand om de 'Meer' knop als een subtab actief is */
+.tab-dropdown.has-active .dropdown-toggle {
+  background: #609942;
+  padding: calc(0.4rem - 2px) calc(1rem - 2px);
+}
