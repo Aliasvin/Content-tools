@@ -39,6 +39,7 @@ function addSection(){
     box.insertBefore(row, div.querySelector('.btn-add-row'));
     row.querySelector('.btn-remove-row').addEventListener('click', ()=>row.remove());
   });
+  
   // remove block
   div.querySelector('.btn-remove').addEventListener('click', ()=>{ div.remove(); renumberSections(); });
   renumberSections();
@@ -82,7 +83,7 @@ function generateBlog(){
     tocItems.push({id:'sectie'+(i+1),label:titel});
   });
   let html='';
-  html += `<p>${intro}</p>\n`;
+  html += formatParagraphs(intro);
   html += `<div class="toc-container">\n  <h2>Inhoudsopgave</h2>\n  <ul class="toc">\n`;
   tocItems.forEach(t=>html += `    <li><a class="tm-link" href="#${t.id}">${t.label}</a></li>\n`);
   html += `    <li><a class="tm-link" href="#Assortiment">Ons assortiment</a></li>\n    <li><a class="tm-link" href="#FAQ">Veelgestelde vragen</a></li>\n  </ul>\n</div>\n`;
@@ -98,7 +99,7 @@ function generateBlog(){
       if(codes.length){ productRows.push(codes); }
     });
     html += `<section id="sectie${i+1}">\n  <h2>${titel}</h2>\n`;
-    if(par) html += `  <p>${par}</p>\n`;
+    if (par) html += formatParagraphs(par);
     if(lijst){
       const items = lijst.split(',').map(s=>s.trim()).filter(Boolean);
       if(items.length){ html += '  <ul>\n' + items.map(x=>'    <li>'+x+'</li>').join('\n') + '\n  </ul>\n'; }

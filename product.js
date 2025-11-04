@@ -32,7 +32,7 @@ function generateProductText(){
   const tech = document.getElementById('prod-tech').value.trim();
   const std = document.getElementById('prod-std').value.trim();
   let html='';
-  if(intro) html += '<p>'+intro+'</p>\n<br>\n';
+  if(intro) html += formatParagraphs(intro);
   html += '<h2>Bijzondere kenmerken</h2>\n';
   const bkItems = normalizeList(bk);
   if(bkItems.length){ html += '<ul>\n'+bkItems.map(i=>'  <li>'+i+'</li>').join('\n')+'\n</ul>\n'; }

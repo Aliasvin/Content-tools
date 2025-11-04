@@ -79,7 +79,7 @@ function generateCategoryText() {
 
   let html = "";
   if (h1) html += `<h1>${h1}</h1>\n`;
-  if (intro) html += `<p>${intro}</p>\n` + '<br>\n';
+  if (intro) html += formatParagraphs(intro)+'<br>\n';
 
   // Merken
   const merken = [...document.querySelectorAll("#cat-merken-container .merk-row")].map(row => {
@@ -96,25 +96,25 @@ function generateCategoryText() {
   html += `<div class="readmore">\n<div class="readmorebtn-show"></div>\n`;
 
   // Subsecties verwerken
-  const sections = document.querySelectorAll("#cat-sections .cat-section-block");
-  sections.forEach(section => {
-    const type = section.querySelector(".cat-subkop-type").value;
-    const subkop = section.querySelector(".cat-subkop").value.trim();
-    const paragrafenRaw = section.querySelector(".cat-paragraaf").value.trim();
-    const opsommingRaw = section.querySelector(".cat-opsomming").value.trim();
+const sections = document.querySelectorAll("#cat-sections .cat-section-block");
+sections.forEach((section, i) => {
+  const type = section.querySelector(".cat-subkop-type").value;
+  const subkop = section.querySelector(".cat-subkop").value.trim();
+  const paragrafenRaw = section.querySelector(".cat-paragraaf").value.trim();
+  const opsommingRaw = section.querySelector(".cat-opsomming").value.trim();
 
-    if (subkop) html += `<${type}>${subkop}</${type}>\n`;
+  if (subkop) html += `<${type}>${subkop}</${type}>\n`;
 
-    if (paragrafenRaw) {
-      const paragrafen = paragrafenRaw.split(/\n+/).map(p => p.trim()).filter(Boolean);
-      paragrafen.forEach(p => html += `<p>${p}</p>\n` + '<br>\n');
-    }
+  if (paragrafenRaw) html += formatParagraphs(paragrafenRaw);
 
-    if (opsommingRaw) {
-      const items = opsommingRaw.split(/\n+/).map(i => i.trim()).filter(Boolean);
-      html += `<ul>\n${items.map(i => `<li>${i}</li>`).join("\n")}\n</ul>\n` + '<br>\n';
-    }
-  });
+  if (opsommingRaw) {
+    const items = opsommingRaw.split(/\n+/).map(i => i.trim()).filter(Boolean);
+    html += `<ul>\n${items.map(i => `<li>${i}</li>`).join("\n")}\n</ul>\n`;
+  }
+
+  // Voeg <br> toe tussen secties, behalve na de laatste
+  if (i < sections.length - 1) html += `<br>\n`;
+});
 
   html += `<div class="readmorebtn-hide"></div>\n</div>\n`;
 

@@ -116,21 +116,21 @@ function generateStepsBlog() {
   });
   toc.push({ id: 'Assortiment', label: 'Ons assortiment' });
   toc.push({ id: 'FAQ', label: 'Veelgestelde vragen' });
-  let html = '<p>' + intro + '</p>\n<div class="toc-container">\n<h2>Inhoudsopgave</h2>\n<ul class="toc">\n';
+  let html = formatParagraphs(intro) + '\n<div class="toc-container">\n<h2>Inhoudsopgave</h2>\n<ul class="toc">\n';
   toc.forEach(t => html += '<li><a class="tm-link" href="#' + t.id + '">' + t.label + '</a></li>\n');
   html += '</ul>\n</div>\n';
   // Waarom
   if (why) {
     const h2 = (why.querySelector('.opt-waarom-h2').value.trim() || 'Waarom?');
     const p = (why.querySelector('.opt-waarom-p').value.trim() || 'TEKST');
-    html += '<section id="Waarom">\n<h2>' + h2 + '</h2>\n<p>' + p + '</p>\n</section>\n<hr class="divider"/>\n';
+    html += '<section id="Waarom">\n<h2>' + h2 + '</h2>\n' + formatParagraphs(p) + '</section>\n<hr class="divider"/>\n';
   }
   // Benodigd
   if (ben) {
     const h2 = (ben.querySelector('.opt-ben-h2').value.trim() || 'Benodigd gereedschap');
     const p = (ben.querySelector('.opt-ben-p').value.trim() || '');
     const listRaw = ben.querySelector('.opt-ben-list').value.trim();
-    html += '<section id="Benodigd gereedschap">\n<h2>' + h2 + '</h2>\n<p>' + p + '</p>\n';
+    html += '<section id="Benodigd gereedschap">\n<h2>' + h2 + '</h2>\n' + formatParagraphs(p);
     if (listRaw) {
       const items = listRaw.split(',').map(x => x.trim()).filter(Boolean);
       html += '<ul>\n' + items.map(i => '<li>' + i + '</li>').join('\n') + '\n</ul>\n';
@@ -154,7 +154,8 @@ function generateStepsBlog() {
     const h2 = (mat.querySelector('.opt-mat-h2').value.trim() || 'Materialen');
     const p = (mat.querySelector('.opt-mat-p').value.trim() || '');
     const listRaw = mat.querySelector('.opt-mat-list').value.trim();
-    html += '<section id="Materialen">\n<h2>' + h2 + '</h2>\n<p>' + p + '</p>\n';
+    html += '<section id="Materialen">\n<h2>' + h2 + '</h2>\n' + formatParagraphs(p);
+
     if (listRaw) {
       const items = listRaw.split(',').map(x => x.trim()).filter(Boolean);
       html += '<ul>\n' + items.map(i => '<li>' + i + '</li>').join('\n') + '\n</ul>\n';
@@ -183,14 +184,14 @@ function generateStepsBlog() {
     const imgLeft = (idx % 2 === 0);
     html += '<section id="stap' + idx + '">\n<div class="container">\n';
     if (!imgLeft) {
-      html += '<div class="text">\n' + (idx === 1 ? '<h2>Stappenplan</h2><br>\n' : '') + '<h3>' + titel + '</h3>\n<p>' + tekst + '</p>\n';
+      html += '<div class="text">\n' + (idx === 1 ? '<h2>Stappenplan</h2><br>\n' : '') + '<h3>' + titel + '</h3>\n' + formatParagraphs(tekst);
       if (lijst) {
         const items = lijst.split(',').map(x => x.trim()).filter(Boolean);
         html += '<ul>\n' + items.map(i => '<li>' + i + '</li>').join('\n') + '\n</ul>\n';
       }
       html += '</div>\n<div class="image banner right"><img alt="' + titel + '" src="' + img + '"/></div>\n';
     } else {
-      html += '<div class="image banner left"><img alt="' + titel + '" src="' + img + '"/></div>\n<div class="text">\n<h3>' + titel + '</h3>\n<p>' + tekst + '</p>\n';
+      html += '<div class="image banner left"><img alt="' + titel + '" src="' + img + '"/></div>\n<div class="text">\n<h3>' + titel + '</h3>\n' + formatParagraphs(tekst);
       if (lijst) {
         const items = lijst.split(',').map(x => x.trim()).filter(Boolean);
         html += '<ul>\n' + items.map(i => '<li>' + i + '</li>').join('\n') + '\n</ul>\n';
