@@ -85,6 +85,8 @@ button {
 .add,
 .generate,
 .generatesteps,
+.encrypt,
+.decrypt,
 .btn-copy,
 .btn-clear {
   display: inline-flex;
@@ -103,7 +105,9 @@ button {
 }
 
 .generate,
-.generatesteps {
+.generatesteps,
+.encrypt,
+.decrypt {
   background: var(--brand);
   color: #fff
 }
@@ -119,7 +123,9 @@ button {
 }
 
 .generate:hover,
-.generatesteps:hover {
+.generatesteps:hover,
+.encrypt:hover,
+.decrypt:hover {
   background: var(--brand-dark);
   transform: translateY(-1px);
 }

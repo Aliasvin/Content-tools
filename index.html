@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Content tools</title>
   <link rel="icon" type="image/png" href="Favicon html editor.png">
-  <link rel="stylesheet" href="base.css">
-  <link rel="stylesheet" href="tabs.css">
-  <link rel="stylesheet" href="url.css">
-  <link rel="stylesheet" href="giftcards.css">
-  <link rel="stylesheet" href="bulk-encrypt.css">
-  <link rel="stylesheet" href="brands.css">
-  <link rel="stylesheet" href="category.css">
-  <link rel="stylesheet" href="preview.css">
-  <link rel="stylesheet" href="compare.css">
-  <link rel="stylesheet" href="dropdown.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/tabs.css">
+  <link rel="stylesheet" href="css/url.css">
+  <link rel="stylesheet" href="css/giftcards.css">
+  <link rel="stylesheet" href="css/bulk-encrypt.css">
+  <link rel="stylesheet" href="css/brands.css">
+  <link rel="stylesheet" href="css/category.css">
+  <link rel="stylesheet" href="css/preview.css">
+  <link rel="stylesheet" href="css/compare.css">
+  <link rel="stylesheet" href="css/dropdown.css">
 </head>
 <body>
   <h1>Content tools</h1>
@@ -34,7 +34,6 @@
       <button class="tab-button" data-tab="bulk-encrypt">Bulk encryptie</button>
       <button class="tab-button" data-tab="compare">Excel vergelijking</button>
       <button class="tab-button" data-tab="html">HTML invoer</button>
-      <button class="tab-button" data-tab="css">CSS invoer</button>
     </div>
   </div>
 </div>
@@ -208,13 +207,13 @@
   <button class="btn add" type="button" onclick="addCatSection()">+ Subsectie toevoegen</button>
 
   <div style="margin-top:1.2rem;">
-    <button class="btn generate" onclick="generateCategoryText()">Genereer tekst</button>
-    <button class="btn btn-clear" onclick="clearCategoryFields()">Velden leegmaken</button>
+    <button class="btn generate" onclick="generateCategoryText()">Genereer</button>
+    <button class="btn btn-clear" onclick="clearCategoryFields()">Leegmaken</button>
   </div>
 
   <h2>Resultaat</h2>
   <pre id="catResult" class="previewArea"></pre>
-  <button class="btn-copy" onclick="copyCategoryResult()">Kopieer HTML</button>
+  <button class="btn-copy" onclick="copyCategoryResult()">Kopieer</button>
 </div>
 
 
@@ -224,10 +223,10 @@
 
     <textarea class="input-tab5" id="inputText" rows="3" placeholder="Cadeaukaart code"></textarea>
     <div class="btn-row">
-      <button class="generate" onclick="encryptText()">Encrypt</button>
-      <button class="generate" onclick="decryptText()">Decrypt</button>
+      <button class="encrypt" onclick="encryptText()">Encrypt</button>
+      <button class="decrypt" onclick="decryptText()">Decrypt</button>
       <button class="btn-clear" onclick="clearFields5()">Leegmaken</button>
-      <button class="btn-copy" onclick="copyOutput()">Copy output</button>
+      <button class="btn-copy" onclick="copyOutput()">Kopieer</button>
     </div>
 
     <h3>Resultaat</h3>
@@ -324,17 +323,17 @@
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
   <!-- scripts -->
-  <script src="common.js"></script>
-  <script src="product.js"></script>
-  <script src="blog.js"></script>
-  <script src="steps.js"></script>
-  <script src="url.js"></script>
-  <script src="brands.js"></script>
-  <script src="category.js"></script>
-  <script src="giftcards.js"></script>
-  <script src="bulk-encrypt.js"></script>
-  <script src="preview.js"></script>
-  <script src="compare.js"></script>
-  <script src="dropdown.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/product.js"></script>
+  <script src="js/blog.js"></script>
+  <script src="js/steps.js"></script>
+  <script src="js/url.js"></script>
+  <script src="js/brands.js"></script>
+  <script src="js/category.js"></script>
+  <script src="js/giftcards.js"></script>
+  <script src="js/bulk-encrypt.js"></script>
+  <script src="js/preview.js"></script>
+  <script src="js/compare.js"></script>
+  <script src="js/dropdown.js"></script>
 </body>
 </html>
