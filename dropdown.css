@@ -44,7 +44,7 @@
 .tab-dropdown .dropdown-menu {
   display: none;
   position: absolute;
-  right: 0;
+  right: 20rem;
   top: calc(100% + 6px);
   background: #444;
   border: 1px solid #444;
@@ -83,4 +83,68 @@
 .tab-dropdown .dropdown-menu .tab-button.active {
   background: #609942;
   color: #fff;
+}
+
+/* Zorg dat dropdown boven alles staat en klikbaar is */
+.tab-dropdown,
+.tab-dropdown .dropdown-toggle,
+.tab-dropdown .dropdown-menu {
+  pointer-events: auto;
+}
+.tab-dropdown { z-index: 200; }
+.tab-dropdown .dropdown-menu { z-index: 9999; }
+
+/* --- Mobiele optimalisatie dropdown --- */
+@media (max-width: 600px) {
+  .tab-dropdown .dropdown-menu {
+    position: fixed !important;
+    left: 50% !important;
+    transform: translateX(-50%);
+    top: auto !important;
+    top: 0;
+    width: 90%;
+    min-width: unset;
+    border-radius: 10px 10px 0 0;
+    padding: 1rem;
+    background: #333;
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.4);
+  }
+
+  .tab-dropdown .dropdown-menu .tab-button {
+    width: 100%;
+    text-align: center;
+    background: #444;
+    padding: 0.8rem 1rem;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+
+  .tab-dropdown .dropdown-menu .tab-button:hover {
+    background: #609942;
+  }
+
+  .tab-dropdown .dropdown-menu::before {
+    content: "Meer opties";
+    display: block;
+    text-align: center;
+    font-weight: 600;
+    color: #ccc;
+    margin-bottom: 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  /* Donkere achtergrond bij open dropdown */
+  body::after {
+    content: "";
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 9998;
+  }
+
+  .tab-dropdown.open ~ body::after,
+  .tab-dropdown.open body::after {
+    display: block;
+  }
 }
