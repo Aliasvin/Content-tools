@@ -52,5 +52,21 @@ document.addEventListener('DOMContentLoaded',()=>{
     const el=document.getElementById(id); if(el) el.addEventListener('input', generateProductText);
   });
 });
-function copyProductText(){ navigator.clipboard.writeText(document.getElementById('productResult').textContent); alert('✅ Producttekst gekopieerd!'); }
+function copyProductText() {
+  const btn = document.querySelector('#tab-product .btn-copy');
+  const text = document.getElementById('productResult').textContent.trim();
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    if (btn) {
+      btn.textContent = "Copied";
+      btn.style.background = "#609942";
+      btn.style.color = "#fff";
+      setTimeout(() => {
+        btn.textContent = "Kopieer";
+        btn.style.background = "";
+        btn.style.color = "";
+      }, 2000);
+    }
+  });
+}
 function clearProductFields(){ ['prod-intro','prod-bk','prod-tech','prod-std'].forEach(id=>{const el=document.getElementById(id); if(el) el.value='';}); document.getElementById('productResult').textContent=''; }

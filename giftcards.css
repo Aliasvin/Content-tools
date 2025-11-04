@@ -26,8 +26,7 @@
 }
 
 #tab-giftcards .output-tab5 {
-  width: 100%;
-  max-width: 600px;
+  width: 80%;
   background: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -101,4 +100,36 @@
 #tab-giftcards .copy-mini:hover {
   background: #dba810;
   transform: translateY(-1px);
+}
+
+/* Acties rechts in de log */
+#tab-giftcards .log-item .log-actions {
+  display: inline-flex;
+  gap: .4rem;
+  align-items: center;
+}
+
+/* Print mini-knop in dezelfde stijl als copy */
+#tab-giftcards .print-mini {
+  margin: 0;
+  background: var(--export);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+}
+#tab-giftcards .print-mini:hover {
+  background: var(--dark-export);
+  transform: translateY(-1px);
+}
+
+#tab-giftcards .copy-mini.copied,
+#tab-giftcards .btn-copy.copied {
+  background: #609942 !important;
+  color: #fff !important;
 }

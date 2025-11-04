@@ -197,7 +197,23 @@ function generateBlog(){
 '<\/script>';
   document.getElementById('blogResult').textContent = html;
 }
-function copyBlog(){navigator.clipboard.writeText(document.getElementById('blogResult').textContent); alert('HTML gekopieerd!');}
+function copyBlog() {
+  const btn = document.querySelector('#tab-blog .btn-copy');
+  const text = document.getElementById('blogResult').textContent.trim();
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    if (btn) {
+      btn.textContent = "Copied";
+      btn.style.background = "#609942";
+      btn.style.color = "#fff";
+      setTimeout(() => {
+        btn.textContent = "Kopieer";
+        btn.style.background = "";
+        btn.style.color = "";
+      }, 2000);
+    }
+  });
+}
 function clearBlogFields(){
   ['intro','ctaText','ctaLink'].forEach(id=>{const el=document.getElementById(id); if(el) el.value='';});
   document.querySelectorAll('#sections-container .section-block').forEach(b=>b.remove());

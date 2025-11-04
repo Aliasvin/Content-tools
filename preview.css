@@ -1,0 +1,10 @@
+    /* Iframe preview (tab HTML/CSS) */
+    #htmlPreview {
+      width: 100%;
+      min-height: 400px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fff;
+      margin-top: 1rem;
+      box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    }

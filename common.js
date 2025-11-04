@@ -14,3 +14,4 @@ document.addEventListener("DOMContentLoaded", () => {
   activate(saved || tabs[0].dataset.tab);
   tabs.forEach(t=>t.addEventListener("click", ()=>activate(t.dataset.tab)));
 });
+

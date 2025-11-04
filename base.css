@@ -7,6 +7,8 @@
   --brand: #609942;
   --brand-dark: #40652c;
   --accent: #febd15;
+  --export: #199be5;
+  --dark-export: #0090e3;
   --danger: #ff6347;
   --danger-dark: #e43b24;
   --shadow: 0 1px 2px rgba(0, 0, 0, .15);
@@ -79,6 +81,7 @@ button {
   gap: .6rem
 }
 
+.export,
 .add,
 .generate,
 .generatesteps,
@@ -103,6 +106,16 @@ button {
 .generatesteps {
   background: var(--brand);
   color: #fff
+}
+
+.export {
+  background: var(--export);
+  color: #fff
+}
+
+.export:hover {
+  background: var(--dark-export);
+  transform: translateY(-1px);
 }
 
 .generate:hover,
@@ -187,4 +200,86 @@ button {
   flex-wrap: wrap;
   align-items: center;
   gap: 1rem
+}
+
+.btn-copy, .copy-mini {
+  transition: all 0.2s ease;
+}
+
+/* --- Productrij knoppen --- */
+#tab-blog .btn-remove-row,
+#tab-steps .btn-remove-row,
+#tab-category .btn-remove-row {
+  position: absolute;
+  right: 6px;
+  top: -6px;
+  background: #ff7b66;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  width: 26px;
+  height: 26px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+#tab-blog .btn-remove-row:hover,
+#tab-steps .btn-remove-row:hover,
+#tab-category .btn-remove-row:hover {
+  background: #e43b24;
+  transform: scale(1.1);
+}
+
+/* + Productrij toevoegen */
+#tab-blog .add,
+#tab-steps .add,
+#tab-category .add {
+  background: #555;
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 0.45rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.6rem;
+  display: inline-block;
+}
+
+#tab-blog .add:hover,
+#tab-steps .add:hover,
+#tab-category .add:hover {
+  background: #333;
+  transform: translateY(-1px);
+}
+
+.product-row {
+  position: relative;
+}
+
+.btn-add-row {
+  background: #555;
+  color: #fff;
+  width: 12rem;
+  border: none;
+  border-radius: 999px;
+  padding: 0.45rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-block;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.btn-add-row:hover {
+  background: #333;
+  transform: translateY(-1px);
 }

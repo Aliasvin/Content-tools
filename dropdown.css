@@ -1,0 +1,80 @@
+/* --- Dropdown menu voor tabbalk --- */
+.tab-dropdown {
+  position: relative;
+  display: inline-block;
+  z-index: 200; /* boven tabbalk */
+}
+
+/* Zorg dat het menu buiten de tabbalk zichtbaar kan zijn */
+.tab-buttons {
+  position: relative;
+  overflow: visible !important; /* belangrijk */
+  z-index: 100;
+}
+
+.tab-dropdown .dropdown-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    min-width: unset;
+    background: #555;
+    color: #f5f5f5;
+    border: none;
+    border-radius: 999px;
+    padding: .4rem 1rem;
+    font-size: .9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: .2s;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+    flex-shrink: 0
+}
+
+.tab-dropdown .dropdown-toggle:hover {
+  background: #666;
+  transform: translateY(-1px);
+}
+
+.tab-dropdown .dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  background: #444;
+  border: 1px solid #444;
+  border-radius: 8px;
+  min-width: 220px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  padding: 0.6rem;
+  z-index: 9999; /* zorgt dat menu boven alles zweeft */
+}
+
+.tab-dropdown.open .dropdown-menu {
+  display: block;
+}
+
+.tab-dropdown .dropdown-menu .tab-button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: #555;
+  border: none;
+  border-radius: 6px;
+  color: #f5f5f5;
+  padding: 0.5rem 0.8rem;
+  margin: 3px 0;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.tab-dropdown .dropdown-menu .tab-button:hover {
+  background: #666;
+}
+
+.tab-dropdown .dropdown-menu .tab-button.active {
+  background: #609942;
+  color: #fff;
+}
+

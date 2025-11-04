@@ -316,7 +316,23 @@ function generateStepsBlog() {
 '<\/script>';
   document.getElementById('stepsResult').textContent = html;
 }
-function copySteps() { navigator.clipboard.writeText(document.getElementById('stepsResult').textContent); alert('HTML gekopieerd!'); }
+function copySteps() {
+  const btn = document.querySelector('#tab-steps .btn-copy');
+  const text = document.getElementById('stepsResult').textContent.trim();
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    if (btn) {
+      btn.textContent = "Copied";
+      btn.style.background = "#609942";
+      btn.style.color = "#fff";
+      setTimeout(() => {
+        btn.textContent = "Kopieer";
+        btn.style.background = "";
+        btn.style.color = "";
+      }, 2000);
+    }
+  });
+}
 function clearStepsFields() {
   ['intro-steps', 'ctaText-steps', 'ctaLink-steps'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
   document.querySelectorAll('#opt-sections .opt-block').forEach(b => b.remove());

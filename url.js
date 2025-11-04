@@ -9,9 +9,22 @@ function generateURLLive(){
   document.getElementById('copyButton1').style.display = show?'inline-flex':'none';
   document.getElementById('copyButton2').style.display = show?'inline-flex':'none';
 }
-function copyToClipboardAlle(id){
-  const text=document.getElementById(id).textContent;
-  navigator.clipboard.writeText(text);
+function copyToClipboardAlle(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const text = el.textContent.trim();
+  const btn = event.target;
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = "Copied";
+    btn.style.background = "#609942";
+    btn.style.color = "#fff";
+    setTimeout(() => {
+      btn.textContent = "Copy";
+      btn.style.background = "";
+      btn.style.color = "";
+    }, 2000);
+  });
 }
 function clearFields3(){
   document.getElementById('inputField').value='';

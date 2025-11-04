@@ -4,26 +4,41 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Content tools</title>
-    <link rel="icon" type="image/png" href="Favicon html editor.png">
-  <link rel="stylesheet" href="base.css">
-  <link rel="stylesheet" href="tabs.css">
-  <link rel="stylesheet" href="url.css">
-  <link rel="stylesheet" href="giftcards.css">
-  <link rel="stylesheet" href="bulk-encrypt.css">
-  <link rel="stylesheet" href="brands.css">
+  <link rel="icon" type="image/png" href="Favicon html editor.png">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/tabs.css">
+  <link rel="stylesheet" href="css/url.css">
+  <link rel="stylesheet" href="css/giftcards.css">
+  <link rel="stylesheet" href="css/bulk-encrypt.css">
+  <link rel="stylesheet" href="css/brands.css">
+  <link rel="stylesheet" href="css/category.css">
+  <link rel="stylesheet" href="css/preview.css">
+  <link rel="stylesheet" href="css/compare.css">
+  <link rel="stylesheet" href="css/dropdown.css">
 </head>
 <body>
   <h1>Content tools</h1>
 
-  <div class="tab-buttons">
-    <button class="tab-button active" data-tab="product">Producttekst</button>
-    <button class="tab-button" data-tab="url">URL generator</button>
-    <button class="tab-button" data-tab="blog">Blog generator</button>
-    <button class="tab-button" data-tab="steps">Blog stappenplan</button>
-    <button class="tab-button" data-tab="brands">Populaire merken</button>
-    <button class="tab-button" data-tab="giftcards">Cadeaukaarten</button>
-    <button class="tab-button" data-tab="bulk-encrypt">Bulk encryptie</button>
+<div class="tab-buttons">
+  <button class="tab-button active" data-tab="product">Producttekst</button>
+  <button class="tab-button" data-tab="url">URL generator</button>
+  <button class="tab-button" data-tab="blog">Blog generator</button>
+  <button class="tab-button" data-tab="steps">Stappenplan</button>
+  <button class="tab-button" data-tab="brands">Populaire merken</button>
+  <button class="tab-button" data-tab="category">Categorie tekst</button>
+  <button class="tab-button" data-tab="giftcards">Cadeaukaarten</button>
+
+  <div class="tab-dropdown">
+    <button class="dropdown-toggle">Meer ▾</button>
+    <div class="dropdown-menu">
+      <button class="tab-button" data-tab="bulk-encrypt">Bulk encryptie</button>
+      <button class="tab-button" data-tab="compare">Excel vergelijking</button>
+      <button class="tab-button" data-tab="html">HTML invoer</button>
+      <button class="tab-button" data-tab="css">CSS invoer</button>
+    </div>
   </div>
+</div>
+
 
   <!-- TAB: Producttekst -->
   <div id="tab-product" class="tab-content active">
@@ -31,16 +46,17 @@
     <label>Intro</label>
     <textarea id="prod-intro" rows="3" placeholder="Korte intro..."></textarea>
 
-    <label>Bijzondere kenmerken</label>
+    <label>Bijzondere kenmerken (enter of komma gescheiden)</label>
     <textarea id="prod-bk" rows="4" placeholder="Krachtige motor, Compact ontwerp...&#10;of op aparte regels"></textarea>
 
-    <label>Technische gegevens</label>
+    <label>Technische gegevens (herkent 'gegevens' per regel, of komma/enter)</label>
     <textarea id="prod-tech" rows="6" placeholder="Inhoud 18,4 l&#10;Max. draagvermogen 22,6 kg&#10;Afm. lxbxh 562x387x162 mm"></textarea>
 
-    <label>Standaard meegeleverd</label>
+    <label>Standaard meegeleverd (enter of komma gescheiden)</label>
     <textarea id="prod-std" rows="4" placeholder="Handgreep, Koffer, Handleiding..."></textarea>
 
     <div class="btn-row">
+      <button class="btn generate">Genereer</button>
       <button class="btn-copy" onclick="copyProductText()">Kopieer</button>
       <button class="btn-clear" onclick="clearProductFields()">Leegmaken</button>
     </div>
@@ -82,12 +98,11 @@
         <div>
         <button class="btn generate" onclick="generateBulkURLs()">Genereer</button>
         <button class="btn btn-clear" onclick="clearBulkURLs()">Leegmaken</button>
-        <button class="btn btn-copy" onclick="exportBulkURLs()">Exporteer</button>
+        <button class="export" onclick="exportBulkURLs()">Exporteer</button>
       </div>
       <div id="bulk-url-table"></div>
     </div>
   </div>
-
 
   <!-- TAB: Blog generator -->
   <div id="tab-blog" class="tab-content">
@@ -173,6 +188,37 @@
     <pre id="merkenResult" class="previewArea"></pre>
   </div>
 
+  <!-- TAB: Categorie Tekst Generator -->
+<div id="tab-category" class="tab-content">
+  <h2>Categorie tekst generator</h2>
+
+  <label for="cat-h1">H1-titel</label>
+  <input id="cat-h1" type="text" placeholder="Bijv. Beste afkortzagen van 2025">
+
+  <label for="cat-intro">Introductie</label>
+  <textarea id="cat-intro" rows="4" placeholder="Korte inleidende tekst..."></textarea>
+
+  <div class="merken-section">
+    <h2>Populaire merken</h2>
+    <div id="cat-merken-container"></div>
+    <button class="btn add" type="button" onclick="addMerkRow()">+ Merk toevoegen</button>
+  </div>
+
+  <h2>Subsecties (onder lees-meer)</h2>
+  <div id="cat-sections"></div>
+  <button class="btn add" type="button" onclick="addCatSection()">+ Subsectie toevoegen</button>
+
+  <div style="margin-top:1.2rem;">
+    <button class="btn generate" onclick="generateCategoryText()">Genereer tekst</button>
+    <button class="btn btn-clear" onclick="clearCategoryFields()">Velden leegmaken</button>
+  </div>
+
+  <h2>Resultaat</h2>
+  <pre id="catResult" class="previewArea"></pre>
+  <button class="btn-copy" onclick="copyCategoryResult()">Kopieer HTML</button>
+</div>
+
+
   <!-- TAB: Cadeaukaarten -->
   <div id="tab-giftcards" class="tab-content">
     <h2>Cadeaukaart codes encrypten & decrypten</h2>
@@ -190,7 +236,7 @@
 
     <h3>Encryption log</h3>
     <ul id="logList" class="log-list"></ul>
-    <button class="generate" onclick="exportCadeauLog()">Exporteer log</button>
+    <button class="export" onclick="exportCadeauLog()">Exporteer log</button>
     <button class="btn-clear" onclick="clearLog()">Log leegmaken</button>
   </div>
 
@@ -225,11 +271,48 @@
     <h3>Log</h3>
     <div id="bulk-log" class="log"></div>
     <div style="margin-top:.6rem; display:flex; gap:.6rem; flex-wrap:wrap;">
-      <button id="downloadExcel" class="btn generate" type="button" style="display:none;">Download Excel</button>
+      <button id="downloadExcel" class="export" type="button" style="display:none;">Download Excel</button>
       <button class="btn btn-clear" type="button" onclick="clearBulkLog()">Log wissen</button>
     </div>
   </div>
 </div>
+
+<!-- TAB: Excel vergelijking -->
+<div id="tab-compare" class="tab-content">
+  <h2>Excel vergelijking (uniek & dubbel)</h2>
+  <p>Upload twee Excel-bestanden. De tool vergelijkt de waarden en exporteert een nieuw Excel-bestand met unieke en dubbele waarden.</p>
+
+  <div class="file-upload">
+    <label for="file1" class="file-label">Kies bestand 1</label>
+    <input type="file" id="file1" accept=".xlsx, .xls, .csv">
+    <span id="fileName1"></span>
+  </div>
+
+  <div class="file-upload">
+    <label for="file2" class="file-label">Kies bestand 2</label>
+    <input type="file" id="file2" accept=".xlsx, .xls, .csv">
+    <span id="fileName2"></span>
+  </div>
+
+  <div class="btn-row">
+  <button id="compareBtn" class="btn generate">Vergelijk bestanden</button>
+  <button id="clearCompare" class="btn btn-clear">Velden leegmaken</button>
+  </div>
+
+  <div id="compareResult" class="compare-log"></div>
+</div>
+
+  <!-- TAB: HTML invoer (live preview) -->
+  <div id="tab-html" class="tab-content">
+    <h2>HTML invoer</h2>
+    <textarea rows="15" placeholder="Voer hier je HTML-code in..."></textarea>
+  </div>
+
+  <!-- TAB: CSS invoer -->
+  <div id="tab-css" class="tab-content">
+    <h2>CSS invoer</h2>
+    <textarea rows="15" placeholder="Voer hier je CSS-code in..."></textarea>
+  </div>
 
 <!-- Zorg dat SheetJS vóór jouw bulk-encrypt script geladen is -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.19.3/dist/xlsx.full.min.js"></script>
@@ -238,14 +321,21 @@
   <!-- libs -->
   <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
+<!-- Verticaal zoeken -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
   <!-- scripts -->
-  <script src="common.js"></script>
-  <script src="product.js"></script>
-  <script src="blog.js"></script>
-  <script src="steps.js"></script>
-  <script src="url.js"></script>
-  <script src="brands.js"></script>
-  <script src="giftcards.js"></script>
-  <script src="bulk-encrypt.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/product.js"></script>
+  <script src="js/blog.js"></script>
+  <script src="js/steps.js"></script>
+  <script src="js/url.js"></script>
+  <script src="js/brands.js"></script>
+  <script src="js/category.js"></script>
+  <script src="js/giftcards.js"></script>
+  <script src="js/bulk-encrypt.js"></script>
+  <script src="js/preview.js"></script>
+  <script src="js/compare.js"></script>
+  <script src="js/dropdown.js"></script>
 </body>
 </html>

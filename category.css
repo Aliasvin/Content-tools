@@ -1,0 +1,96 @@
+#tab-category textarea, 
+#tab-category input[type="text"], 
+#tab-category select {
+  width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0.5rem 0.8rem;
+  margin-bottom: 0.8rem;
+  font-size: 1rem;
+  box-shadow: 0 0 4px rgba(0,0,0,0.05);
+}
+
+#tab-category textarea:focus,
+#tab-category input[type="text"]:focus {
+  outline: none;
+  border-color: #609942;
+  box-shadow: 0 0 8px rgba(96,153,66,0.3);
+}
+
+#tab-category .merken-section {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+#tab-category .merk-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+  position: relative;
+}
+
+#tab-category .cat-section-block {
+  position: relative;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+#tab-category .btn-remove {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  background: #ff6347;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#tab-category .btn-remove:hover{
+  background: #e43b24;
+  transform: translateY(-1px);
+}
+
+/* Verwijderknop in merk-row — netjes verticaal gecentreerd */
+#tab-category .btn-remove-row {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  transform: translateY(-50%);
+  background: #ff6347;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  font-weight: bold;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#tab-category .btn-remove-row:hover {
+  background: #e43b24;
+  transform: translateY(-50%) scale(1.1);
+}
+
+
+#tab-category h4 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #333;
+}

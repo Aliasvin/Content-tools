@@ -35,10 +35,22 @@ function generateMerkenHTML(){
   const output=arr.length? `<p>Populaire merken: ${arr.join(' | ')}</p>` : '';
   document.getElementById('merkenResult').textContent = output;
 }
-function copyMerken(){
-  const text=document.getElementById('merkenResult').textContent.trim();
-  if(!text) return alert('Er is geen HTML om te kopiëren.');
-  navigator.clipboard.writeText(text).then(()=>alert('✅ HTML gekopieerd!'));
+function copyMerken() {
+  const btn = document.querySelector('#tab-brands .btn-copy');
+  const text = document.getElementById('merkenResult').textContent.trim();
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => {
+    if (btn) {
+      btn.textContent = "Copied";
+      btn.style.background = "#609942";
+      btn.style.color = "#fff";
+      setTimeout(() => {
+        btn.textContent = "Kopieer";
+        btn.style.background = "";
+        btn.style.color = "";
+      }, 2000);
+    }
+  });
 }
 function clearMerkenFields(){
   document.getElementById('merken-container').innerHTML='';
