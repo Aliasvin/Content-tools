@@ -61,3 +61,39 @@
   font-size: 0.95rem;
   box-shadow: 0 0 6px rgba(0,0,0,0.05);
 }
+
+#tab-compare select {
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  background: #fff;
+}
+
+/* --- Kolom dropdowns --- */
+#tab-compare .col-select {
+  display: block;
+  width: 600px;
+  max-width: 100%;
+  margin-top: 0.6rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-size: 0.95rem;
+  box-shadow: 0 0 6px rgba(0,0,0,0.05);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#tab-compare .col-select:focus {
+  border-color: #609942;
+  box-shadow: 0 0 8px rgba(96,153,66,0.3);
+  outline: none;
+}
+
+/* Zorg dat alles netjes onder elkaar staat */
+#tab-compare .file-upload {
+  flex-direction: column;
+  align-items: flex-start;
+}
