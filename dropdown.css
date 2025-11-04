@@ -5,30 +5,34 @@
   z-index: 200; /* boven tabbalk */
 }
 
-/* Zorg dat het menu buiten de tabbalk zichtbaar kan zijn */
+/* Zorg dat tabbalk horizontaal scrollt, maar dropdown erbuiten kan vallen */
 .tab-buttons {
   position: relative;
-  overflow: visible !important; /* belangrijk */
+  overflow-x: auto;
+  overflow-y: visible !important; /* belangrijk — menu mag erbuiten */
+  white-space: nowrap;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
   z-index: 100;
 }
 
+/* --- Dropdown toggle knop --- */
 .tab-dropdown .dropdown-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    min-width: unset;
-    background: #555;
-    color: #f5f5f5;
-    border: none;
-    border-radius: 999px;
-    padding: .4rem 1rem;
-    font-size: .9rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: .2s;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, .15);
-    flex-shrink: 0
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #555;
+  color: #f5f5f5;
+  border: none;
+  border-radius: 999px;
+  padding: .4rem 1rem;
+  font-size: .9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .tab-dropdown .dropdown-toggle:hover {
@@ -36,6 +40,7 @@
   transform: translateY(-1px);
 }
 
+/* --- Dropdown menu zelf --- */
 .tab-dropdown .dropdown-menu {
   display: none;
   position: absolute;
@@ -47,13 +52,15 @@
   min-width: 220px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
   padding: 0.6rem;
-  z-index: 9999; /* zorgt dat menu boven alles zweeft */
+  z-index: 9999; /* boven alles */
 }
 
+/* Actieve status */
 .tab-dropdown.open .dropdown-menu {
   display: block;
 }
 
+/* --- Knoppen in dropdown --- */
 .tab-dropdown .dropdown-menu .tab-button {
   display: block;
   width: 100%;
@@ -77,4 +84,3 @@
   background: #609942;
   color: #fff;
 }
-
