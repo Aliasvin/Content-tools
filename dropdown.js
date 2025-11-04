@@ -39,16 +39,33 @@
     if (e.key === "Escape") closeDropdown();
   });
 
-  // Tabs activeren
-  function activateTab(key) {
-    allTabs.forEach(b => b.classList.remove("active"));
-    panes.forEach(p => p.classList.remove("active"));
-    document.querySelectorAll(`.tab-button[data-tab="${key}"]`).forEach(btn => btn.classList.add("active"));
-    const pane = document.getElementById(`tab-${key}`);
-    if (pane) pane.classList.add("active");
-    sessionStorage.setItem("activeTab", key);
-    closeDropdown();
+// Tabs activeren
+function activateTab(key) {
+  allTabs.forEach(b => b.classList.remove("active"));
+  panes.forEach(p => p.classList.remove("active"));
+
+  // Activeer tabknop(pen)
+  document.querySelectorAll(`.tab-button[data-tab="${key}"]`).forEach(btn => btn.classList.add("active"));
+
+  // Toon het juiste paneel
+  const pane = document.getElementById(`tab-${key}`);
+  if (pane) pane.classList.add("active");
+
+  // Opslaan
+  sessionStorage.setItem("activeTab", key);
+  closeDropdown();
+
+  // ✅ Nieuw: groene rand als actieve tab in dropdown zit
+  const dropdown = document.querySelector(".tab-dropdown");
+  if (dropdown) {
+    const inside = dropdown.querySelector(`[data-tab="${key}"]`);
+    if (inside) {
+      dropdown.classList.add("has-active");
+    } else {
+      dropdown.classList.remove("has-active");
+    }
   }
+}
 
   allTabs.forEach(b => {
     b.addEventListener("click", (ev) => {
@@ -67,3 +84,15 @@
     if (first) activateTab(first);
   }
 })();
+
+// Herstel groene rand na herladen
+const savedTab = sessionStorage.getItem("activeTab");
+if (savedTab) {
+  const dropdown = document.querySelector(".tab-dropdown");
+  if (dropdown) {
+    const inside = dropdown.querySelector(`[data-tab="${savedTab}"]`);
+    if (inside) {
+      dropdown.classList.add("has-active");
+    }
+  }
+}
