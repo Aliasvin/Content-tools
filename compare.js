@@ -1,4 +1,4 @@
-/* ---------- Excel Vergelijking met kolomselectie (netjes geïntegreerd) ---------- */
+/* ---------- Excel Vergelijking met volledige data en bestandsnamen ---------- */
 
 document.addEventListener("DOMContentLoaded", () => {
   const file1Input = document.getElementById("file1");
@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const clearBtn = document.getElementById("clearCompare");
   const resultBox = document.getElementById("compareResult");
 
-  // Voeg select dropdowns toe binnen file-upload containers
   const file1Wrapper = file1Input.closest(".file-upload");
   const file2Wrapper = file2Input.closest(".file-upload");
 
@@ -21,10 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
   colSelect1.disabled = true;
   colSelect2.disabled = true;
 
-  file1Wrapper.appendChild(colSelect1);
-  file2Wrapper.appendChild(colSelect2);
+  // Plaats dropdowns onder input-knoppen
+  file1Input.insertAdjacentElement("afterend", colSelect1);
+  file2Input.insertAdjacentElement("afterend", colSelect2);
 
-  // Bestand upload events
   file1Input.addEventListener("change", async () => {
     document.getElementById("fileName1").textContent = file1Input.files[0]?.name || "";
     if (file1Input.files[0]) await populateColumnSelect(file1Input.files[0], colSelect1);
@@ -35,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (file2Input.files[0]) await populateColumnSelect(file2Input.files[0], colSelect2);
   });
 
-  // Vergelijk knop
   compareBtn.addEventListener("click", async () => {
     const f1 = file1Input.files[0];
     const f2 = file2Input.files[0];
@@ -48,23 +46,43 @@ document.addEventListener("DOMContentLoaded", () => {
     const data1 = await readExcel(f1);
     const data2 = await readExcel(f2);
 
-    const col1 = data1.map(r => r[colSelect1.value]?.toString().trim()).filter(Boolean);
-    const col2 = data2.map(r => r[colSelect2.value]?.toString().trim()).filter(Boolean);
+    const key1 = colSelect1.value;
+    const key2 = colSelect2.value;
 
-    const set1 = new Set(col1);
-    const set2 = new Set(col2);
+    // Combineer alle kolomnamen
+    const alleKolommen = Array.from(
+      new Set([...Object.keys(data1[0] || {}), ...Object.keys(data2[0] || {})])
+    );
+
+    const col1Values = new Set(data1.map(r => r[key1]?.toString().trim()).filter(Boolean));
+    const col2Values = new Set(data2.map(r => r[key2]?.toString().trim()).filter(Boolean));
 
     const resultaat = [];
 
-    // Waarden uit bestand 1
-    set1.forEach(val => {
-      if (set2.has(val)) resultaat.push({ waarde: val, bestand: `${file1Name} + ${file2Name}`, type: "Dubbel" });
-      else resultaat.push({ waarde: val, bestand: file1Name, type: "Uniek" });
+    // Bestand 1 vergelijken
+    data1.forEach(row => {
+      const waarde = row[key1]?.toString().trim();
+      if (!waarde) return;
+      const isDubbel = col2Values.has(waarde);
+      resultaat.push({
+        bestand: isDubbel ? `${file1Name} + ${file2Name}` : file1Name,
+        type: isDubbel ? "Dubbel" : "Uniek",
+        ...row
+      });
     });
 
-    // Waarden die alleen in bestand 2 staan
-    set2.forEach(val => {
-      if (!set1.has(val)) resultaat.push({ waarde: val, bestand: file2Name, type: "Uniek" });
+    // Bestand 2 vergelijken
+    data2.forEach(row => {
+      const waarde = row[key2]?.toString().trim();
+      if (!waarde) return;
+      const isDubbel = col1Values.has(waarde);
+      if (!isDubbel) {
+        resultaat.push({
+          bestand: file2Name,
+          type: "Uniek",
+          ...row
+        });
+      }
     });
 
     // Samenvatting
@@ -73,19 +91,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     resultBox.innerHTML = `
       <h2>Resultaat</h2>  
-      <p><strong>${file1Name}</strong> (kolom <em>${colSelect1.value}</em>) vergeleken met 
-         <strong>${file2Name}</strong> (kolom <em>${colSelect2.value}</em>)</p>
+      <p><strong>${file1Name}</strong> (${key1}) vergeleken met 
+         <strong>${file2Name}</strong> (${key2})</p>
       <p><strong>Unieke waarden:</strong> ${uniekAantal}</p>
       <p><strong>Dubbele waarden:</strong> ${dubbelAantal}</p>
       <button id="exportExcel" class="export">Exporteer naar Excel</button>
     `;
 
     document.getElementById("exportExcel").addEventListener("click", () => {
-      exportToExcel(resultaat, file1Name, file2Name);
+      exportToExcel(resultaat, alleKolommen, key1, file1Name, file2Name);
     });
   });
 
-  // Resetknop
   clearBtn.addEventListener("click", () => {
     file1Input.value = "";
     file2Input.value = "";
@@ -121,17 +138,19 @@ async function populateColumnSelect(file, selectEl) {
   selectEl.disabled = false;
 }
 
-function exportToExcel(data, file1Name, file2Name) {
-  const wsData = [["Waarde", "Komt voor in bestand", "Type"]];
+function exportToExcel(data, kolommen, gekozenKolom, file1Name, file2Name) {
+  const wsData = [[...kolommen, "Komt voor in bestand", "Type"]];
   data.forEach(row => {
-    wsData.push([row.waarde, row.bestand, row.type]);
+    const values = kolommen.map(k => row[k] || "");
+    wsData.push([...values, row.bestand, row.type]);
   });
 
   const wb = XLSX.utils.book_new();
   const ws = XLSX.utils.aoa_to_sheet(wsData);
   XLSX.utils.book_append_sheet(wb, ws, "Vergelijking");
 
+  const keyName = gekozenKolom.replace(/\s+/g, "_");
   const datum = new Date().toLocaleDateString("nl-NL").replaceAll("/", "-");
-  const fileName = `vergelijking-${file1Name}_vs_${file2Name}-${datum}.xlsx`;
+  const fileName = `vergelijking-${keyName}_${file1Name}_vs_${file2Name}-${datum}.xlsx`;
   XLSX.writeFile(wb, fileName);
 }
