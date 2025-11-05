@@ -26,7 +26,7 @@
 }
 
 #tab-giftcards .output-tab5 {
-  width: 80%;
+  width: 50rem;
   background: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -68,7 +68,7 @@
 }
 
 #tab-giftcards .log-item {
-  width: 40rem;
+  width: 50rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
