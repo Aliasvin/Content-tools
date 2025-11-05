@@ -20,58 +20,90 @@ function addBenodigd() {
   const wrap = document.getElementById('opt-sections');
   const div = document.createElement('div');
   div.className = 'opt-block'; div.dataset.kind = 'benodigd';
-  div.innerHTML = '<button class="btn-remove">×</button><h4>Benodigd gereedschap</h4>'
-    + '<label>H2-tekst</label><input class="opt-ben-h2" placeholder="Benodigd gereedschap">'
-    + '<label>Paragraaf</label><textarea class="opt-ben-p" rows="2" placeholder="Waarom dit gereedschap..."></textarea>'
-    + '<label>Opsomming (komma-gescheiden)</label><input class="opt-ben-list" placeholder="Boormachine, Waterpas, Tegelzaag">'
-    + '<div class="product-rows"><div class="product-row"><label>Productcodes (rij 1, komma-gescheiden)</label><input class="opt-ben-codes" placeholder="DDF485Z, DHP482Z, DTD152Z"></div></div>'
-    + '<button type="button" class="btn-add-row">+ Productrij toevoegen</button>';
+  div.innerHTML = `
+    <button class="btn-remove">×</button><h4>Benodigd gereedschap</h4>
+    <label>H2-tekst</label><input class="opt-ben-h2" placeholder="Benodigd gereedschap">
+    <label>Paragraaf</label><textarea class="opt-ben-p" rows="2" placeholder="Waarom dit gereedschap..."></textarea>
+    <label>Opsomming (enter-gescheiden)</label><textarea class="opt-ben-list" rows="3" placeholder="Bijv. Boormachine"></textarea>
+    <div class="product-rows">
+      <div class="product-row">
+        <label>Productcodes (komma of enter-gescheiden)</label>
+        <textarea class="opt-ben-codes" rows="2" placeholder="DDF485Z, DHP482Z, DTD152Z"></textarea>
+      </div>
+    </div>
+    <button type="button" class="btn-add-row">+ Productrij toevoegen</button>
+  `;
   wrap.appendChild(div);
   div.querySelector('.btn-remove').addEventListener('click', () => { div.remove(); hasBenodigd = false; });
   div.querySelector('.btn-add-row').addEventListener('click', () => {
     const rows = div.querySelector('.product-rows');
     const count = rows.querySelectorAll('.product-row').length + 1;
-    const row = document.createElement('div'); row.className = 'product-row';
-    row.innerHTML = '<label>Productcodes (rij ' + count + ', komma-gescheiden)</label><input class="opt-ben-codes" placeholder="Bijv. DDF484Z, DHS710Z, DTD153Z"><button type="button" class="btn-remove-row" title="Verwijderen">×</button>';
-    rows.appendChild(row); row.querySelector('.btn-remove-row').addEventListener('click', () => row.remove());
+    const row = document.createElement('div');
+    row.className = 'product-row';
+    row.innerHTML = `
+      <label>Productcodes (rij ${count}, komma of enter-gescheiden)</label>
+      <textarea class="opt-ben-codes" rows="2" placeholder="Bijv. DDF484Z,DHS710Z,DTD153Z"></textarea>
+      <button type="button" class="btn-remove-row" title="Verwijderen">×</button>
+    `;
+    rows.appendChild(row);
+    row.querySelector('.btn-remove-row').addEventListener('click', () => row.remove());
   });
 }
+
 function addMaterialen() {
   if (hasMaterialen) return alert('Sectie "Materialen" is al toegevoegd.');
   hasMaterialen = true;
   const wrap = document.getElementById('opt-sections');
   const div = document.createElement('div');
   div.className = 'opt-block'; div.dataset.kind = 'materialen';
-  div.innerHTML = '<button class="btn-remove">×</button><h4>Materialen</h4>'
-    + '<label>H2-tekst</label><input class="opt-mat-h2" placeholder="Materialen">'
-    + '<label>Paragraaf</label><textarea class="opt-mat-p" rows="2" placeholder="Welke materialen..."></textarea>'
-    + '<label>Opsomming (komma-gescheiden)</label><input class="opt-mat-list" placeholder="Tegellijm, Voegmiddel, Randprofielen">'
-    + '<div class="product-rows"><div class="product-row"><label>Productcodes (rij 1, komma-gescheiden)</label><input class="opt-mat-codes" placeholder="Bijv. DDF485Z, DHP482Z, DTD152Z"></div></div>'
-    + '<button type="button" class="btn-add-row">+ Productrij toevoegen</button>';
+  div.innerHTML = `
+    <button class="btn-remove">×</button><h4>Materialen</h4>
+    <label>H2-tekst</label><input class="opt-mat-h2" placeholder="Materialen">
+    <label>Paragraaf</label><textarea class="opt-mat-p" rows="2" placeholder="Welke materialen..."></textarea>
+    <label>Opsomming (enter-gescheiden)</label><textarea class="opt-mat-list" rows="3" placeholder="Tegellijm"></textarea>
+    <div class="product-rows">
+      <div class="product-row">
+        <label>Productcodes (komma of enter-gescheiden)</label>
+        <textarea class="opt-mat-codes" rows="2" placeholder="DDF485Z, DHP482Z, DTD152Z"></textarea>
+      </div>
+    </div>
+    <button type="button" class="btn-add-row">+ Productrij toevoegen</button>
+  `;
   wrap.appendChild(div);
   div.querySelector('.btn-remove').addEventListener('click', () => { div.remove(); hasMaterialen = false; });
   div.querySelector('.btn-add-row').addEventListener('click', () => {
     const rows = div.querySelector('.product-rows');
     const count = rows.querySelectorAll('.product-row').length + 1;
-    const row = document.createElement('div'); row.className = 'product-row';
-    row.innerHTML = '<label>Productcodes (rij ' + count + ', komma-gescheiden)</label><input class="opt-mat-codes" placeholder="Bijv. DDF484Z, DHS710Z, DTD153Z"><button type="button" class="btn-remove-row" title="Verwijderen">×</button>';
-    rows.appendChild(row); row.querySelector('.btn-remove-row').addEventListener('click', () => row.remove());
+    const row = document.createElement('div');
+    row.className = 'product-row';
+    row.innerHTML = `
+      <label>Productcodes (rij ${count}, komma of enter-gescheiden)</label>
+      <textarea class="opt-mat-codes" rows="2" placeholder="Bijv. DDF484Z,DHS710Z,DTD153Z"></textarea>
+      <button type="button" class="btn-remove-row" title="Verwijderen">×</button>
+    `;
+    rows.appendChild(row);
+    row.querySelector('.btn-remove-row').addEventListener('click', () => row.remove());
   });
 }
 function addStep() {
   stepCount++;
   const c = document.getElementById('steps-container');
-  const block = document.createElement('div'); block.className = 'stap-block';
-  block.innerHTML = '<button type="button" class="btn-remove" title="Verwijderen">×</button><h4>Stap ' + stepCount + '</h4>'
-    + '<label>Titel</label><input type="text" class="stap-titel" placeholder="Stap ' + stepCount + '">'
-    + '<label>Tekst</label><textarea class="stap-tekst" rows="3" placeholder="Beschrijf hier wat je doet in deze stap..."></textarea>'
-    + '<label>Opsomming (komma-gescheiden)</label><input type="text" class="stap-lijst" placeholder="Bijv. Meet af, Snijd op maat, Plaats tegel">'
-    + '<label>Afbeeldinglink</label><input type="text" class="stap-image" placeholder="https://www.toolmax.nl/files/stap-' + stepCount + '.jpg">';
+  const block = document.createElement('div');
+  block.className = 'stap-block';
+  block.innerHTML = `
+    <button type="button" class="btn-remove" title="Verwijderen">×</button>
+    <h4>Stap ${stepCount}</h4>
+    <label>Titel</label><input type="text" class="stap-titel" placeholder="Stap ${stepCount}">
+    <label>Tekst</label><textarea class="stap-tekst" rows="3" placeholder="Beschrijf hier wat je doet in deze stap..."></textarea>
+    <label>Opsomming (enter-gescheiden)</label><textarea class="stap-lijst" rows="3" placeholder="Meet af"></textarea>
+    <label>Afbeeldinglink</label><input type="text" class="stap-image" placeholder="https://www.toolmax.nl/files/stap-${stepCount}.jpg">
+  `;
   const btn = c.querySelector('button[onclick="addStep()"]');
   c.insertBefore(block, btn);
   block.querySelector('.btn-remove').addEventListener('click', () => { block.remove(); renumberSteps(); });
   renumberSteps();
 }
+
 function renumberSteps() {
   const steps = document.querySelectorAll('#steps-container .stap-block');
   steps.forEach((b, i) => {
@@ -99,114 +131,146 @@ function renumberFAQSteps() {
   faqStepsCount = document.querySelectorAll('#faq-steps-container .faq-block').length;
 }
 function generateStepsBlog() {
-  const intro = document.getElementById('intro-steps').value.trim();
-  const ctaText = document.getElementById('ctaText-steps').value.trim();
-  const ctaLink = document.getElementById('ctaLink-steps').value.trim();
+  const h1Title = document.getElementById("h1Title-steps")?.value.trim() || "";
+  const intro = document.getElementById("intro-steps").value.trim();
+  const ctaText = document.getElementById("ctaText-steps").value.trim();
+  const ctaLink = document.getElementById("ctaLink-steps").value.trim();
+
   let toc = [];
   const why = document.querySelector('#opt-sections .opt-block[data-kind="waarom"]');
   const ben = document.querySelector('#opt-sections .opt-block[data-kind="benodigd"]');
   const mat = document.querySelector('#opt-sections .opt-block[data-kind="materialen"]');
-  if (why) toc.push({ id: 'Waarom', label: (why.querySelector('.opt-waarom-h2').value.trim() || 'Waarom?') });
-  if (ben) toc.push({ id: 'Benodigd gereedschap', label: (ben.querySelector('.opt-ben-h2').value.trim() || 'Benodigd gereedschap') });
-  if (mat) toc.push({ id: 'Materialen', label: (mat.querySelector('.opt-mat-h2').value.trim() || 'Materialen') });
-  const steps = document.querySelectorAll('#steps-container .stap-block');
+
+  if (why) toc.push({ id: "Waarom", label: why.querySelector(".opt-waarom-h2").value.trim() || "Waarom?" });
+  if (ben) toc.push({ id: "Benodigd gereedschap", label: ben.querySelector(".opt-ben-h2").value.trim() || "Benodigd gereedschap" });
+  if (mat) toc.push({ id: "Materialen", label: mat.querySelector(".opt-mat-h2").value.trim() || "Materialen" });
+
+  const steps = document.querySelectorAll("#steps-container .stap-block");
   steps.forEach((s, i) => {
-    const title = s.querySelector('.stap-titel').value.trim();
-    toc.push({ id: 'stap' + (i + 1), label: title || ('Stap ' + (i + 1)) });
+    const title = s.querySelector(".stap-titel").value.trim();
+    toc.push({ id: "stap" + (i + 1), label: title || "Stap " + (i + 1) });
   });
-  toc.push({ id: 'Assortiment', label: 'Ons assortiment' });
-  toc.push({ id: 'FAQ', label: 'Veelgestelde vragen' });
-  let html = formatParagraphs(intro) + '\n<div class="toc-container">\n<h2>Inhoudsopgave</h2>\n<ul class="toc">\n';
-  toc.forEach(t => html += '<li><a class="tm-link" href="#' + t.id + '">' + t.label + '</a></li>\n');
-  html += '</ul>\n</div>\n';
+
+  toc.push({ id: "Assortiment", label: "Ons assortiment" });
+  toc.push({ id: "FAQ", label: "Veelgestelde vragen" });
+
+  let html = "";
+  if (h1Title) html += `<h1>${h1Title}</h1>\n`;
+  if (intro) html += formatParagraphs(intro);
+
+  // Inhoudsopgave
+  html += `<div class="toc-container">\n<h2>Inhoudsopgave</h2>\n<ul class="toc">\n`;
+  toc.forEach(t => html += `<li><a class="tm-link" href="#${t.id}">${t.label}</a></li>\n`);
+  html += `</ul>\n</div>\n`;
+
   // Waarom
   if (why) {
-    const h2 = (why.querySelector('.opt-waarom-h2').value.trim() || 'Waarom?');
-    const p = (why.querySelector('.opt-waarom-p').value.trim() || 'TEKST');
-    html += '<section id="Waarom">\n<h2>' + h2 + '</h2>\n' + formatParagraphs(p) + '</section>\n<hr class="divider"/>\n';
+    const h2 = why.querySelector(".opt-waarom-h2").value.trim() || "Waarom?";
+    const p = why.querySelector(".opt-waarom-p").value.trim();
+    if (p) html += `<section id="Waarom">\n<h2>${h2}</h2>\n${formatParagraphs(p)}</section>\n<hr class="divider"/>\n`;
   }
+
   // Benodigd
   if (ben) {
-    const h2 = (ben.querySelector('.opt-ben-h2').value.trim() || 'Benodigd gereedschap');
-    const p = (ben.querySelector('.opt-ben-p').value.trim() || '');
-    const listRaw = ben.querySelector('.opt-ben-list').value.trim();
-    html += '<section id="Benodigd gereedschap">\n<h2>' + h2 + '</h2>\n' + formatParagraphs(p);
-    if (listRaw) {
-      const items = listRaw.split(',').map(x => x.trim()).filter(Boolean);
-      html += '<ul>\n' + items.map(i => '<li>' + i + '</li>').join('\n') + '\n</ul>\n';
-    }
-    const codeRows = ben.querySelectorAll('.opt-ben-codes');
-    codeRows.forEach(row => {
-      const rowVal = row.value.trim(); if (!rowVal) return;
-      const codes = rowVal.split(',').map(x => x.trim()).filter(Boolean);
-      if (codes.length) {
-        html += '  <blok-horizontaal breedte:100>\n';
-        codes.forEach(c => {
-          html += '    <blok-horizontaal breedte:30>\n<product>\n<productcode>' + c + '</productcode><includeprice>true</includeprice>\n</product>\n</blok-horizontaal>\n';
-        });
-        html += '  </blok-horizontaal>\n';
-      }
-    });
-    html += '</section>\n<hr class="divider"/>\n';
-  }
-  // Materialen
-  if (mat) {
-    const h2 = (mat.querySelector('.opt-mat-h2').value.trim() || 'Materialen');
-    const p = (mat.querySelector('.opt-mat-p').value.trim() || '');
-    const listRaw = mat.querySelector('.opt-mat-list').value.trim();
-    html += '<section id="Materialen">\n<h2>' + h2 + '</h2>\n' + formatParagraphs(p);
+    const h2 = ben.querySelector(".opt-ben-h2").value.trim() || "Benodigd gereedschap";
+    const p = ben.querySelector(".opt-ben-p").value.trim();
+    const listRaw = ben.querySelector(".opt-ben-list").value.trim();
+
+    let sectionHtml = `<section id="Benodigd gereedschap">\n<h2>${h2}</h2>\n`;
+    if (p) sectionHtml += formatParagraphs(p);
 
     if (listRaw) {
-      const items = listRaw.split(',').map(x => x.trim()).filter(Boolean);
-      html += '<ul>\n' + items.map(i => '<li>' + i + '</li>').join('\n') + '\n</ul>\n';
+      const items = listRaw.split(/\n+/).map(x => x.trim()).filter(Boolean);
+      if (items.length) sectionHtml += `<ul>\n${items.map(i => `<li>${i}</li>`).join("\n")}\n</ul>\n`;
     }
-    const codeRows = mat.querySelectorAll('.opt-mat-codes');
+
+    const codeRows = ben.querySelectorAll(".opt-ben-codes");
     codeRows.forEach(row => {
-      const rowVal = row.value.trim(); if (!rowVal) return;
-      const codes = rowVal.split(',').map(x => x.trim()).filter(Boolean);
-      if (codes.length) {
-        html += '  <blok-horizontaal breedte:100>\n';
-        codes.forEach(c => {
-          html += '    <blok-horizontaal breedte:30>\n<product>\n<productcode>' + c + '</productcode><includeprice>true</includeprice>\n</product>\n</blok-horizontaal>\n';
-        });
-        html += '  </blok-horizontaal>\n';
-      }
+      const codes = row.value.split(/[\n,]+/).map(x => x.trim()).filter(Boolean);
+      if (!codes.length) return;
+      sectionHtml += `  <blok-horizontaal breedte:100>\n`;
+      codes.forEach(c => {
+        sectionHtml += `    <blok-horizontaal breedte:30>\n<product>\n<productcode>${c}</productcode><includeprice>true</includeprice>\n</product>\n</blok-horizontaal>\n`;
+      });
+      sectionHtml += `  </blok-horizontaal>\n`;
     });
-    html += '</section>\n<hr class="divider"/>\n';
+
+    sectionHtml += `</section>\n<hr class="divider"/>\n`;
+    html += sectionHtml;
   }
+
+  // Materialen
+  if (mat) {
+    const h2 = mat.querySelector(".opt-mat-h2").value.trim() || "Materialen";
+    const p = mat.querySelector(".opt-mat-p").value.trim();
+    const listRaw = mat.querySelector(".opt-mat-list").value.trim();
+
+    let sectionHtml = `<section id="Materialen">\n<h2>${h2}</h2>\n`;
+    if (p) sectionHtml += formatParagraphs(p);
+
+    if (listRaw) {
+      const items = listRaw.split(/\n+/).map(x => x.trim()).filter(Boolean);
+      if (items.length) sectionHtml += `<ul>\n${items.map(i => `<li>${i}</li>`).join("\n")}\n</ul>\n`;
+    }
+
+    const codeRows = mat.querySelectorAll(".opt-mat-codes");
+    codeRows.forEach(row => {
+      const codes = row.value.split(/[\n,]+/).map(x => x.trim()).filter(Boolean);
+      if (!codes.length) return;
+      sectionHtml += `  <blok-horizontaal breedte:100>\n`;
+      codes.forEach(c => {
+        sectionHtml += `    <blok-horizontaal breedte:30>\n<product>\n<productcode>${c}</productcode><includeprice>true</includeprice>\n</product>\n</blok-horizontaal>\n`;
+      });
+      sectionHtml += `  </blok-horizontaal>\n`;
+    });
+
+    sectionHtml += `</section>\n<hr class="divider"/>\n`;
+    html += sectionHtml;
+  }
+
   // Stappen
   steps.forEach((s, i) => {
     const idx = i + 1;
-    const titel = (s.querySelector('.stap-titel').value.trim() || ('Stap ' + idx));
-    const tekst = (s.querySelector('.stap-tekst').value.trim() || 'TEKST');
-    const lijst = (s.querySelector('.stap-lijst').value.trim() || '');
-    const img = (s.querySelector('.stap-image').value.trim() || ('https://www.toolmax.nl/files/stap-' + idx + '.jpg'));
-    const imgLeft = (idx % 2 === 0);
-    html += '<section id="stap' + idx + '">\n<div class="container">\n';
-    if (!imgLeft) {
-      html += '<div class="text">\n' + (idx === 1 ? '<h2>Stappenplan</h2><br>\n' : '') + '<h3>' + titel + '</h3>\n' + formatParagraphs(tekst);
-      if (lijst) {
-        const items = lijst.split(',').map(x => x.trim()).filter(Boolean);
-        html += '<ul>\n' + items.map(i => '<li>' + i + '</li>').join('\n') + '\n</ul>\n';
-      }
-      html += '</div>\n<div class="image banner right"><img alt="' + titel + '" src="' + img + '"/></div>\n';
-    } else {
-      html += '<div class="image banner left"><img alt="' + titel + '" src="' + img + '"/></div>\n<div class="text">\n<h3>' + titel + '</h3>\n' + formatParagraphs(tekst);
-      if (lijst) {
-        const items = lijst.split(',').map(x => x.trim()).filter(Boolean);
-        html += '<ul>\n' + items.map(i => '<li>' + i + '</li>').join('\n') + '\n</ul>\n';
-      }
-      html += '</div>\n';
+    const titel = s.querySelector(".stap-titel").value.trim() || `Stap ${idx}`;
+    const tekst = s.querySelector(".stap-tekst").value.trim();
+    const lijst = s.querySelector(".stap-lijst").value.trim();
+    const img = s.querySelector(".stap-image").value.trim();
+    const imgLeft = idx % 2 === 0;
+
+    if (!tekst && !img && !lijst) return; // overslaan als leeg
+
+    html += `<section id="stap${idx}">\n<div class="container">\n`;
+
+    let textHtml = "";
+    if (tekst) textHtml += formatParagraphs(tekst);
+
+    if (lijst) {
+      const items = lijst.split(/\n+/).map(x => x.trim()).filter(Boolean);
+      if (items.length) textHtml += `<ul>\n${items.map(i => `<li>${i}</li>`).join("\n")}\n</ul>\n`;
     }
-    html += '</div>\n</section>\n<hr class="divider"/>\n';
+
+    if (!imgLeft) {
+      html += `<div class="text">\n${idx === 1 ? "<h2>Stappenplan</h2><br>\n" : ""}<h3>${titel}</h3>\n${textHtml}</div>\n`;
+      if (img) html += `<div class="image banner right"><img alt="${titel}" src="${img}"/></div>\n`;
+    } else {
+      if (img) html += `<div class="image banner left"><img alt="${titel}" src="${img}"/></div>\n`;
+      html += `<div class="text">\n<h3>${titel}</h3>\n${textHtml}</div>\n`;
+    }
+
+    html += `</div>\n</section>\n<hr class="divider"/>\n`;
   });
+
   // CTA + FAQ
-  html += '<section id="Assortiment">\n<h2>Ons assortiment</h2>\n<div class="cta-box">\n<p>Bekijk ons gehele assortiment aan </p>\n<div class="cta-wrapper">\n<a href="' + ctaLink + '" class="cta-button">' + ctaText + '</a>\n</div></div></section>\n';
-  html += '<section id="FAQ">\n<h2>Veelgestelde vragen</h2>\n';
-  const fq = document.querySelectorAll('#faq-steps-container .faq-vraag-steps');
-  const fa = document.querySelectorAll('#faq-steps-container .faq-antwoord-steps');
-  fq.forEach((q, i) => { const vraag = q.value.trim(), antw = (fa[i]?.value.trim() || ''); if (vraag && antw) html += '<details>\n<summary>' + vraag + '</summary>\n<p>' + antw + '</p>\n</details>\n'; });
-  html += '</section>\n';
+  html += `<section id="Assortiment">\n<h2>Ons assortiment</h2>\n<div class="cta-box">\n<p>Bekijk ons gehele assortiment aan </p>\n<div class="cta-wrapper">\n<a href="${ctaLink}" class="cta-button">${ctaText}</a>\n</div></div></section>\n`;
+
+  html += `<section id="FAQ">\n<h2>Veelgestelde vragen</h2>\n`;
+  const fq = document.querySelectorAll("#faq-steps-container .faq-vraag-steps");
+  const fa = document.querySelectorAll("#faq-steps-container .faq-antwoord-steps");
+  fq.forEach((q, i) => {
+    const vraag = q.value.trim(), antw = (fa[i]?.value.trim() || "");
+    if (vraag && antw) html += `<details>\n<summary>${vraag}</summary>\n<p>${antw}</p>\n</details>\n`;
+  });
+  html += `</section>\n`;
   html += '<style>\n' +
 '  .container{\n' +
 '   display:flex;\n' +
