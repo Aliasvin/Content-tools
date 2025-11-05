@@ -279,25 +279,41 @@
 
 
   <!-- TAB: Cadeaukaarten -->
-  <div id="tab-giftcards" class="tab-content">
-    <h2>Cadeaukaart codes encrypten & decrypten</h2>
+<div id="tab-giftcards" class="tab-content">
+  <h2>Cadeaukaart codes encrypten & decrypten</h2>
 
-    <textarea class="input-tab5" id="inputText" rows="3" placeholder="Cadeaukaart code"></textarea>
-    <div class="btn-row">
-      <button class="encrypt" onclick="encryptText()">Encrypt</button>
-      <button class="decrypt" onclick="decryptText()">Decrypt</button>
-      <button class="btn-clear" onclick="clearFields5()">Leegmaken</button>
-      <button class="btn-copy" onclick="copyOutput()">Kopieer</button>
-    </div>
+  <div class="gift-inputs">
+    <label>€10 Cadeaukaart code</label>
+    <input type="text" id="gift10" placeholder="Code voor €10 cadeaukaart">
 
-    <h3>Resultaat</h3>
-    <div class="output-tab5" id="outputText"></div>
+    <label>€25 Cadeaukaart code</label>
+    <input type="text" id="gift25" placeholder="Code voor €25 cadeaukaart">
 
-    <h3>Encryption log</h3>
-    <ul id="logList" class="log-list"></ul>
-    <button class="export" onclick="exportCadeauLog()">Exporteer log</button>
-    <button class="btn-clear" onclick="clearLog()">Log leegmaken</button>
+    <label>€50 Cadeaukaart code</label>
+    <input type="text" id="gift50" placeholder="Code voor €50 cadeaukaart">
+
+    <label>€75 Cadeaukaart code</label>
+    <input type="text" id="gift75" placeholder="Code voor €75 cadeaukaart">
+
+    <label>€100 Cadeaukaart code</label>
+    <input type="text" id="gift100" placeholder="Code voor €100 cadeaukaart">
   </div>
+
+  <div class="btn-row">
+    <button class="encrypt" onclick="encryptGiftcards()">Encrypt</button>
+    <button class="decrypt" onclick="decryptGiftcards()">Decrypt</button>
+    <button class="btn-clear" onclick="clearGiftcards()">Leegmaken</button>
+    <button class="btn-copy" onclick="copyGiftOutput()">Kopieer</button>
+  </div>
+
+  <h3>Resultaat</h3>
+  <div class="output-tab5" id="giftOutput"></div>
+
+  <h3>Encryption log</h3>
+  <ul id="logList" class="log-list"></ul>
+  <button class="export" onclick="exportGiftcards()">Exporteer log</button>
+  <button class="btn-clear" onclick="clearLog()">Log leegmaken</button>
+</div>
 
   <!-- TAB: Bulk encryptie -->
 <div id="tab-bulk-encrypt" class="tab-content">
