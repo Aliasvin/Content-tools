@@ -116,7 +116,7 @@ input:checked + .toggle-label .slider {
 /* Zon-icoon links */
 .dark-toggle .fa-sun {
   left: 8px;
-  color: #ffcc33;
+  color: #f1b414;
 }
 
 /* Maan-icoon rechts */
@@ -268,3 +268,4 @@ body.dark-mode .tab-button.active {
   background: #609942;
   color: #fff;
 }
+
