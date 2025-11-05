@@ -1,11 +1,13 @@
-/* ---------- CADEAUKAART TAB (encryptie & decryptie) ---------- */
+/* ============================================================
+   CADEAUKAART TAB – Encryptie, decryptie, logging & export
+   ============================================================ */
 
-// ROT13 + nummerrotatie
+/* ---------- ROT13 + nummerrotatie (encryptie/decryptie) ---------- */
 function rot13(input) {
   return input.replace(/[a-zA-Z0-9]/g, function (char) {
-    const lower = 'abcdefghijklmnopqrstuvwxyz';
-    const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const nums = '0123456789';
+    const lower = "abcdefghijklmnopqrstuvwxyz";
+    const upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const nums = "0123456789";
 
     if (lower.includes(char)) return lower[(lower.indexOf(char) + 13) % 26];
     if (upper.includes(char)) return upper[(upper.indexOf(char) + 13) % 26];
@@ -14,85 +16,108 @@ function rot13(input) {
   });
 }
 
-/* ---------- ENCRYPT / DECRYPT ---------- */
-function encryptText() {
-  const input = document.getElementById("inputText").value.trim();
-  if (!input) return alert("Voer een code in om te encrypten.");
-  const encrypted = rot13(input);
-  document.getElementById("outputText").textContent = encrypted;
-  addToLog(input, encrypted, "Encrypted");
-}
+/* ---------- GIFT CARD CONFIGURATIE ---------- */
+const giftCards = [
+  { id: "gift10", label: "€10" },
+  { id: "gift25", label: "€25" },
+  { id: "gift50", label: "€50" },
+  { id: "gift75", label: "€75" },
+  { id: "gift100", label: "€100" },
+];
 
-function decryptText() {
-  const input = document.getElementById("inputText").value.trim();
-  if (!input) return alert("Voer een code in om te decrypten.");
-  const decrypted = rot13(input);
-  document.getElementById("outputText").textContent = decrypted;
-  addToLog(input, decrypted, "Decrypted");
-}
+/* ---------- ENCRYPT ---------- */
+function encryptGiftcards() {
+  const output = document.getElementById("giftOutput");
+  const logList = document.getElementById("logList");
+  output.innerHTML = "";
+  logList.innerHTML = "";
 
-/* ---------- CLEAR / COPY ---------- */
-function clearFields5() {
-  document.getElementById("inputText").value = "";
-  document.getElementById("outputText").textContent = "";
-}
+  giftCards.forEach(card => {
+    const val = document.getElementById(card.id)?.value.trim();
+    if (val) {
+      const enc = rot13(val);
+      const date = new Date().toLocaleDateString("nl-NL");
 
-function copyOutput() {
-  const btn = document.querySelector('#tab-giftcards .btn-copy');
-  const text = document.getElementById("outputText").textContent.trim();
-  if (!text) return;
-  navigator.clipboard.writeText(text).then(() => {
-    if (btn) {
-      btn.textContent = "Copied";
-      btn.style.background = "#609942";
-      btn.style.color = "#fff";
-      setTimeout(() => {
-        btn.textContent = "Copy output";
-        btn.style.background = "";
-        btn.style.color = "";
-      }, 2000);
+      // Toon resultaat
+      const p = document.createElement("p");
+      p.innerHTML = `<strong>${card.label}:</strong> ${enc}`;
+      output.appendChild(p);
+
+      // Voeg logregel toe
+      const li = document.createElement("li");
+      li.classList.add("log-item");
+      li.innerHTML = `
+        <span class="log-text">Encrypted ${card.label}: ${val} → ${enc} [${date}]</span>
+        <div class="log-actions">
+          <button class="copy-mini" title="Kopieer">Copy</button>
+          <button class="print-mini" title="Print label">Print</button>
+        </div>
+      `;
+      logList.appendChild(li);
+
+      // ✅ Copy-knop met voorraadtekst
+      li.querySelector(".copy-mini").addEventListener("click", (e) => {
+        const btn = e.target;
+        const copyString = `${enc} voor voorraad [${date}]`;
+        navigator.clipboard.writeText(copyString).then(() => {
+          btn.textContent = "Copied";
+          btn.style.background = "#609942";
+          btn.style.color = "#fff";
+          setTimeout(() => {
+            btn.textContent = "Copy";
+            btn.style.background = "";
+            btn.style.color = "";
+          }, 1500);
+        });
+      });
+
+      // Printknop
+      li.querySelector(".print-mini").addEventListener("click", () => {
+        printEncryptedLabel(enc);
+      });
+
+      // Sla log op
+      saveLog(val, enc, date, `Encrypted ${card.label}`);
     }
   });
+
+  if (!output.innerHTML.trim()) {
+    output.textContent = "Geen codes ingevoerd.";
+  }
 }
 
-/* ---------- LOG FUNCTIES ---------- */
-function addToLog(original, result, action) {
-  const logList = document.getElementById("logList");
-  const date = new Date().toLocaleDateString("nl-NL"); // alleen datum
+/* ---------- DECRYPT ---------- */
+function decryptGiftcards() {
+  const output = document.getElementById("giftOutput");
+  output.innerHTML = "";
 
-  const li = document.createElement("li");
-  li.classList.add("log-item");
-  li.innerHTML = `
-    <span class="log-text">${action}: ${original} → ${result} [voorraad: ${date}]</span>
-    <div class="log-actions">
-      <button class="copy-mini" title="Kopieer">Copy</button>
-      <button class="print-mini" title="Print label">Print</button>
-    </div>
-  `;
-  logList.appendChild(li);
-
-// Copy-knop
-li.querySelector(".copy-mini").addEventListener("click", (e) => {
-  const btn = e.target;
-  const copyString = `${result} voor voorraad [${date}]`;
-  navigator.clipboard.writeText(copyString).then(() => {
-    btn.textContent = "Copied";
-    btn.style.background = "#609942";
-    btn.style.color = "#fff";
-    setTimeout(() => {
-      btn.textContent = "Copy";
-      btn.style.background = "";
-      btn.style.color = "";
-    }, 2000);
-  });
-});
-
-  // Print-knop
-  li.querySelector(".print-mini").addEventListener("click", () => {
-    printEncryptedLabel(result);
+  giftCards.forEach(card => {
+    const val = document.getElementById(card.id)?.value.trim();
+    if (val) {
+      const dec = rot13(val);
+      const p = document.createElement("p");
+      p.innerHTML = `<strong>${card.label}:</strong> ${dec}`;
+      output.appendChild(p);
+    }
   });
 
-  saveLog(original, result, date, action);
+  if (!output.innerHTML.trim()) {
+    output.textContent = "Geen codes ingevoerd.";
+  }
+}
+
+/* ---------- CLEAR & COPY ---------- */
+function clearGiftcards() {
+  giftCards.forEach(c => (document.getElementById(c.id).value = ""));
+  document.getElementById("giftOutput").innerHTML = "";
+}
+
+function copyGiftOutput() {
+  const text = [...document.querySelectorAll("#giftOutput p")]
+    .map(p => p.textContent)
+    .join("\n");
+  if (!text) return alert("Geen resultaat om te kopiëren.");
+  navigator.clipboard.writeText(text);
 }
 
 /* ---------- PRINT LABEL FUNCTIE ---------- */
@@ -145,7 +170,7 @@ function printEncryptedLabel(code) {
   w.document.close();
 }
 
-/* ---------- OPSLAAN / LADEN / EXPORTEREN ---------- */
+/* ---------- LOG OPSLAAN / LADEN / EXPORTEREN ---------- */
 function saveLog(original, result, date, action) {
   const log = JSON.parse(localStorage.getItem("cadeauLog")) || [];
   log.push({ original, result, date, action });
@@ -156,11 +181,12 @@ function loadLog() {
   const log = JSON.parse(localStorage.getItem("cadeauLog")) || [];
   const logList = document.getElementById("logList");
   logList.innerHTML = "";
+
   log.forEach(entry => {
     const li = document.createElement("li");
     li.classList.add("log-item");
     li.innerHTML = `
-      <span class="log-text">${entry.action}: ${entry.original} → ${entry.result} [voorraad: ${entry.date}]</span>
+      <span class="log-text">${entry.action}: ${entry.original} → ${entry.result} [${entry.date}]</span>
       <div class="log-actions">
         <button class="copy-mini" title="Kopieer">Copy</button>
         <button class="print-mini" title="Print label">Print</button>
@@ -168,21 +194,21 @@ function loadLog() {
     `;
     logList.appendChild(li);
 
+    // ✅ Copy met voorraadtekst
     li.querySelector(".copy-mini").addEventListener("click", (e) => {
-  const btn = e.target;
-  const copyString = `${entry.result} voor voorraad [${entry.date}]`;
-  navigator.clipboard.writeText(copyString).then(() => {
-    btn.textContent = "Copied";
-    btn.style.background = "#609942";
-    btn.style.color = "#fff";
-    setTimeout(() => {
-      btn.textContent = "Copy";
-      btn.style.background = "";
-      btn.style.color = "";
-    }, 2000);
-  });
-});
-
+      const btn = e.target;
+      const copyString = `${entry.result} voor voorraad [${entry.date}]`;
+      navigator.clipboard.writeText(copyString).then(() => {
+        btn.textContent = "Copied";
+        btn.style.background = "#609942";
+        btn.style.color = "#fff";
+        setTimeout(() => {
+          btn.textContent = "Copy";
+          btn.style.background = "";
+          btn.style.color = "";
+        }, 1500);
+      });
+    });
 
     li.querySelector(".print-mini").addEventListener("click", () => {
       printEncryptedLabel(entry.result);
@@ -190,7 +216,6 @@ function loadLog() {
   });
 }
 
-/* ---------- LOG WISSEN ---------- */
 function clearLog() {
   if (confirm("Weet je zeker dat je het log wilt verwijderen?")) {
     localStorage.removeItem("cadeauLog");
@@ -198,7 +223,6 @@ function clearLog() {
   }
 }
 
-/* ---------- EXPORT FUNCTIE ---------- */
 function exportCadeauLog() {
   const log = JSON.parse(localStorage.getItem("cadeauLog")) || [];
   if (!log.length) return alert("Geen loggegevens om te exporteren.");
