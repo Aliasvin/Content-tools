@@ -26,14 +26,14 @@
 
 #tab-giftcards .output-tab5 {
   width: 100%;
-  background: #f9f9f9;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 1rem;
-  font-family: Arial, sans-serif;
-  min-height: 60px;
-  box-shadow: 0 0 6px rgba(0,0,0,0.05);
+  background: #f7f7f7;
+  border: 1px solid #eee;
+  border-radius: 6px;
   margin-bottom: 1rem;
+  padding: 0.5rem;
+  font-size: 0.9rem;
+  font-family: Arial, sans-serif;
+  line-height: 1.4;
   white-space: pre-wrap;
   word-break: break-word;
 }
@@ -53,6 +53,7 @@
   list-style: none;
   padding-left: 0;
   margin: 0;
+  margin-bottom: 1rem;
 }
 
 #tab-giftcards #logList li {
@@ -131,4 +132,29 @@
 #tab-giftcards .btn-copy.copied {
   background: #609942 !important;
   color: #fff !important;
+}
+
+#tab-giftcards .gift-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+  margin-bottom: 1rem;
+}
+
+#tab-giftcards .gift-inputs label {
+  grid-column: span 2;
+  font-weight: 600;
+}
+
+#tab-giftcards input {
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+#tab-giftcards #logList li {
+  background: #f8f8f8;
+  border-radius: 6px;
+  padding: 6px 10px;
+  margin-bottom: 4px;
 }
