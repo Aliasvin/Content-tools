@@ -223,17 +223,22 @@ function clearLog() {
   }
 }
 
-function exportCadeauLog() {
+function exportGiftcards() {
   const log = JSON.parse(localStorage.getItem("cadeauLog")) || [];
   if (!log.length) return alert("Geen loggegevens om te exporteren.");
+
   const rows = [["Actie", "Origineel", "Resultaat", "Datum"]];
   log.forEach(e => rows.push([e.action, e.original, e.result, e.date]));
 
   const ws = XLSX.utils.aoa_to_sheet(rows);
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Cadeaukaartlog");
-  XLSX.writeFile(wb, "cadeaukaart-log.xlsx");
+
+  const datum = new Date().toISOString().split("T")[0];
+  XLSX.writeFile(wb, `cadeaukaart-log-${datum}.xlsx`);
 }
+// Maak 'm expliciet global voor inline onclick
+window.exportGiftcards = exportGiftcards;
 
 /* ---------- INIT ---------- */
 document.addEventListener("DOMContentLoaded", loadLog);
