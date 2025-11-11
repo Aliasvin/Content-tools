@@ -271,6 +271,10 @@ function generateStepsBlog() {
     if (vraag && antw) html += `<details>\n<summary>${vraag}</summary>\n<p>${antw}</p>\n</details>\n`;
   });
   html += `</section>\n`;
+    html += '<div class="blog-navigation">\n'+
+  '<a id="prev-blog" class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Vorige blog</a>\n' +
+  '<a id="next-blog" class="nav-btn next-btn">Volgende blog <i class="fas fa-arrow-right"></i></a>\n' + 
+  '</div>\n' ;
   html += '<style>\n' +
 '  .container{\n' +
 '   display:flex;\n' +
@@ -364,6 +368,26 @@ function generateStepsBlog() {
 '   padding:.9rem 1.2rem;\n' +
 '   min-width:120px}\n' +
 '   }\n' +
+ '\n' + 
+' .nav-btn {\n' + 
+  ' display: inline-block;\n' + 
+  ' background: var(--btn-bg, #febd15);\n' + 
+  ' color: var(--btn-color, #303030);\n' + 
+  ' padding: 10px 20px;\n' + 
+  ' border-radius: 8px;\n' + 
+  ' text-decoration: none;\n' + 
+  ' font-weight: bold;\n' + 
+  ' transition: all 0.3s ease;\n' + 
+' }\n' + 
+ '\n' + 
+' .nav-btn:hover {\n' + 
+  ' background: var(--btn-hover-bg, #dba810);\n' + 
+  ' color: var(--btn-hover-color, #303030);\n' + 
+' }\n' + 
+ '\n' + 
+' .next-btn {\n' + 
+  ' margin-left: auto;\n' + 
+' } \n' +
 '</style>\n';
 
   html += '\n' +'<script>\n' +
@@ -378,6 +402,76 @@ function generateStepsBlog() {
 '      });\n' +
 '    });\n' +
 '  });\n' +
+' (async () => {\n' +
+  ' const path = window.location.pathname;\n' +
+  ' // Herken URLs zoals /blog/78/verwarming.html\n' +
+  ' const match = path.match(/\/blog\/(\d+)\/[^/]+\.html$/);\n' +
+  ' if (!match) return;\n' +
+   '\n' + 
+  ' const currentNumber = parseInt(match[1], 10);\n' +
+  ' const prevBtn = document.getElementById("prev-blog");\n' +
+  ' const nextBtn = document.getElementById("next-blog");\n' +
+   '\n' + 
+  ' // Controleer of pagina bestaat\n' +
+  ' async function pageExists(url) {\n' +
+    ' try {\n' +
+      ' const res = await fetch(url, { method: "HEAD" });\n' +
+      ' return res.ok;\n' +
+    ' } catch {\n' +
+      ' return false;\n' +
+    ' }\n' +
+  ' }\n' +
+   '\n' + 
+  ' // Vind eerste bestaande .html binnen /blog/{nummer}/\n' +
+  ' async function findExistingHtml(num) {\n' +
+    ' const base = `/blog/${num}/`;\n' +
+    ' const candidates = [\n' +
+      ' `${base}${num}.html`,\n' +
+      ' `${base}index.html`\n' +
+    ' ];\n' +
+    ' for (const url of candidates) {\n' +
+      ' if (await pageExists(url)) return url;\n' +
+    ' }\n' +
+    ' return null;\n' +
+  ' }\n' +
+   '\n' + 
+  ' //  "Vorige blog" = nieuwere blog (hoger nummer)\n' +
+  ' let prevUrl = null;\n' +
+  ' for (let i = 1; i <= 20; i++) {\n' +
+    ' const test = await findExistingHtml(currentNumber + i);\n' +
+    ' if (test) {\n' +
+      ' prevUrl = test;\n' +
+      ' break;\n' +
+    ' }\n' +
+  ' }\n' +
+   '\n' + 
+  ' if (prevUrl) {\n' +
+    ' prevBtn.href = prevUrl;\n' +
+    ' prevBtn.innerHTML = `<i class="fas fa-arrow-left"></i> Vorige blog`;\n' +
+  ' } else {\n' +
+    ' prevBtn.href = "/blog.html";\n' +
+    ' prevBtn.innerHTML = `<i class="fas fa-list"></i> Alle blogs`;\n' +
+  ' }\n' +
+   '\n' + 
+  ' // "Volgende blog" = oudere blog (lager nummer)\n' +
+  ' let nextUrl = null;\n' +
+  ' for (let i = 1; i <= 20; i++) {\n' +
+    ' const target = currentNumber - i;\n' +
+    ' if (target <= 0) break;\n' +
+    ' const test = await findExistingHtml(target);\n' +
+    ' if (test) {\n' +
+      ' nextUrl = test;\n' +
+      ' break;\n' +
+    ' }\n' +
+  ' }\n' +
+   '\n' + 
+  ' if (nextUrl) {\n' +
+    ' nextBtn.href = nextUrl;\n' +
+    ' nextBtn.innerHTML = `Volgende blog <i class="fas fa-arrow-right"></i>`;\n' +
+  ' } else {\n' +
+    ' nextBtn.style.display = "none";\n' +
+  ' }\n' +
+' })();\n' +
 '<\/script>';
   document.getElementById('stepsResult').textContent = html;
 }
