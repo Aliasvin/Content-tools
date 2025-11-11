@@ -60,7 +60,7 @@ input:checked + .toggle-label .slider {
 
 /* Container */
 .dark-toggle {
-  position: fixed;
+  position: absolute;
   top: 1rem;
   right: 1rem;
   z-index: 999;
@@ -268,4 +268,5 @@ body.dark-mode .tab-button.active {
   background: #609942;
   color: #fff;
 }
+
 
