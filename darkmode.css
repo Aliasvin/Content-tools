@@ -151,8 +151,10 @@ input:checked + .toggle-label .slider {
 /* Dark mode kleuren */
 body.dark-mode,
 body.dark-mode .tab-content,
-body.dark-mode .tool-card {
-  background: #1f1f1f;
+body.dark-mode .tool-card, 
+body.dark-mode #tab-category h4,
+body.dark-mode #tab-compare .col-select {
+  background: #1e1e1e;
   color: #f5f5f5;
   transition: background 0.4s ease, color 0.4s ease;
 }
@@ -187,8 +189,9 @@ body.dark-mode .tab-content a:hover {
 body.dark-mode #bulk-url-generator,
 body.dark-mode .tab-content input,
 body.dark-mode .tab-content textarea,
-body.dark-mode .tab-content select {
-  background: #333;
+body.dark-mode .tab-content select,
+body.dark-mode #tab-category .cat-section-block {
+  background: #1E1E1E;
   color: #fff;
   border: 1px solid #444;
 }
@@ -268,5 +271,3 @@ body.dark-mode .tab-button.active {
   background: #609942;
   color: #fff;
 }
-
-
