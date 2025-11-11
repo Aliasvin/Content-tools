@@ -143,11 +143,11 @@
       .filter(Boolean);
 
     if (merken.length) {
-      html += `<p>Populaire merken: ${merken.join(" | ")}</p>\n`;
+      html += `<p>Populaire merken: ${merken.join(" | ")}</p>\n` + '<br>\n';
     }
 
     // leesmeer-sectie
-    html += `<div class="readmore">\n<div class="readmorebtn-show"></div>\n`;
+    html += `<div data-lm-fold data-lm-height="50">\n`;
 
     sections.forEach((section, i) => {
       const type = section.querySelector(".cat-subkop-type").value;
@@ -168,7 +168,7 @@
       if (i < sections.length - 1) html += `\n<br>\n`;
     });
 
-    html += `\n<div class="readmorebtn-hide"></div>\n</div>\n`;
+    html += `\n</div>\n`;
     tab.querySelector("#catResult").textContent = html;
   }
 
