@@ -402,6 +402,7 @@ function generateStepsBlog() {
 '      });\n' +
 '    });\n' +
 '  });\n' +
+'\n' + 
 ' (async () => {\n' +
   ' const path = window.location.pathname;\n' +
   ' // Herken URLs zoals /blog/78/verwarming.html\n' +
