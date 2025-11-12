@@ -349,7 +349,7 @@ function copyBlog() {
 }
 
 function clearBlogFields() {
-  ["h1Title", "intro", "ctaText", "ctaLink"].forEach((id) => {
+  ["h1Title", "intro", "ctaText", "ctaLink", "prevBlogLink", "nextBlogLink"].forEach((id) => {
     const el = document.getElementById(id);
     if (el) el.value = "";
   });

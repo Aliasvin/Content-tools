@@ -444,7 +444,7 @@ function copySteps() {
   });
 }
 function clearStepsFields() {
-  ['intro-steps', 'ctaText-steps', 'ctaLink-steps'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  ['intro-steps', 'ctaText-steps', 'ctaLink-steps', 'prevStepsLink', 'nextStepsLink'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
   document.querySelectorAll('#opt-sections .opt-block').forEach(b => b.remove());
   document.querySelectorAll('#steps-container .stap-block').forEach(b => b.remove());
   document.querySelectorAll('#faq-steps-container .faq-block').forEach(b => b.remove());
