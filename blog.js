@@ -308,7 +308,7 @@ if (prevBlog || nextBlog) {
   ' color: var(--btn-hover-color, #303030);\n' + 
 ' }\n' + 
  '\n' + 
-' .next-prev {\n' + 
+' .prev-btn {\n' + 
   ' margin-left: auto;\n' + 
 ' } \n' + 
   ' </style>\n'; 
