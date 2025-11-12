@@ -8,21 +8,26 @@ function normalizeList(input){
   }
   return lines.map(l=>l.replace(/\s{2,}/g,' '));
 }
-function keyValueToBullet(input){
-  if(!input) return [];
-  const lines = input.split(/\n+/).map(s=>s.trim()).filter(Boolean);
+function keyValueToBullet(input) {
+  if (!input) return [];
+  const lines = input.split(/\n+/).map(s => s.trim()).filter(Boolean);
   const bullets = [];
-  lines.forEach(line=>{
-    const m = line.match(/^([^:]+)\s*[:\-]?\s*(.+)$/);
-    if(m){ bullets.push(m[1].trim()+m[2].trim()); }
-    else{
+
+  lines.forEach(line => {
+    // Herken key-value met : of - ertussen
+    const m = line.match(/^([^:]+)\s*[:\-]\s*(.+)$/);
+    if (m) {
+      // Voeg de : of - expliciet terug toe met een spatie
+      bullets.push(`${m[1].trim()}: ${m[2].trim()}`);
+    } else {
       // fallback: split op komma's in dezelfde regel
-      const parts=line.split(',').map(s=>s.trim()).filter(Boolean);
+      const parts = line.split(',').map(s => s.trim()).filter(Boolean);
       bullets.push(...parts);
     }
   });
-  if(bullets.length===0){
-    return input.split(/[\n,]+/).map(s=>s.trim()).filter(Boolean);
+
+  if (bullets.length === 0) {
+    return input.split(/[\n,]+/).map(s => s.trim()).filter(Boolean);
   }
   return bullets;
 }
