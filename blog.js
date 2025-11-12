@@ -113,7 +113,22 @@ function generateBlog() {
   const blocks = document.querySelectorAll("#sections-container .section-block");
   const titles = document.querySelectorAll(".sectie-titel");
 
-  // Inhoudsopgave (alleen H2’s)
+  // ---------- FAQ eerst checken ----------
+  const fq = document.querySelectorAll("#faq-container .faq-vraag");
+  const fa = document.querySelectorAll("#faq-container .faq-antwoord");
+
+  let faqItems = "";
+  fq.forEach((q, i) => {
+    const vraag = q.value.trim();
+    const antw = fa[i]?.value.trim() || "";
+    if (vraag && antw) {
+      faqItems += `  <details>\n    <summary>${vraag}</summary>\n    <p>${antw}</p>\n  </details>\n`;
+    }
+  });
+
+  const hasFAQ = faqItems.length > 0;
+
+  // ---------- Inhoudsopgave (alleen H2’s) ----------
   let tocItems = [];
   titles.forEach((t, i) => {
     const titel = t.value.trim() || "Sectie " + (i + 1);
@@ -124,14 +139,18 @@ function generateBlog() {
   if (h1Title) html += `<h1>${h1Title}</h1>\n`;
   if (intro) html += formatParagraphs(intro);
 
-  // TOC (zonder H1)
+  // ---------- TOC ----------
   if (tocItems.length) {
     html += `<div class="toc-container">\n  <h2>Inhoudsopgave</h2>\n  <ul class="toc">\n`;
-    tocItems.forEach((t) => (html += `    <li><a class="tm-link" href="#${t.id}">${t.label}</a></li>\n`));
-    html += `    <li><a class="tm-link" href="#Assortiment">Ons assortiment</a></li>\n    <li><a class="tm-link" href="#FAQ">Veelgestelde vragen</a></li>\n  </ul>\n</div>\n`;
+    tocItems.forEach((t) => {
+      html += `    <li><a class="tm-link" href="#${t.id}">${t.label}</a></li>\n`;
+    });
+    html += `    <li><a class="tm-link" href="#Assortiment">Ons assortiment</a></li>\n`;
+    if (hasFAQ) html += `    <li><a class="tm-link" href="#FAQ">Veelgestelde vragen</a></li>\n`;
+    html += `  </ul>\n</div>\n`;
   }
 
-  // Secties
+  // ---------- Secties ----------
   blocks.forEach((block, i) => {
     const titel = block.querySelector(".sectie-titel").value || `Sectie ${i + 1}`;
     const par = block.querySelector(".sectie-tekst").value.trim();
@@ -157,47 +176,43 @@ function generateBlog() {
         .map((s) => s.trim())
         .filter(Boolean);
       if (items.length) {
-        html += "  <ul>\n" + items.map((x) => "    <li>" + x + "</li>").join("\n") + "\n  </ul>\n  <br>\n";
+        html += "  <ul>\n";
+        items.forEach((x) => {
+          if (x.includes(":")) {
+            const [left, right] = x.split(/:(.+)/);
+            html += `    <li><strong>${left.trim()}</strong>: ${right.trim()}</li>\n`;
+          } else {
+            html += `    <li>${x}</li>\n`;
+          }
+        });
+        html += "  </ul>\n  <br>\n";
       }
     }
 
     if (wilProd && productRows.length) {
-  const prodTitle = block.querySelector(".sectie-producttitel")?.value.trim();
-  if (prodTitle) html += `  <p><strong>${prodTitle}</strong></p>\n`;
+      const prodTitle = block.querySelector(".sectie-producttitel")?.value.trim();
+      if (prodTitle) html += `  <p><strong>${prodTitle}</strong></p>\n`;
 
-  productRows.forEach((row) => {
-    html += "  <blok-horizontaal breedte:100>\n";
-    row.forEach((code) => {
-      html += `    <blok-horizontaal breedte:30>\n      <product>\n        <productcode>${code}</productcode><includeprice>true</includeprice>\n      </product>\n    </blok-horizontaal>\n`;
-    });
-    html += "  </blok-horizontaal>\n";
-  });
-}
-
+      productRows.forEach((row) => {
+        html += "  <blok-horizontaal breedte:100>\n";
+        row.forEach((code) => {
+          html += `    <blok-horizontaal breedte:30>\n      <product>\n        <productcode>${code}</productcode><includeprice>true</includeprice>\n      </product>\n    </blok-horizontaal>\n`;
+        });
+        html += "  </blok-horizontaal>\n";
+      });
+    }
 
     html += "</section>\n";
   });
 
-  // CTA-sectie
-  html += `<section id="Assortiment">\n  <h2>Ons assortiment</h2>\n  <div class="cta-box">\n    <p>Bekijk ons gehele assortiment aan </p>\n    <div class="cta-wrapper">\n      <a href="${ctaLink}" class="cta-button">${ctaText}</a>\n    </div>\n  </div>\n</section>\n`;
+  // ---------- CTA-sectie ----------
+  html += `<section id="Assortiment">\n  <h2>Ons assortiment</h2>\n  <div class="cta-box">\n    <p>Bekijk ons gehele assortiment aan</p>\n    <div class="cta-wrapper">\n      <a href="${ctaLink}" class="cta-button">${ctaText}</a>\n    </div>\n  </div>\n</section>\n`;
 
-  // FAQ
-  const fq = document.querySelectorAll("#faq-container .faq-vraag");
-  const fa = document.querySelectorAll("#faq-container .faq-antwoord");
-  html += `<section id="FAQ">\n  <h2>Veelgestelde vragen</h2>\n`;
-  fq.forEach((q, i) => {
-    const vraag = q.value.trim();
-    const antw = fa[i]?.value.trim() || "";
-    if (vraag && antw) {
-      html += `  <details>\n    <summary>${vraag}</summary>\n    <p>${antw}</p>\n  </details>\n`;
-    }
-  });
-  html += `</section>\n`;
+  // ---------- FAQ alleen tonen indien aanwezig ----------
+  if (hasFAQ) {
+    html += `<section id="FAQ">\n  <h2>Veelgestelde vragen</h2>\n${faqItems}</section>\n`;
+  }
 
-  html += '<div class="blog-navigation">\n'+
-  '<a id="prev-blog" class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Vorige blog</a>\n' +
-  '<a id="next-blog" class="nav-btn next-btn">Volgende blog <i class="fas fa-arrow-right"></i></a>\n' + 
-  '</div>\n' ;
   // style+script minimal (anchors smooth scroll) 
   html += '<style>\n' + 
   ' .cta-box{\n' + 
@@ -298,77 +313,6 @@ function generateBlog() {
   '  });\n' + 
   ' });\n' + 
   '});\n' +
-   '\n' + 
-  ' (async () => {\n' +
-  ' const path = window.location.pathname;\n' +
-  ' // Herken URLs zoals /blog/78/verwarming.html\n' +
-  ' const match = path.match(/\/blog\/(\d+)\/[^/]+\.html$/);\n' +
-  ' if (!match) return;\n' +
-   '\n' + 
-  ' const currentNumber = parseInt(match[1], 10);\n' +
-  ' const prevBtn = document.getElementById("prev-blog");\n' +
-  ' const nextBtn = document.getElementById("next-blog");\n' +
-   '\n' + 
-  ' // Controleer of pagina bestaat\n' +
-  ' async function pageExists(url) {\n' +
-    ' try {\n' +
-      ' const res = await fetch(url, { method: "HEAD" });\n' +
-      ' return res.ok;\n' +
-    ' } catch {\n' +
-      ' return false;\n' +
-    ' }\n' +
-  ' }\n' +
-   '\n' + 
-  ' // Vind eerste bestaande .html binnen /blog/{nummer}/\n' +
-  ' async function findExistingHtml(num) {\n' +
-    ' const base = `/blog/${num}/`;\n' +
-    ' const candidates = [\n' +
-      ' `${base}${num}.html`,\n' +
-      ' `${base}index.html`\n' +
-    ' ];\n' +
-    ' for (const url of candidates) {\n' +
-      ' if (await pageExists(url)) return url;\n' +
-    ' }\n' +
-    ' return null;\n' +
-  ' }\n' +
-   '\n' + 
-  ' //  "Vorige blog" = nieuwere blog (hoger nummer)\n' +
-  ' let prevUrl = null;\n' +
-  ' for (let i = 1; i <= 20; i++) {\n' +
-    ' const test = await findExistingHtml(currentNumber + i);\n' +
-    ' if (test) {\n' +
-      ' prevUrl = test;\n' +
-      ' break;\n' +
-    ' }\n' +
-  ' }\n' +
-   '\n' + 
-  ' if (prevUrl) {\n' +
-    ' prevBtn.href = prevUrl;\n' +
-    ' prevBtn.innerHTML = `<i class="fas fa-arrow-left"></i> Vorige blog`;\n' +
-  ' } else {\n' +
-    ' prevBtn.href = "/blog.html";\n' +
-    ' prevBtn.innerHTML = `<i class="fas fa-list"></i> Alle blogs`;\n' +
-  ' }\n' +
-   '\n' + 
-  ' // "Volgende blog" = oudere blog (lager nummer)\n' +
-  ' let nextUrl = null;\n' +
-  ' for (let i = 1; i <= 20; i++) {\n' +
-    ' const target = currentNumber - i;\n' +
-    ' if (target <= 0) break;\n' +
-    ' const test = await findExistingHtml(target);\n' +
-    ' if (test) {\n' +
-      ' nextUrl = test;\n' +
-      ' break;\n' +
-    ' }\n' +
-  ' }\n' +
-   '\n' + 
-  ' if (nextUrl) {\n' +
-    ' nextBtn.href = nextUrl;\n' +
-    ' nextBtn.innerHTML = `Volgende blog <i class="fas fa-arrow-right"></i>`;\n' +
-  ' } else {\n' +
-    ' nextBtn.style.display = "none";\n' +
-  ' }\n' +
-' })();\n' +
   '<\/script>';
 
   document.getElementById("blogResult").textContent = html;
