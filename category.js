@@ -11,8 +11,8 @@
     return text
       .toLowerCase()
       .trim()
-      .replace(/[^\w\s-]/g, "") // verwijder speciale tekens
-      .replace(/\s+/g, "-"); // vervang spaties door -
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-");
   }
 
   function addMerkRow() {
@@ -28,7 +28,7 @@
       </div>
       <input type="text" class="merk-naam" placeholder="Merknaam (bijv. Makita)">
       <input type="text" class="merk-categorie" placeholder="Categorie (bijv. afkortzaag)">
-      <input type="text" class="merk-link" placeholder="Automatisch gegenereerd..." readonly>
+      <input type="text" class="merk-link" placeholder="Automatisch of handmatig invullen...">
     `;
 
     container.appendChild(row);
@@ -39,29 +39,28 @@
       renumberMerken();
     });
 
-    // Automatisch link genereren
+    // Automatische link + handmatige override
     const merkInput = row.querySelector(".merk-naam");
     const catInput = row.querySelector(".merk-categorie");
     const linkInput = row.querySelector(".merk-link");
+    let manualOverride = false;
 
     function updateLink() {
+      if (manualOverride) return; // behoud handmatige invoer
       const merk = slugify(merkInput.value);
       const cat = slugify(catInput.value);
-      if (merk && cat) {
-        linkInput.value = `/${merk}/${cat}.html`;
-      } else if (merk) {
-        linkInput.value = `/${merk}/`;
-      } else {
-        linkInput.value = "";
-      }
+      if (merk && cat) linkInput.value = `/${merk}/${cat}.html`;
+      else if (merk) linkInput.value = `/${merk}/`;
+      else linkInput.value = "";
     }
 
+    linkInput.addEventListener("input", () => (manualOverride = true));
     merkInput.addEventListener("input", updateLink);
     catInput.addEventListener("input", updateLink);
   }
 
   function renumberMerken() {
-    const rows = tab.querySelectorAll(".merk-row");
+    const rows = tab.querySelectorAll("#cat-merken-container .merk-row");
     rows.forEach((r, i) => {
       const h = r.querySelector("h4");
       if (h) h.textContent = `Merk ${i + 1}`;
@@ -122,10 +121,11 @@
 
   // ---------- GENEREREN ----------
   function generateCategoryText() {
-    const h1 = tab.querySelector("#cat-h1").value.trim();
-    const intro = tab.querySelector("#cat-intro").value.trim();
-    const merkenRows = tab.querySelectorAll(".merk-row");
-    const sections = tab.querySelectorAll(".cat-section-block");
+    const h1 = tab.querySelector("#cat-h1")?.value.trim();
+    const intro = tab.querySelector("#cat-intro")?.value.trim();
+    const merkenRows = tab.querySelectorAll("#cat-merken-container .merk-row");
+    const sections = tab.querySelectorAll("#cat-sections .cat-section-block");
+    const resultBox = tab.querySelector("#catResult");
 
     let html = "";
     if (h1) html += `<h1>${h1}</h1>\n`;
@@ -143,7 +143,7 @@
       .filter(Boolean);
 
     if (merken.length) {
-      html += `<p>Populaire merken: ${merken.join(" | ")}</p>\n` + '<br>\n';
+      html += `<p>Populaire merken: ${merken.join(" | ")}</p>\n<br>\n`;
     }
 
     // leesmeer-sectie
@@ -158,18 +158,26 @@
       if (subkop) html += `<${type}>${subkop}</${type}>\n`;
       if (paragrafen) html += formatParagraphs(paragrafen);
       if (opsomming) {
-        const items = opsomming
-          .split(/\n+/)
-          .map(i => i.trim())
-          .filter(Boolean);
-        html += `<ul>\n${items.map(i => `<li>${i}</li>`).join("\n")}\n</ul>`;
+        const items = opsomming.split(/\n+/).map(i => i.trim()).filter(Boolean);
+
+        // 🔹 Nieuw: maak tekst vóór ":" dikgedrukt
+        const parsedItems = items.map(i => {
+          if (i.includes(":")) {
+            const [label, ...rest] = i.split(":");
+            return `<li><strong>${label.trim()}</strong>: ${rest.join(":").trim()}</li>`;
+          } else {
+            return `<li>${i}</li>`;
+          }
+        });
+
+        html += `<ul>\n${parsedItems.join("\n")}\n</ul>\n`;
       }
 
       if (i < sections.length - 1) html += `\n<br>\n`;
     });
 
     html += `\n</div>\n`;
-    tab.querySelector("#catResult").textContent = html;
+    resultBox.textContent = html;
   }
 
   // ---------- LEEGMAKEN ----------
