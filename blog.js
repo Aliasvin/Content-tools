@@ -26,9 +26,12 @@ function addSection() {
     </select>
 
     <div class="sectie-producten" style="display:none;">
-      <label>Productcodes (komma of enter gescheiden):</label>
-      <textarea class="sectie-productcodes" rows="2" placeholder="Bijv. DDF485Z, DHP482Z, DTD152Z"></textarea>
-      <button type="button" class="btn-add-row">+ Productrij toevoegen</button>
+    <label>Vetgedrukte titel boven producten:</label>
+    <input type="text" class="sectie-producttitel" placeholder="Bijv. Onze topkeuze voor dit type machine">
+  
+    <label>Productcodes (komma of enter gescheiden):</label>
+    <textarea class="sectie-productcodes" rows="2" placeholder="Bijv. DDF485Z, DHP482Z, DTD152Z"></textarea>
+    <button type="button" class="btn-add-row">+ Productrij toevoegen</button>
     </div>
     <hr>
   `;
@@ -154,19 +157,23 @@ function generateBlog() {
         .map((s) => s.trim())
         .filter(Boolean);
       if (items.length) {
-        html += "  <ul>\n" + items.map((x) => "    <li>" + x + "</li>").join("\n") + "\n  </ul>\n";
+        html += "  <ul>\n" + items.map((x) => "    <li>" + x + "</li>").join("\n") + "\n  </ul>\n  <br>\n";
       }
     }
 
     if (wilProd && productRows.length) {
-      productRows.forEach((row) => {
-        html += "  <blok-horizontaal breedte:100>\n";
-        row.forEach((code) => {
-          html += `    <blok-horizontaal breedte:30>\n      <product>\n        <productcode>${code}</productcode><includeprice>true</includeprice>\n      </product>\n    </blok-horizontaal>\n`;
-        });
-        html += "  </blok-horizontaal>\n";
-      });
-    }
+  const prodTitle = block.querySelector(".sectie-producttitel")?.value.trim();
+  if (prodTitle) html += `  <p><strong>${prodTitle}</strong></p>\n`;
+
+  productRows.forEach((row) => {
+    html += "  <blok-horizontaal breedte:100>\n";
+    row.forEach((code) => {
+      html += `    <blok-horizontaal breedte:30>\n      <product>\n        <productcode>${code}</productcode><includeprice>true</includeprice>\n      </product>\n    </blok-horizontaal>\n`;
+    });
+    html += "  </blok-horizontaal>\n";
+  });
+}
+
 
     html += "</section>\n";
   });
