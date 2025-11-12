@@ -213,6 +213,19 @@ function generateBlog() {
     html += `<section id="FAQ">\n  <h2>Veelgestelde vragen</h2>\n${faqItems}</section>\n`;
   }
 
+    // ---------- Navigatie knoppen ----------
+const nextBlog = document.getElementById("nextBlogLink")?.value.trim() || "";
+const prevBlog = document.getElementById("prevBlogLink")?.value.trim() || "";
+
+if (prevBlog || nextBlog) {
+  html += `
+<div class="blog-navigation">
+  ${nextBlog ? `<a href="${nextBlog}" class="nav-btn next-btn"><i class="fas fa-arrow-left"></i> Volgende blog</a>` : ""}
+  ${prevBlog ? `<a href="${prevBlog}" class="nav-btn prev-btn">Vorige blog <i class="fas fa-arrow-right"></i></a>` : ""}
+</div>\n
+`;
+}
+
   // style+script minimal (anchors smooth scroll) 
   html += '<style>\n' + 
   ' .cta-box{\n' + 
@@ -295,7 +308,7 @@ function generateBlog() {
   ' color: var(--btn-hover-color, #303030);\n' + 
 ' }\n' + 
  '\n' + 
-' .next-btn {\n' + 
+' .next-prev {\n' + 
   ' margin-left: auto;\n' + 
 ' } \n' + 
   ' </style>\n'; 

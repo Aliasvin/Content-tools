@@ -280,6 +280,20 @@ function generateStepsBlog() {
   if (hasFAQ) {
     html += `<section id="FAQ">\n<h2>Veelgestelde vragen</h2>\n${faqItems}</section>\n`;
   }
+
+  // ---------- Navigatie knoppen ----------
+const nextSteps = document.getElementById("nextStepsLink")?.value.trim() || "";
+const prevSteps = document.getElementById("prevStepsLink")?.value.trim() || "";
+
+if (prevSteps || nextSteps) {
+  html += `
+<div class="blog-navigation">
+  ${nextSteps ? `<a href="${nextSteps}" class="nav-btn next-btn"><i class="fas fa-arrow-left"></i> Volgende blog</a>` : ""}
+  ${prevSteps ? `<a href="${prevSteps}" class="nav-btn prev-btn">Vorige blog <i class="fas fa-arrow-right"></i></a>` : ""}
+</div>\n
+`;
+}
+
   html += '<style>\n' +
 '  .container{\n' +
 '   display:flex;\n' +
@@ -390,7 +404,7 @@ function generateStepsBlog() {
   ' color: var(--btn-hover-color, #303030);\n' + 
 ' }\n' + 
  '\n' + 
-' .next-btn {\n' + 
+' .prev-btn {\n' + 
   ' margin-left: auto;\n' + 
 ' } \n' +
 '</style>\n';
