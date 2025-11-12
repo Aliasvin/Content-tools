@@ -282,14 +282,14 @@ function generateStepsBlog() {
   }
 
   // ---------- Navigatie knoppen ----------
-const nextSteps = document.getElementById("nextStepsLink")?.value.trim() || "";
-const prevSteps = document.getElementById("prevStepsLink")?.value.trim() || "";
+  const prevSteps = document.getElementById("prevStepsLink")?.value.trim() || "";
+  const nextSteps = document.getElementById("nextStepsLink")?.value.trim() || "";
 
 if (prevSteps || nextSteps) {
   html += `
 <div class="blog-navigation">
-  ${nextSteps ? `<a href="${nextSteps}" class="nav-btn next-btn"><i class="fas fa-arrow-left"></i> Volgende blog</a>` : ""}
-  ${prevSteps ? `<a href="${prevSteps}" class="nav-btn prev-btn">Vorige blog <i class="fas fa-arrow-right"></i></a>` : ""}
+  ${prevSteps ? `<a href="${prevSteps}" class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Vorige blog</a>` : ""}
+  ${nextSteps ? `<a href="${nextSteps}" class="nav-btn next-btn">Volgende blog <i class="fas fa-arrow-right"></i></a>` : ""}
 </div>\n
 `;
 }
@@ -404,7 +404,7 @@ if (prevSteps || nextSteps) {
   ' color: var(--btn-hover-color, #303030);\n' + 
 ' }\n' + 
  '\n' + 
-' .prev-btn {\n' + 
+' .next-btn {\n' + 
   ' margin-left: auto;\n' + 
 ' } \n' +
 '</style>\n';

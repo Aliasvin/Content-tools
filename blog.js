@@ -214,14 +214,14 @@ function generateBlog() {
   }
 
     // ---------- Navigatie knoppen ----------
-const nextBlog = document.getElementById("nextBlogLink")?.value.trim() || "";
 const prevBlog = document.getElementById("prevBlogLink")?.value.trim() || "";
+const nextBlog = document.getElementById("nextBlogLink")?.value.trim() || "";
 
 if (prevBlog || nextBlog) {
   html += `
 <div class="blog-navigation">
-  ${nextBlog ? `<a href="${nextBlog}" class="nav-btn next-btn"><i class="fas fa-arrow-left"></i> Volgende blog</a>` : ""}
-  ${prevBlog ? `<a href="${prevBlog}" class="nav-btn prev-btn">Vorige blog <i class="fas fa-arrow-right"></i></a>` : ""}
+  ${prevBlog ? `<a href="${prevBlog}" class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Vorige blog</a>` : ""}
+  ${nextBlog ? `<a href="${nextBlog}" class="nav-btn next-btn">Volgende blog <i class="fas fa-arrow-right"></i></a>` : ""}
 </div>\n
 `;
 }
@@ -308,7 +308,7 @@ if (prevBlog || nextBlog) {
   ' color: var(--btn-hover-color, #303030);\n' + 
 ' }\n' + 
  '\n' + 
-' .prev-btn {\n' + 
+' .next-btn {\n' + 
   ' margin-left: auto;\n' + 
 ' } \n' + 
   ' </style>\n'; 
