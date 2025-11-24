@@ -3,7 +3,7 @@
   const tab = document.getElementById("tab-category");
   if (!tab) return;
 
-  let merkCount = 0;
+  let catMerkCount = 0;
   let catSectionCount = 0;
 
   // ---------- MERKEN ----------
@@ -16,19 +16,19 @@
   }
 
   function addMerkRow() {
-    merkCount++;
+    catMerkCount++;
     const container = tab.querySelector("#cat-merken-container");
     const row = document.createElement("div");
-    row.classList.add("merk-row");
+    row.classList.add("cat-merk-row");
 
     row.innerHTML = `
-      <div class="merk-header">
-        <h4>Merk ${merkCount}</h4>
+      <div class="cat-merk-header">
+        <h4>Merk ${catMerkCount}</h4>
         <button class="btn-remove-row" type="button" title="Verwijderen">×</button>
       </div>
-      <input type="text" class="merk-naam" placeholder="Merknaam (bijv. Makita)">
-      <input type="text" class="merk-categorie" placeholder="Categorie (bijv. afkortzaag)">
-      <input type="text" class="merk-link" placeholder="Automatisch of handmatig invullen...">
+      <input type="text" class="cat-merk-naam" placeholder="Merknaam (bijv. Makita)">
+      <input type="text" class="cat-merk-categorie" placeholder="Categorie (bijv. afkortzaag)">
+      <input type="text" class="cat-merk-link" placeholder="Automatisch of handmatig invullen...">
     `;
 
     container.appendChild(row);
@@ -36,17 +36,17 @@
     // Verwijderen
     row.querySelector(".btn-remove-row").addEventListener("click", () => {
       row.remove();
-      renumberMerken();
+      renumberCatMerken();
     });
 
     // Automatische link + handmatige override
-    const merkInput = row.querySelector(".merk-naam");
-    const catInput = row.querySelector(".merk-categorie");
-    const linkInput = row.querySelector(".merk-link");
+    const merkInput = row.querySelector(".cat-merk-naam");
+    const catInput = row.querySelector(".cat-merk-categorie");
+    const linkInput = row.querySelector(".cat-merk-link");
     let manualOverride = false;
 
     function updateLink() {
-      if (manualOverride) return; // behoud handmatige invoer
+      if (manualOverride) return; 
       const merk = slugify(merkInput.value);
       const cat = slugify(catInput.value);
       if (merk && cat) linkInput.value = `/${merk}/${cat}.html`;
@@ -59,13 +59,13 @@
     catInput.addEventListener("input", updateLink);
   }
 
-  function renumberMerken() {
-    const rows = tab.querySelectorAll("#cat-merken-container .merk-row");
+  function renumberCatMerken() {
+    const rows = tab.querySelectorAll("#cat-merken-container .cat-merk-row");
     rows.forEach((r, i) => {
       const h = r.querySelector("h4");
       if (h) h.textContent = `Merk ${i + 1}`;
     });
-    merkCount = rows.length;
+    catMerkCount = rows.length;
   }
 
   // ---------- SUBSECTIES ----------
@@ -123,19 +123,21 @@
   function generateCategoryText() {
     const h1 = tab.querySelector("#cat-h1")?.value.trim();
     const intro = tab.querySelector("#cat-intro")?.value.trim();
-    const merkenRows = tab.querySelectorAll("#cat-merken-container .merk-row");
+    const merkenRows = tab.querySelectorAll(".cat-merk-row");
     const sections = tab.querySelectorAll("#cat-sections .cat-section-block");
     const resultBox = tab.querySelector("#catResult");
 
     let html = "";
+    html += `<div data-lm-fold data-lm-height="50">\n`;
+
     if (h1) html += `<h1>${h1}</h1>\n`;
     if (intro) html += formatParagraphs(intro) + "\n<br>\n";
 
-    // merkenlijst
+    // Merkenlijst
     const merken = [...merkenRows]
       .map(row => {
-        const merk = row.querySelector(".merk-naam")?.value.trim();
-        const link = row.querySelector(".merk-link")?.value.trim();
+        const merk = row.querySelector(".cat-merk-naam")?.value.trim();
+        const link = row.querySelector(".cat-merk-link")?.value.trim();
         return merk && link
           ? `<a class="tm-link" href="${link}">${merk}</a>`
           : "";
@@ -146,9 +148,7 @@
       html += `<p>Populaire merken: ${merken.join(" | ")}</p>\n<br>\n`;
     }
 
-    // leesmeer-sectie
-    html += `<div data-lm-fold data-lm-height="50">\n`;
-
+    // Subsecties
     sections.forEach((section, i) => {
       const type = section.querySelector(".cat-subkop-type").value;
       const subkop = section.querySelector(".cat-subkop").value.trim();
@@ -157,10 +157,10 @@
 
       if (subkop) html += `<${type}>${subkop}</${type}>\n`;
       if (paragrafen) html += formatParagraphs(paragrafen);
+
       if (opsomming) {
         const items = opsomming.split(/\n+/).map(i => i.trim()).filter(Boolean);
 
-        // 🔹 Nieuw: maak tekst vóór ":" dikgedrukt
         const parsedItems = items.map(i => {
           if (i.includes(":")) {
             const [label, ...rest] = i.split(":");
@@ -176,7 +176,7 @@
       if (i < sections.length - 1) html += `\n<br>\n`;
     });
 
-    html += `\n</div>\n`;
+    html += `</div>\n`;
     resultBox.textContent = html;
   }
 
@@ -186,7 +186,7 @@
     tab.querySelector("#cat-merken-container").innerHTML = "";
     tab.querySelector("#cat-sections").innerHTML = "";
     tab.querySelector("#catResult").textContent = "";
-    merkCount = 0;
+    catMerkCount = 0;
     catSectionCount = 0;
   }
 

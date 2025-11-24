@@ -294,7 +294,7 @@ if (prevSteps || nextSteps) {
 `;
 }
 
-  html += '<style>\n' +
+  html += '\n<style>\n' +
 '  .container{\n' +
 '   display:flex;\n' +
 '   flex-wrap:wrap;\n'+
@@ -406,6 +406,10 @@ if (prevSteps || nextSteps) {
  '\n' + 
 ' .next-btn {\n' + 
   ' margin-left: auto;\n' + 
+' } \n' +
+'\n' + 
+' details {\n' + 
+  ' cursor: pointer;\n' + 
 ' } \n' +
 '</style>\n';
 

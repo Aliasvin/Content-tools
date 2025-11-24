@@ -292,3 +292,97 @@ button {
   background: #333;
   transform: translateY(-1px);
 }
+
+/* Hamburger icoon */
+.hamburger {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  font-size: 30px;
+  cursor: pointer;
+  z-index: 9998;
+  color: #fff;
+}
+
+/* Sticky wanneer open */
+.hamburger.sticky {
+  position: fixed;
+}
+
+/* Mobiel menu */
+#mobileMenu {
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 165px;
+  height: 100vh;
+  background: #303030;
+  padding-top: 70px;
+  transition: left .3s ease;
+  z-index: 9999;
+}
+
+#mobileMenu.active {
+  left: 0;
+}
+
+#mobileMenu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#mobileMenu li {
+  padding: 14px 20px;
+  border-bottom: 1px solid #444;
+  color: #fff;
+  cursor: pointer;
+  font-size: .9rem;
+}
+
+#mobileMenu li:hover {
+  background: #609942;
+}
+
+#mobileMenu li.active {
+  background: #609942;
+  font-weight: bold;
+}
+
+.mobile-menu-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1rem;
+  font-size: 1.4rem;
+  color: #fff;
+  cursor: pointer;
+  z-index: 10001;
+  opacity: .9;
+  transition: opacity .2s ease;
+}
+
+.mobile-menu-close:hover {
+  opacity: 1;
+}
+
+/* Mobiel: menu gesloten */
+#mobileMenu {
+  left: -260px;
+}
+
+/* Mobiel geopend */
+#mobileMenu.active {
+  left: 0;
+}
+
+/* Desktop: menu standaard open */
+@media (min-width: 768px) {
+  #mobileMenu {
+    left: 0;
+  }
+
+  /* Desktop gesloten staat */
+  #mobileMenu.closed {
+    left: -260px !important;
+  }
+}

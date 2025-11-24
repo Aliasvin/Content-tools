@@ -7,14 +7,19 @@ function addSection() {
   const container = document.getElementById("sections-container");
   const div = document.createElement("div");
   div.className = "section-block";
+
   div.innerHTML = `
     <button type="button" class="btn-remove" title="Verwijderen">×</button>
     <h4>Sectie ${sectionCount}</h4>
+    
     <label>Subkop (H2):</label>
     <input type="text" class="sectie-titel" placeholder="Bijv. Hoe gebruik je deze machine?">
     
     <label>Paragraaftekst:</label>
     <textarea class="sectie-tekst" rows="3" placeholder="Voeg hier je tekst toe..."></textarea>
+
+    <label>Vetgedrukte titel boven de opsomming (optioneel):</label>
+    <input type="text" class="sectie-list-title" placeholder="Bijv. Belangrijkste voordelen">
     
     <label>Opsomming (één punt per regel):</label>
     <textarea class="sectie-lijst" rows="3" placeholder="Bijv. Punt 1"></textarea>
@@ -26,20 +31,22 @@ function addSection() {
     </select>
 
     <div class="sectie-producten" style="display:none;">
-    <label>Vetgedrukte titel boven producten:</label>
-    <input type="text" class="sectie-producttitel" placeholder="Bijv. Onze topkeuze voor dit type machine">
-  
-    <label>Productcodes (komma of enter gescheiden):</label>
-    <textarea class="sectie-productcodes" rows="2" placeholder="Bijv. DDF485Z, DHP482Z, DTD152Z"></textarea>
-    <button type="button" class="btn-add-row">+ Productrij toevoegen</button>
+      <label>Vetgedrukte titel boven producten:</label>
+      <input type="text" class="sectie-producttitel" placeholder="Bijv. Onze topkeuze voor dit type machine">
+    
+      <label>Productcodes (komma of enter gescheiden):</label>
+      <textarea class="sectie-productcodes" rows="2" placeholder="Bijv. DDF485Z, DHP482Z, DTD152Z"></textarea>
+      <button type="button" class="btn-add-row">+ Productrij toevoegen</button>
     </div>
     <hr>
   `;
+
   container.appendChild(div);
 
   // Toggle producten
   div.querySelector(".sectie-producten-keuze").addEventListener("change", (e) => {
-    div.querySelector(".sectie-producten").style.display = e.target.value === "ja" ? "block" : "none";
+    div.querySelector(".sectie-producten").style.display =
+      e.target.value === "ja" ? "block" : "none";
   });
 
   // Nieuwe productrij
@@ -50,20 +57,26 @@ function addSection() {
     row.className = "product-row";
     row.innerHTML = `
       <label>Productcodes (rij ${idx}, komma of enter gescheiden):</label>
-      <textarea class="sectie-productcodes" rows="2" placeholder="Bijv. DDF484Z, DHS710Z↵DTD153Z"></textarea>
+      <textarea class="sectie-productcodes" rows="2" placeholder="Bijv. DDF484Z, DHS710Z, DTD153Z"></textarea>
       <button type="button" class="btn-remove-row" title="Verwijderen">×</button>
     `;
     box.insertBefore(row, div.querySelector(".btn-add-row"));
     row.querySelector(".btn-remove-row").addEventListener("click", () => row.remove());
   });
 
-  // Verwijderen
+  // Verwijderen van sectie
   div.querySelector(".btn-remove").addEventListener("click", () => {
     div.remove();
     renumberSections();
   });
 
   renumberSections();
+
+  // Knop altijd direct onder de laatste sectie
+  const addButton = document.getElementById("addSectionBtn");
+  if (addButton) {
+    container.appendChild(addButton);
+  }
 }
 
 function renumberSections() {
@@ -89,11 +102,22 @@ function addFAQ() {
     <hr>
   `;
   c.appendChild(div);
+
+  // FAQ verwijderen
   div.querySelector(".btn-remove").addEventListener("click", () => {
     div.remove();
     renumberFAQs();
+
+    // Zorg dat knop altijd onderaan blijft
+    const addFAQBtn = document.getElementById("addFaqBtn");
+    if (addFAQBtn) c.appendChild(addFAQBtn);
   });
+
   renumberFAQs();
+
+  // ⭐ Knop direct onder laatste FAQ
+  const addFAQBtn = document.getElementById("addFaqBtn");
+  if (addFAQBtn) c.appendChild(addFAQBtn);
 }
 
 function renumberFAQs() {
@@ -107,13 +131,20 @@ function renumberFAQs() {
 function generateBlog() {
   const h1Title = document.getElementById("h1Title")?.value.trim() || "";
   const intro = document.getElementById("intro").value.trim();
+
+  // Korte samenvatting velden
+  const summaryTitle = document.getElementById("summaryTitle")?.value.trim() || "";
+  const summaryText = document.getElementById("summaryText")?.value.trim() || "";
+  const summaryListTitle = document.getElementById("summaryListTitle")?.value.trim() || "";
+  const summaryList = document.getElementById("summaryList")?.value.trim() || "";
+
   const ctaText = document.getElementById("ctaText").value.trim();
   const ctaLink = document.getElementById("ctaLink").value.trim();
 
   const blocks = document.querySelectorAll("#sections-container .section-block");
   const titles = document.querySelectorAll(".sectie-titel");
 
-  // ---------- FAQ eerst checken ----------
+  // ---------- FAQ ----------
   const fq = document.querySelectorAll("#faq-container .faq-vraag");
   const fa = document.querySelectorAll("#faq-container .faq-antwoord");
 
@@ -125,10 +156,9 @@ function generateBlog() {
       faqItems += `  <details>\n    <summary>${vraag}</summary>\n    <p>${antw}</p>\n  </details>\n`;
     }
   });
-
   const hasFAQ = faqItems.length > 0;
 
-  // ---------- Inhoudsopgave (alleen H2’s) ----------
+  // ---------- Inhoudsopgave ----------
   let tocItems = [];
   titles.forEach((t, i) => {
     const titel = t.value.trim() || "Sectie " + (i + 1);
@@ -137,6 +167,45 @@ function generateBlog() {
 
   let html = "";
   if (h1Title) html += `<h1>${h1Title}</h1>\n`;
+
+  /* ---------- Dynamische korte samenvatting ---------- */
+let hasSummaryContent = summaryTitle || summaryText || summaryList;
+
+if (hasSummaryContent) {
+
+  // Titel samenvatting (optioneel)
+  if (summaryTitle) {
+    html += `<p><strong>${summaryTitle}</strong></p>\n`;
+  }
+
+  // Tekst samenvatting (optioneel)
+  if (summaryText) {
+    html += `<p>${summaryText}</p>\n`;
+  }
+
+  // Opsomming samenvatting (optioneel)
+  if (summaryList) {
+    const items = summaryList
+      .split(/\n+/)
+      .map(i => i.trim())
+      .filter(Boolean);
+
+    if (items.length) {
+
+      // Vetgedrukte titel boven opsomming (alleen meenemen als ingevuld)
+      if (summaryListTitle) {
+        html += `<p><strong>${summaryListTitle}</strong></p>\n`;
+      }
+
+      html += `<ul>\n`;
+      items.forEach(i => {
+        html += `  <li>${i}</li>\n`;
+      });
+      html += `</ul>\n`;
+    }
+  }
+}
+
   if (intro) html += formatParagraphs(intro);
 
   // ---------- TOC ----------
@@ -155,6 +224,8 @@ function generateBlog() {
     const titel = block.querySelector(".sectie-titel").value || `Sectie ${i + 1}`;
     const par = block.querySelector(".sectie-tekst").value.trim();
     const lijst = block.querySelector(".sectie-lijst").value.trim();
+    const listTitle = block.querySelector(".sectie-list-title")?.value.trim() || "";
+
     const wilProd = block.querySelector(".sectie-producten-keuze").value === "ja";
     const productInputs = block.querySelectorAll(".sectie-productcodes");
     let productRows = [];
@@ -168,6 +239,7 @@ function generateBlog() {
     });
 
     html += `<section id="sectie${i + 1}">\n  <h2>${titel}</h2>\n`;
+
     if (par) html += formatParagraphs(par);
 
     if (lijst) {
@@ -175,7 +247,12 @@ function generateBlog() {
         .split(/\n+/)
         .map((s) => s.trim())
         .filter(Boolean);
+
       if (items.length) {
+        if (listTitle) {
+          html += `  <p><strong>${listTitle}</strong></p>\n`;
+        }
+
         html += "  <ul>\n";
         items.forEach((x) => {
           if (x.includes(":")) {
@@ -208,26 +285,26 @@ function generateBlog() {
   // ---------- CTA-sectie ----------
   html += `<section id="Assortiment">\n  <h2>Ons assortiment</h2>\n  <div class="cta-box">\n    <p>Bekijk ons gehele assortiment aan</p>\n    <div class="cta-wrapper">\n      <a href="${ctaLink}" class="cta-button">${ctaText}</a>\n    </div>\n  </div>\n</section>\n`;
 
-  // ---------- FAQ alleen tonen indien aanwezig ----------
+  // ---------- FAQ ----------
   if (hasFAQ) {
     html += `<section id="FAQ">\n  <h2>Veelgestelde vragen</h2>\n${faqItems}</section>\n`;
   }
 
-    // ---------- Navigatie knoppen ----------
-const prevBlog = document.getElementById("prevBlogLink")?.value.trim() || "";
-const nextBlog = document.getElementById("nextBlogLink")?.value.trim() || "";
+  // ---------- Navigatie knoppen ----------
+  const prevBlog = document.getElementById("prevBlogLink")?.value.trim() || "";
+  const nextBlog = document.getElementById("nextBlogLink")?.value.trim() || "";
 
-if (prevBlog || nextBlog) {
-  html += `
+  if (prevBlog || nextBlog) {
+    html += `
 <div class="blog-navigation">
   ${prevBlog ? `<a href="${prevBlog}" class="nav-btn prev-btn"><i class="fas fa-arrow-left"></i> Vorige blog</a>` : ""}
   ${nextBlog ? `<a href="${nextBlog}" class="nav-btn next-btn">Volgende blog <i class="fas fa-arrow-right"></i></a>` : ""}
 </div>\n
 `;
-}
+  }
 
   // style+script minimal (anchors smooth scroll) 
-  html += '<style>\n' + 
+  html += '\n<style>\n' + 
   ' .cta-box{\n' + 
   ' margin:2em 0;\n' + 
   ' padding:1.5em;\n' + 
@@ -290,9 +367,9 @@ if (prevBlog || nextBlog) {
   ' margin-top: 40px;\n' + 
   ' padding-top: 20px;\n' + 
   ' border-top: 1px solid var(--border-color, #ddd);\n' + 
-' }\n' + 
- '\n' + 
-' .nav-btn {\n' + 
+  ' }\n' + 
+  '\n' + 
+  ' .nav-btn {\n' + 
   ' display: inline-block;\n' + 
   ' background: var(--btn-bg, #febd15);\n' + 
   ' color: var(--btn-color, #303030);\n' + 
@@ -301,31 +378,35 @@ if (prevBlog || nextBlog) {
   ' text-decoration: none;\n' + 
   ' font-weight: bold;\n' + 
   ' transition: all 0.3s ease;\n' + 
-' }\n' + 
- '\n' + 
-' .nav-btn:hover {\n' + 
+  ' }\n' + 
+  '\n' + 
+  ' .nav-btn:hover {\n' + 
   ' background: var(--btn-hover-bg, #dba810);\n' + 
   ' color: var(--btn-hover-color, #303030);\n' + 
-' }\n' + 
- '\n' + 
-' .next-btn {\n' + 
+  ' }\n' + 
+  '\n' + 
+  ' .next-btn {\n' + 
   ' margin-left: auto;\n' + 
+  ' } \n' +
+  '\n' + 
+  ' details {\n' + 
+  ' cursor: pointer;\n' + 
 ' } \n' + 
   ' </style>\n'; 
+
   html += '\n' + 
   '<script>\n' + 
   ' document.addEventListener("DOMContentLoaded",()=>{\n' + 
-  ' document.querySelectorAll(".toc a").forEach(a=>{\n' + 
-  ' a.addEventListener("click",e=>{\n' + 
-  ' e.preventDefault();\n' + 
-  ' const id=a.getAttribute("href").substring(1);\n' + 
-  ' const el=document.getElementById(id);\n' + 
-  ' const off=(el?el.offsetTop:0)-130;\n' + 
-  ' window.scrollTo({top:off,behavior:"smooth"\n' + 
+  '   document.querySelectorAll(".toc a").forEach(a=>{\n' + 
+  '     a.addEventListener("click",e=>{\n' + 
+  '       e.preventDefault();\n' + 
+  '       const id=a.getAttribute("href").substring(1);\n' + 
+  '       const el=document.getElementById(id);\n' + 
+  '       const off=(el?el.offsetTop:0)-130;\n' + 
+  '       window.scrollTo({top:off,behavior:"smooth"});\n' + 
+  '     });\n' + 
   '   });\n' + 
-  '  });\n' + 
-  ' });\n' + 
-  '});\n' +
+  ' });\n' +
   '<\/script>';
 
   document.getElementById("blogResult").textContent = html;
@@ -349,13 +430,37 @@ function copyBlog() {
 }
 
 function clearBlogFields() {
-  ["h1Title", "intro", "ctaText", "ctaLink", "prevBlogLink", "nextBlogLink"].forEach((id) => {
+  [
+    "h1Title",
+    "intro",
+    "summaryTitle",
+    "summaryText",
+    "summaryListTitle",
+    "summaryList",
+    "ctaText",
+    "ctaLink",
+    "prevBlogLink",
+    "nextBlogLink",
+  ].forEach((id) => {
     const el = document.getElementById(id);
     if (el) el.value = "";
   });
-  document.querySelectorAll("#sections-container .section-block").forEach((b) => b.remove());
-  document.querySelectorAll("#faq-container .faq-block").forEach((b) => b.remove());
+  document
+    .querySelectorAll("#sections-container .section-block")
+    .forEach((b) => b.remove());
+  document
+    .querySelectorAll("#faq-container .faq-block")
+    .forEach((b) => b.remove());
   sectionCount = 0;
   faqCount = 0;
   document.getElementById("blogResult").textContent = "";
+}
+
+/* ---------- Helper ---------- */
+function formatParagraphs(text) {
+  return text
+    .split(/\n+/)
+    .filter(Boolean)
+    .map((p) => `<p>${p.trim()}</p>\n`)
+    .join("");
 }

@@ -14,15 +14,52 @@
   <link rel="stylesheet" href="bulk-encrypt.css">
   <link rel="stylesheet" href="brands.css">
   <link rel="stylesheet" href="category.css">
+  <link rel="stylesheet" href="actietekst.css">
   <link rel="stylesheet" href="preview.css">
   <link rel="stylesheet" href="compare.css">
   <link rel="stylesheet" href="dropdown.css">
+  <link rel="stylesheet" href="code-editor.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
   <h1>Content tools</h1>
 
-<div class="dark-toggle">
+  <!-- Hamburger -->
+<div class="hamburger">
+  <i class="fa-solid fa-bars" id="hamburgerToggle"></i>
+</div>
+
+<!-- Mobiel menu -->
+<nav id="mobileMenu">
+  <div id="mobileMenuClose" class="mobile-menu-close">
+    <i class="fa-solid fa-xmark"></i>
+  </div>
+  <div>
+  <ul>
+    <li data-tab="home">Home</li>
+    <li data-tab="product">Producttekst</li>
+    <li data-tab="url">URL generator</li>
+    <li data-tab="blog">Blog generator</li>
+    <li data-tab="steps">Stappenplan</li>
+    <li data-tab="brands">Populaire merken</li>
+    <li data-tab="category">Categorie tekst</li>
+    <li data-tab="giftcards">Cadeaukaarten</li>
+    <li data-tab="actie-cms">Actie tekst</li>
+    <li data-tab="bulk-encrypt">Bulk encrypt</li>
+    <li data-tab="compare">Excel vergelijking</li>
+    <li data-tab="html">HTML invoer</li>
+    <li data-tab="codeeditor">Code editor</li>
+  </ul>
+  <div class="dark-toggle mobile-dark-toggle">
+  <input type="checkbox" id="darkModeToggleMobile">
+  <label for="darkModeToggleMobile">
+    <i class="fa-solid fa-sun"></i>
+    <i class="fa-solid fa-moon"></i>
+  </label>
+</div>
+</nav>
+
+  <div class="dark-toggle">
   <input type="checkbox" id="darkModeToggle">
   <label for="darkModeToggle">
     <i class="fa-solid fa-sun"></i>
@@ -43,9 +80,11 @@
   <div class="tab-dropdown">
   <button type="button" class="dropdown-toggle" aria-expanded="false">Meer ▾</button>
   <div class="dropdown-menu" role="menu">
+      <button class="tab-button" data-tab="actie-cms">Actie tekst</button>
       <button class="tab-button" data-tab="bulk-encrypt">Bulk encryptie</button>
       <button class="tab-button" data-tab="compare">Excel vergelijking</button>
       <button class="tab-button" data-tab="html">HTML invoer</button>
+      <button class="tab-button" data-tab="codeeditor">Code editor</button>
     </div>
   </div>
 </div>
@@ -84,6 +123,10 @@
       <h3>Cadeaukaarten</h3>
       <p>Encrypt/decrypt codes en logs exporteren.</p>
     </div>
+    <div class="tool-card" data-tab="actie-cms">
+      <h3>Actie tekst Genereren</h3>
+      <p>Maak hier de tekst voor de actie. voor categorie-, product- en alle acties pagina.</p>
+    </div>
     <div class="tool-card" data-tab="bulk-encrypt">
       <h3>Bulk encrypt</h3>
       <p>Encrypt/decrypt codes in bulk.</p>
@@ -95,6 +138,10 @@
     <div class="tool-card" data-tab="html">
       <h3>HTML invoer</h3>
       <p>Zie hoe je HTML eruit komt te zien.</p>
+    </div>
+    <div class="tool-card" data-tab="codeeditor">
+      <h3>Code editor</h3>
+      <p>HTML & CSS editor met preview.</p>
     </div>
   </div>
 </div>
@@ -170,16 +217,27 @@
     <label for="h1Title">Titel</label>
     <input id="h1Title" type="text" placeholder="Bijv. De beste accuboormachines van 2025">
 
+    <label>Korte samenvatting titel (optioneel)</label>
+    <input id="summaryTitle" type="text" placeholder="Bijv. Samenvatting">
+
+    <label>Korte samenvatting</label>
+    <textarea id="summaryText" rows="2" placeholder="1–3 zinnen korte samenvatting..."></textarea>
+
+    <label>Vetgedrukte titel boven korte samenvattings-opsomming (optioneel)</label>
+    <input id="summaryListTitle" type="text" placeholder="Bijv. ToolMax Keuze">
+
+    <label>Opsomming korte samenvatting (optioneel)</label>
+    <textarea id="summaryList" rows="2" placeholder="Bijv. Makita&#10;DeWalt"></textarea>
+
     <label>Intro</label>
     <textarea id="intro" rows="3" placeholder="Korte intro van je blog..."></textarea>
 
     <div id="sections-container">
-      <button class="add" onclick="addSection()">+ Sectie toevoegen</button>
     </div>
+    <button id="addSectionBtn" class="add" onclick="addSection()">+ Sectie toevoegen</button>
 
-    <div id="faq-container">
-      <button class="add" onclick="addFAQ()">+ FAQ toevoegen</button>
-    </div>
+    <div id="faq-container"></div>
+    <button id="addFaqBtn" class="add" onclick="addFAQ()">+ Vraag toevoegen</button>
 
     <label>CTA tekst</label>
     <input id="ctaText" placeholder="Bekijk alle ...">
@@ -296,7 +354,6 @@
   <button class="btn-copy" onclick="copyCategoryResult()">Kopieer</button>
 </div>
 
-
   <!-- TAB: Cadeaukaarten -->
 <div id="tab-giftcards" class="tab-content">
   <h2>Cadeaukaart codes encrypten & decrypten</h2>
@@ -332,6 +389,57 @@
   <ul id="logList" class="log-list"></ul>
   <button class="export" onclick="exportGiftcards()">Exporteer log</button>
   <button class="btn-clear" onclick="clearLog()">Log leegmaken</button>
+</div>
+
+<!-- TAB: Actie Tekst -->
+<div id="tab-actie-cms" class="tab-content">
+  <h2>Actie Teskt</h2>
+
+  <!-- Titel -->
+  <label for="actie-title">Titel</label>
+  <input id="actie-title" type="text" placeholder="Actietitel...">
+
+  <!-- Paragraaf tekst -->
+  <label for="actie-paragraph">Paragraaf tekst</label>
+  <textarea id="actie-paragraph" rows="4" placeholder="Voer hier je paragraaf in..."></textarea>
+
+  <!-- Actieperiode -->
+  <label for="actie-periode">Actieperiode</label>
+  <input id="actie-periode" type="text" placeholder="Bijv. Actie geldig t/m 31 december 2025">
+
+  <!-- Alt tekst -->
+  <label for="actie-alt">Alt tekst</label>
+  <input id="actie-alt" type="text" placeholder="Alt-tekst voor de afbeelding...">
+
+  <!-- Afbeelding link -->
+  <label for="actie-image">Afbeelding link</label>
+  <input id="actie-image" type="text" placeholder="https://link-naar-afbeelding.jpg">
+
+  <!-- Actie link -->
+  <label for="actie-link">Link actie</label>
+  <input id="actie-link" type="text" placeholder="https://www.toolmax.nl/voorbeeld-actie.html">
+
+  <h2>Secties</h2>
+  <div id="actie-sections"></div>
+
+  <button class="btn add" type="button" onclick="addActieSection()">+ Sectie toevoegen</button>
+
+  <div class="button-row" style="margin-top:1rem;">
+    <button class="btn generate" onclick="generateActieCMS()">Genereer</button>
+    <button class="btn-clear" onclick="clearActieCMS()">Leegmaken</button>
+  </div>
+
+  <h3>Actie tekst categoriepagina</h3>
+  <pre id="actie-output-category" class="previewArea"></pre>
+  <button class="btn-copy" type="button" onclick="copyActieOutput1()">Kopieer actie tekst</button>
+
+  <h3>Actie tekst CMS</h3>
+  <pre id="actie-output" class="previewArea"></pre>
+  <button class="btn-copy" type="button" onclick="copyActieOutput2()">Kopieer actie cms</button>
+
+  <h3>Actie tekst - Alle acties</h3>
+  <pre id="actie-output-banner" class="previewArea"></pre>
+  <button class="btn-copy" type="button" onclick="copyActieOutput3()">Kopieer actie</button>
 </div>
 
   <!-- TAB: Bulk encryptie -->
@@ -408,6 +516,36 @@
     <textarea rows="15" placeholder="Voer hier je CSS-code in..."></textarea>
   </div>
 
+  <!-- TAB: CODE EDITOR -->
+<div id="tab-codeeditor" class="tab-content">
+  <h2>Code editor</h2>
+
+  <div class="code-editor-wrapper">
+
+    <!-- HTML -->
+    <div class="editor-box">
+      <label>HTML-invoer</label>
+      <textarea id="htmlInput"></textarea>
+    </div>
+
+    <!-- CSS -->
+    <div class="editor-box">
+      <label>CSS-invoer</label>
+      <textarea id="cssInput"></textarea>
+    </div>
+
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="preview-container">
+    <h3>Preview</h3>
+    <iframe id="livePreview"></iframe>
+  </div>
+
+</div>
+
+
+
 <!-- Zorg dat SheetJS vóór jouw bulk-encrypt script geladen is -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.19.3/dist/xlsx.full.min.js"></script>
 
@@ -418,6 +556,34 @@
 <!-- Verticaal zoeken -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
+<!-- CodeMirror Core -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+
+<!-- Languages -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+
+<!-- AUTOCOMPLETE -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/show-hint.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/hint/css-hint.min.js"></script>
+
+<!-- Auto-close -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closebrackets.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/closetag.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js"></script>
+
+<!-- THEMES -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/neo.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/material-darker.min.css">
+
+<!-- VS Code themes -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror-theme-vscode@1.0.0/theme/vscode-light.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror-theme-vscode@1.0.0/theme/vscode-dark.css">
+
   <!-- scripts -->
   <script src="home.js"></script>
   <script src="common.js"></script>
@@ -427,10 +593,12 @@
   <script src="url.js"></script>
   <script src="brands.js"></script>
   <script src="category.js"></script>
+  <script src="actietekst.js"></script>
   <script src="giftcards.js"></script>
   <script src="bulk-encrypt.js"></script>
   <script src="preview.js"></script>
   <script src="compare.js"></script>
   <script src="dropdown.js"></script>
+  <script src="code-editor.js"></script>
 </body>
 </html>

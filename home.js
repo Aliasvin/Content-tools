@@ -73,14 +73,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const header = document.querySelector("h1");
-  if (header && header.textContent.trim() === "Content tools") {
-    header.style.cursor = "pointer";
-    header.title = "Klik om terug te gaan naar startpagina";
 
-    header.addEventListener("click", () => {
+  if (header && header.textContent.trim() === "Content tools") {
+
+    // Maak alleen de tekst klikbaar, niet het blok eromheen
+    const textOnly = document.createElement("span");
+    textOnly.textContent = header.textContent;
+    header.textContent = "";
+    header.appendChild(textOnly);
+
+    textOnly.style.cursor = "pointer";
+    textOnly.title = "Klik om terug te gaan naar startpagina";
+
+    textOnly.addEventListener("click", () => {
       if (window.activateTab) {
         window.activateTab("home");
       }
     });
   }
 });
+

@@ -25,7 +25,7 @@
   margin-bottom: 1.2rem;
 }
 
-#tab-category .merk-row {
+.cat-merk-row {
   display: flex;
   flex-wrap: wrap;
   gap: 0.8rem;
