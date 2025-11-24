@@ -305,4 +305,35 @@ body.dark-mode .mobile-dark-toggle label::after {
   background: #222;
 }
 
+/* --- Sidebar darkmode toggle (zelfde stijl als mobile-dark-toggle) --- */
+.sidebar-dark-toggle {
+  position: relative;
+  margin: 25px auto 20px auto;
+  width: fit-content;
+  display: block;
+  padding-top: 20px;
+  border-top: 1px solid #444;
+}
+
+/* Zorg dat er geen absolute of fixed positie ontstaat */
+#desktopSidebar .sidebar-dark-toggle {
+  position: relative !important;
+  top: 0 !important;
+  right: 0 !important;
+}
+
+/* Icons (zelfde grootte) */
+.sidebar-dark-toggle .fa-sun,
+.sidebar-dark-toggle .fa-moon {
+  font-size: 14px;
+}
+
+/* Donker thema kleuren (zelfde overrides) */
+body.dark-mode .sidebar-dark-toggle label {
+  background: #444;
+}
+
+body.dark-mode .sidebar-dark-toggle label::after {
+  background: #222;
+}
 

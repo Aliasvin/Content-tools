@@ -341,7 +341,7 @@ button {
 }
 
 #mobileMenu li:hover {
-  background: #609942;
+  background: #3d3d3d;
 }
 
 #mobileMenu li.active {
@@ -378,11 +378,76 @@ button {
 /* Desktop: menu standaard open */
 @media (min-width: 768px) {
   #mobileMenu {
-    left: 0;
+    display: none;
   }
 
   /* Desktop gesloten staat */
   #mobileMenu.closed {
     left: -260px !important;
+  }
+}
+
+/* === SIDEBAR (DESKTOP) === */
+#desktopSidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 165px;
+  height: 100vh;
+  background: #303030;
+  color: #fff;
+  padding: 20px 0;
+  /*border-right: 1px solid #444;*/
+  z-index: 9999;
+  transform: translateX(0);
+  transition: transform .3s ease;
+}
+
+#desktopSidebar.closed {
+  transform: translateX(-240px);
+}
+
+/* Sidebar header */
+#desktopSidebar .sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 18px 10px 18px;
+  border-bottom: 1px solid #444;
+}
+
+#desktopSidebar .sidebar-header i {
+  cursor: pointer;
+  font-size: 22px;
+}
+
+/* Sidebar menu */
+.sidebar-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-list li {
+  padding: 14px 20px;
+  border-bottom: 1px solid #444;
+  cursor: pointer;
+  font-size: .9rem;
+  transition: background .2s;
+}
+
+.sidebar-list li:hover {
+  background: #3d3d3d;
+}
+
+.sidebar-list li.active {
+  background: #609942;
+  font-weight: bold;
+}
+
+/* Verborgen op mobiel */
+@media (max-width: 767px) {
+  #desktopSidebar {
+    display: none;
   }
 }

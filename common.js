@@ -75,39 +75,49 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// Beide toggles
-const darkToggle = document.getElementById("darkModeToggle");
-const darkToggleMobile = document.getElementById("darkModeToggleMobile");
+// LIGHT/DARK MODE SWITCH
+const toggleMain = document.getElementById("darkModeToggle");
+const toggleMobile = document.getElementById("darkModeToggleMobile");
+const toggleSidebar = document.getElementById("darkModeToggleSidebar");
 
-// Theme setter
 function setTheme(isDark) {
   if (isDark) {
     document.body.classList.add("dark-mode");
-    darkToggle.checked = true;
-    if (darkToggleMobile) darkToggleMobile.checked = true;
+    toggleMain.checked = true;
+    if (toggleMobile) toggleMobile.checked = true;
+    if (toggleSidebar) toggleSidebar.checked = true;
     localStorage.setItem("theme", "dark");
   } else {
     document.body.classList.remove("dark-mode");
-    darkToggle.checked = false;
-    if (darkToggleMobile) darkToggleMobile.checked = false;
+    toggleMain.checked = false;
+    if (toggleMobile) toggleMobile.checked = false;
+    if (toggleSidebar) toggleSidebar.checked = false;
     localStorage.setItem("theme", "light");
   }
 }
 
-// Herstel voorkeur
+// Herstel uit localStorage bij laden
 setTheme(localStorage.getItem("theme") === "dark");
 
-// Event: hoofdtoggle
-darkToggle.addEventListener("change", () => {
-  setTheme(darkToggle.checked);
+// Hoofd toggle
+toggleMain.addEventListener("change", () => {
+  setTheme(toggleMain.checked);
 });
 
-// Event: mobiele toggle
-if (darkToggleMobile) {
-  darkToggleMobile.addEventListener("change", () => {
-    setTheme(darkToggleMobile.checked);
+// Mobiel toggle
+if (toggleMobile) {
+  toggleMobile.addEventListener("change", () => {
+    setTheme(toggleMobile.checked);
   });
 }
+
+// Sidebar toggle
+if (toggleSidebar) {
+  toggleSidebar.addEventListener("change", () => {
+    setTheme(toggleSidebar.checked);
+  });
+}
+
 
 // --- SELECTORS ---
 const burger = document.getElementById("hamburgerToggle");
@@ -175,5 +185,40 @@ document.querySelectorAll("#mobileMenu li").forEach(item => {
     }
 
     updateHamburgerSticky();
+  });
+});
+
+// DESKTOP SIDEBAR
+const desktopSidebar = document.getElementById("desktopSidebar");
+const desktopSidebarClose = document.getElementById("desktopSidebarClose");
+
+// Sluiten (desktop)
+desktopSidebarClose.addEventListener("click", () => {
+  desktopSidebar.classList.add("closed");
+});
+
+// Klik op hamburger opent desktop sidebar (alleen desktop)
+burger.addEventListener("click", () => {
+  if (window.innerWidth >= 768) {
+    desktopSidebar.classList.remove("closed");
+  }
+});
+
+// Sidebar tab click
+document.querySelectorAll("#desktopSidebar li").forEach(item => {
+  item.addEventListener("click", () => {
+    const tab = item.getAttribute("data-tab");
+
+    // Activate tab content
+    document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
+    document.querySelector(`#tab-${tab}`).classList.add("active");
+
+    // Highlight top buttons
+    document.querySelectorAll(".tab-button").forEach(btn => btn.classList.remove("active"));
+    document.querySelector(`.tab-button[data-tab="${tab}"]`)?.classList.add("active");
+
+    // Active in sidebar
+    document.querySelectorAll("#desktopSidebar li").forEach(li => li.classList.remove("active"));
+    item.classList.add("active");
   });
 });
