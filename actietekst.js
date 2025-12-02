@@ -65,8 +65,8 @@ function generateActieCMS() {
   }
 
   if (title) output1 += `<h2>${title}</h2>\n`;
-  if (paragraph) output1 += `<p>${paragraph}</p>\n`;
-  if (actieperiode) output1 += `<p><strong>Actieperiode:${actieperiode}</strong></p>\n`;
+  if (paragraph) output1 += `<p>${paragraph}</p>\n<br>\n`;
+  if (actieperiode) output1 += `<p><strong>Actieperiode:${actieperiode}</strong></p>\n<br>\n`;
 
   // Secties toevoegen
   document.querySelectorAll(".actie-section").forEach(sec => {
@@ -78,10 +78,10 @@ function generateActieCMS() {
 
     if (secText) {
       if (secType === "paragraph") {
-        output1 += `<p>${secText}</p>\n`;
+        output1 += `<p>${secText}</p>\n<br>\n`;
       } else {
         const arr = secText.split("\n").map(t => t.trim()).filter(Boolean);
-        output1 += `<ul>\n${arr.map(i => `  <li>${i}</li>`).join("\n")}\n</ul>\n`;
+        output1 += `<ul>\n${arr.map(i => `  <li>${i}</li>`).join("\n")}\n</ul>\n<br>\n`;
       }
     }
   });
