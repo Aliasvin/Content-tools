@@ -46,7 +46,7 @@ function generateProductText() {
 
   // INTRO
   if (intro) {
-    html += formatParagraphs(intro) + '\n<br>\n';
+    html += formatParagraphs(intro) + '<br>\n';
   }
 
   // BIJZONDERE KENMERKEN
