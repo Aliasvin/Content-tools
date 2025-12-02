@@ -67,7 +67,7 @@ function generateProductText() {
   const stdItems = normalizeList(std);
   if (stdItems.length) {
     html += '<h2>Standaard meegeleverd</h2>\n';
-    html += '<ul>\n' + stdItems.map(i => `  <li>${i}</li>`).join('\n') + '\n</ul>\n<br>\n';
+    html += '<ul>\n' + stdItems.map(i => `  <li>${i}</li>`).join('\n') + '\n</ul>';
   }
 
   document.getElementById('productResult').textContent = html.trim();
