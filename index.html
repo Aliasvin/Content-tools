@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="tabs.css">
   <link rel="stylesheet" href="darkmode.css">
   <link rel="stylesheet" href="url.css">
+  <link rel="stylesheet" href="url-submaps.css">
   <link rel="stylesheet" href="giftcards.css">
   <link rel="stylesheet" href="bulk-encrypt.css">
   <link rel="stylesheet" href="brands.css">
@@ -76,6 +77,7 @@
     <li data-tab="category">Categorie tekst</li>
     <li data-tab="giftcards">Cadeaukaarten</li>
     <li data-tab="actie-cms">Actie tekst</li>
+    <li data-tab="url-submaps">URL generator submap</li>
     <li data-tab="bulk-encrypt">Bulk encrypt</li>
     <li data-tab="compare">Excel vergelijking</li>
     <li data-tab="html">HTML invoer</li>
@@ -112,6 +114,7 @@
   <button type="button" class="dropdown-toggle" aria-expanded="false">Meer ▾</button>
   <div class="dropdown-menu" role="menu">
       <button class="tab-button" data-tab="actie-cms">Actie tekst</button>
+      <button class="tab-button" data-tab="url-submaps">URL generator submap</button>
       <button class="tab-button" data-tab="bulk-encrypt">Bulk encryptie</button>
       <button class="tab-button" data-tab="compare">Excel vergelijking</button>
       <button class="tab-button" data-tab="html">HTML invoer</button>
@@ -157,6 +160,10 @@
     <div class="tool-card" data-tab="actie-cms">
       <h3>Actie tekst genereren</h3>
       <p>Maak hier de tekst voor de actie. voor categorie-, product- en alle acties pagina.</p>
+    </div>
+    <div class="tool-card" data-tab="url-submap">
+      <h3>URL generator submappen</h3>
+      <p>URL generator voor categorieën met submappen.</p>
     </div>
     <div class="tool-card" data-tab="bulk-encrypt">
       <h3>Bulk encrypt</h3>
@@ -473,6 +480,64 @@
   <button class="btn-copy" type="button" onclick="copyActieOutput3()">Kopieer actie</button>
 </div>
 
+<div id="tab-url-submaps" class="tab-content">
+
+  <h2>URL generator met submappen</h2>
+
+  <!-- LIVE GENERATOR -->
+  <div class="url-live-wrapper">
+
+    <label>Hoofdgroep</label>
+    <input id="slug-hoofdgroep" type="text">
+
+    <label>Subgroep 1</label>
+    <input id="slug-sub1" type="text">
+
+    <label>Subgroep 2</label>
+    <input id="slug-sub2" type="text">
+
+    <label>Productnaam (optioneel)</label>
+    <input id="slug-product" type="text">
+
+    <hr>
+
+    <div class="result-container-submap">
+      <div class="result">
+      <span id="result-submap"></span>
+      </div>
+      <div class="result">
+      <span id="resultURL-submap"></span>
+      </div>
+    </div>
+
+    <div class="btn-row">
+    <button id="copyButtonSub1" class="btn-copy" onclick="copySubmap('result-submap')">Copy slug</button>
+    <button id="copyButtonSub2" class="btn-copy" onclick="copySubmap('resultURL-submap')">Copy URL</button>
+    <button class="btn-clear" onclick="clearLiveSubmapFields()">Velden leegmaken</button>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- BULK GENERATOR -->
+  <div class="url-bulk-wrapper">
+    <h2>Bulk URL generator met submappen</h2>
+
+            <label class="file-upload">
+          <input type="file" id="bulkSubmapsFile" accept=".xlsx,.xls,.csv">
+          <span class="file-label">Bestand kiezen</span>
+          <span id="bulkSubmapsFileName"></span>
+        </label>
+
+    <button class="btn generate" onclick="generateBulkSubmapURLs()">Genereer bulk URL's</button>
+    <button class="export" onclick="exportBulkSubmapURLs()">Exporteren</button>
+
+    <hr>
+
+    <div id="bulk-submap-table"></div>
+  </div>
+</div>
+
   <!-- TAB: Bulk encryptie -->
 <div id="tab-bulk-encrypt" class="tab-content">
   <h2>Bulk encryptie (cadeaucodes)</h2>
@@ -622,6 +687,7 @@
   <script src="blog.js"></script>
   <script src="steps.js"></script>
   <script src="url.js"></script>
+  <script src="url-submaps.js"></script>
   <script src="brands.js"></script>
   <script src="category.js"></script>
   <script src="actietekst.js"></script>
