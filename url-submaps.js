@@ -59,17 +59,22 @@ function generateURLSubmaps() {
 
 function copySubmap(id) {
   const el = document.getElementById(id);
+  if (!el) return;
+
   const text = el.textContent.trim();
   if (!text) return;
 
+  const btn = event.currentTarget; // correcte knop detectie
+
   navigator.clipboard.writeText(text).then(() => {
-    const btn = event.target;
-    btn.textContent = "Gekopieerd!";
+    btn.textContent = "Copied";
     btn.style.background = "#609942";
+    btn.style.color = "#fff";
 
     setTimeout(() => {
-      btn.textContent = "Copy";
+      btn.textContent = btn.id === "copyButtonSub1" ? "Copy slug" : "Copy URL";
       btn.style.background = "";
+      btn.style.color = "";
     }, 1500);
   });
 }
