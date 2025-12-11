@@ -91,6 +91,9 @@
 
       <label>Opsomming:</label>
       <textarea class="cat-opsomming" rows="4" placeholder="Elke regel = nieuw opsomming-item."></textarea>
+
+      <label>Extra paragraaftekst onder opsomming:</label>
+      <textarea class="cat-afterlist" rows="4" placeholder="Elke enter = nieuwe paragraaf."></textarea>
     `;
 
     container.appendChild(div);
@@ -172,6 +175,13 @@
 
         html += `<ul>\n${parsedItems.join("\n")}\n</ul>\n`;
       }
+
+      // Extra paragraaf onder opsomming
+        const afterList = section.querySelector(".cat-afterlist").value.trim();
+          if (afterList) {
+          html += formatParagraphs(afterList) + '\n';
+        }
+
 
       if (i < sections.length - 1) html += `\n<br>\n`;
     });
