@@ -133,8 +133,8 @@
     let html = "";
     html += `<div data-lm-fold data-lm-height="50">\n`;
 
-    if (h1) html += `<h1>${h1}</h1>\n`;
-    if (intro) html += formatParagraphs(intro) + "\n<br>\n";
+    if (h1) html += `<h1>${h1}</h1>`;
+    if (intro) html += '\n' + formatParagraphs(intro);
 
     // Merkenlijst
     const merken = [...merkenRows]
@@ -148,7 +148,7 @@
       .filter(Boolean);
 
     if (merken.length) {
-      html += `<p>Populaire merken: ${merken.join(" | ")}</p>\n<br>\n`;
+      html += `\n<br>\n<p>Populaire merken: ${merken.join(" | ")}</p>`;
     }
 
     // Subsecties
@@ -158,8 +158,8 @@
       const paragrafen = section.querySelector(".cat-paragraaf").value.trim();
       const opsomming = section.querySelector(".cat-opsomming").value.trim();
 
-      if (subkop) html += `<${type}>${subkop}</${type}>\n`;
-      if (paragrafen) html += formatParagraphs(paragrafen);
+      if (subkop) html += `\n<br>\n<${type}>${subkop}</${type}>`;
+      if (paragrafen) html += '\n' + formatParagraphs(paragrafen);
 
       if (opsomming) {
         const items = opsomming.split(/\n+/).map(i => i.trim()).filter(Boolean);
@@ -173,20 +173,20 @@
           }
         });
 
-        html += `<ul>\n${parsedItems.join("\n")}\n</ul>\n`;
+        html += `\n<ul>\n${parsedItems.join("\n")}\n</ul>`;
       }
 
       // Extra paragraaf onder opsomming
         const afterList = section.querySelector(".cat-afterlist").value.trim();
           if (afterList) {
-          html += formatParagraphs(afterList) + '\n';
+          html += '\n<br>\n' + formatParagraphs(afterList);
         }
 
 
-      if (i < sections.length - 1) html += `\n<br>\n`;
+      //if (i < sections.length - 1) html += `\n`;
     });
 
-    html += `</div>\n`;
+    html += `\n</div>\n`;
     resultBox.textContent = html;
   }
 
