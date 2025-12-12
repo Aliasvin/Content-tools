@@ -46,27 +46,27 @@ function generateProductText() {
 
   // INTRO
   if (intro) {
-    html += formatParagraphs(intro) + '<br>\n';
+    html += formatParagraphs(intro);
   }
 
   // BIJZONDERE KENMERKEN
   const bkItems = normalizeList(bk);
   if (bkItems.length) {
-    html += '<h2>Bijzondere kenmerken</h2>\n';
-    html += '<ul>\n' + bkItems.map(i => `  <li>${i}</li>`).join('\n') + '\n</ul>\n<br>\n';
+    html += '<br>\n<h2>Bijzondere kenmerken</h2>\n';
+    html += '<ul>\n' + bkItems.map(i => `  <li>${i}</li>`).join('\n') + '\n</ul>\n';
   }
 
   // TECHNISCHE GEGEVENS
   const techItems = keyValueToBullet(tech);
   if (techItems.length) {
-    html += '<h2>Technische gegevens</h2>\n';
-    html += '<ul>\n' + techItems.map(i => `  <li>${i}</li>`).join('\n') + '\n</ul>\n<br>\n';
+    html += '<br>\n<h2>Technische gegevens</h2>\n';
+    html += '<ul>\n' + techItems.map(i => `  <li>${i}</li>`).join('\n') + '\n</ul>\n';
   }
 
   // STANDAARD MEEGELEVERD
   const stdItems = normalizeList(std);
   if (stdItems.length) {
-    html += '<h2>Standaard meegeleverd</h2>\n';
+    html += '<br>\n<h2>Standaard meegeleverd</h2>\n';
     html += '<ul>\n' + stdItems.map(i => `  <li>${i}</li>`).join('\n') + '\n</ul>';
   }
 
