@@ -45,10 +45,10 @@ function generateURLSubmaps() {
     .filter(Boolean);
 
   const slugPath = segments.join("/");
-  const url = slugPath ? "https://www.toolmax.nl/" + slugPath + ".html" : "";
+  const url = slugPath ? "https://www.toolmax.nl/" + slugPath : "";
 
   document.getElementById("result-submap").textContent =
-    slugPath ? slugPath + ".html" : "";
+    slugPath ? slugPath : "";
 
   document.getElementById("resultURL-submap").textContent = url;
 
@@ -129,7 +129,7 @@ function generateBulkSubmapURLs() {
         .filter(Boolean);
 
       const slugPath = segments.join("/");
-      const url = slugPath ? "https://www.toolmax.nl/" + slugPath + ".html" : "";
+      const url = slugPath ? "https://www.toolmax.nl/" + slugPath : "";
       const preview = segments.join(" → ");
       const meta = generateMetaTitle(h, s1, s2, p);
 
