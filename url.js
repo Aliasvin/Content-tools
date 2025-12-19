@@ -77,10 +77,10 @@ function generateURLLive() {
   const slugPath = generateSubmapSlug(text);
 
   document.getElementById("result").textContent =
-    slugPath ? slugPath + ".html" : "";
+    slugPath ? slugPath : "";
 
   document.getElementById("resultURL").textContent =
-    slugPath ? "https://www.toolmax.nl/" + slugPath + ".html" : "";
+    slugPath ? "https://www.toolmax.nl/" + slugPath : "";
 
   const show = !!slugPath;
   document.getElementById("copyButton1").style.display = show ? "inline-flex" : "none";
@@ -154,12 +154,12 @@ function generateBulkURLs() {
       if (!input) return;
 
       const slugPath = generateSubmapSlug(input.toString().trim());
-      const url = "https://www.toolmax.nl/" + slugPath + ".html";
+      const url = "https://www.toolmax.nl/" + slugPath;
 
       html += `
         <tr>
           <td>${input}</td>
-          <td>${slugPath}.html</td>
+          <td>${slugPath}</td>
           <td>${url}</td>
         </tr>
       `;
