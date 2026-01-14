@@ -131,7 +131,7 @@
     const resultBox = tab.querySelector("#catResult");
 
     let html = "";
-    html += `<div data-lm-fold data-lm-height="50">\n`;
+    html += `<div data-lm-fold data-lm-height="75">\n`;
 
     if (h1) html += `<h1>${h1}</h1>`;
     if (intro) html += '\n' + formatParagraphs(intro);
