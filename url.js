@@ -154,7 +154,7 @@ function generateBulkURLs() {
       if (!input) return;
 
       const slugPath = generateSubmapSlug(input.toString().trim());
-      const url = "https://www.toolmax.nl/" + slugPath;
+      const url = "https://toolmax.nl/" + slugPath;
 
       html += `
         <tr>
