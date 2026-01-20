@@ -80,7 +80,7 @@ function generateURLLive() {
     slugPath ? slugPath : "";
 
   document.getElementById("resultURL").textContent =
-    slugPath ? "https://www.toolmax.nl/" + slugPath : "";
+    slugPath ? "https://toolmax.nl/" + slugPath : "";
 
   const show = !!slugPath;
   document.getElementById("copyButton1").style.display = show ? "inline-flex" : "none";
