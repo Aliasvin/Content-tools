@@ -4,12 +4,29 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Toegang | Content tools</title>
+  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="tabs.css">
+  <link rel="stylesheet" href="darkmode.css">
+  <link rel="stylesheet" href="url.css">
+  <link rel="stylesheet" href="url-submaps.css">
+  <link rel="stylesheet" href="giftcards.css">
+  <link rel="stylesheet" href="bulk-encrypt.css">
+  <link rel="stylesheet" href="brands.css">
+  <link rel="stylesheet" href="category.css">
+  <link rel="stylesheet" href="actietekst.css">
+  <link rel="stylesheet" href="preview.css">
+  <link rel="stylesheet" href="compare.css">
+  <link rel="stylesheet" href="dropdown.css">
+  <link rel="stylesheet" href="code-editor.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;margin:0;display:grid;place-items:center;min-height:100vh;padding:20px}
     .box{width:min(550px,100%);border:1px solid rgba(0,0,0,.15);border-radius:14px;padding:20px}
     h1{margin:0 0 10px;font-size:22px}
     p{margin:0 0 14px;opacity:.85;line-height:1.4}
     input{width:80%;padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,.2)}
+    .dark-mode input{width:80%;padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,.2);color:#ffff;background: #303030}
     button{margin-top:10px;padding:12px 14px;border-radius:10px;border:1px solid rgba(0,0,0,.2);cursor:pointer;font-weight:700;background:#609942;color: #ffff;}
     button:hover{background:#40652c;transform: translateY(-1px)}
     .msg{margin-top:10px;font-size:14px;color:#b00020}
@@ -17,13 +34,22 @@
   </style>
 </head>
 <body>
+
+      <div class="dark-toggle">
+  <input type="checkbox" id="darkModeToggle">
+  <label for="darkModeToggle">
+    <i class="fa-solid fa-sun"></i>
+    <i class="fa-solid fa-moon"></i>
+  </label>
+</div>
+
   <div class="box">
-    <h1>Content tools</h1>
+    <h2>Content tools</h2>
     <p>Voer het wachtwoord in om verder te gaan.</p>
 
     <form id="f">
       <input id="pw" type="password" autocomplete="current-password" placeholder="Wachtwoord" required>
-      <button type="submit">Login</button>
+      <button class="btn generate" type="submit">Login</button>
       <div id="msg" class="msg" aria-live="polite"></div>
     </form>
 
@@ -74,5 +100,22 @@
       }
     });
   </script>
+  <!-- scripts -->
+  <script src="home.js"></script>
+  <script src="common.js"></script>
+  <script src="product.js"></script>
+  <script src="blog.js"></script>
+  <script src="steps.js"></script>
+  <script src="url.js"></script>
+  <script src="url-submaps.js"></script>
+  <script src="brands.js"></script>
+  <script src="category.js"></script>
+  <script src="actietekst.js"></script>
+  <script src="giftcards.js"></script>
+  <script src="bulk-encrypt.js"></script>
+  <script src="preview.js"></script>
+  <script src="compare.js"></script>
+  <script src="dropdown.js"></script>
+  <script src="code-editor.js"></script>
 </body>
 </html>
