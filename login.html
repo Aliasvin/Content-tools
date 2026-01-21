@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Toegang | Content tools</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;margin:0;display:grid;place-items:center;min-height:100vh;padding:20px}
+    .box{width:min(550px,100%);border:1px solid rgba(0,0,0,.15);border-radius:14px;padding:20px}
+    h1{margin:0 0 10px;font-size:22px}
+    p{margin:0 0 14px;opacity:.85;line-height:1.4}
+    input{width:80%;padding:12px;border-radius:10px;border:1px solid rgba(0,0,0,.2)}
+    button{margin-top:10px;padding:12px 14px;border-radius:10px;border:1px solid rgba(0,0,0,.2);cursor:pointer;font-weight:700;background:#609942;color: #ffff;}
+    button:hover{background:#40652c;transform: translateY(-1px)}
+    .msg{margin-top:10px;font-size:14px;color:#b00020}
+    .small{margin-top:12px;font-size:12px;opacity:.7}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h1>Content tools</h1>
+    <p>Voer het wachtwoord in om verder te gaan.</p>
+
+    <form id="f">
+      <input id="pw" type="password" autocomplete="current-password" placeholder="Wachtwoord" required>
+      <button type="submit">Login</button>
+      <div id="msg" class="msg" aria-live="polite"></div>
+    </form>
+
+    <div class="small">Tip: bookmark deze pagina als je vaak wisselt van device.</div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'ct_access_ok';
+    const TTL_HOURS = 12; // na 12 uur opnieuw inloggen
+
+    // 1) Zet hier de SHA-256 hash van je wachtwoord (zie stap 3)
+    const PASSWORD_HASH = '9900515e9126df4fb96d04f04dbb49b0a46cee02456d0403493f5577950caf64';
+
+    function setSessionOk() {
+      const until = Date.now() + TTL_HOURS * 60 * 60 * 1000;
+      localStorage.setItem(STORAGE_KEY, String(until));
+    }
+
+    function isSessionOk() {
+      const until = Number(localStorage.getItem(STORAGE_KEY) || 0);
+      return until && Date.now() < until;
+    }
+
+    async function sha256(text) {
+      const enc = new TextEncoder().encode(text);
+      const buf = await crypto.subtle.digest('SHA-256', enc);
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+    }
+
+    // Al toegang? -> door
+    if (isSessionOk()) {
+      window.location.replace('./index.html');
+    }
+
+    document.getElementById('f').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('msg');
+      msg.textContent = '';
+
+      const pw = document.getElementById('pw').value;
+      const hash = await sha256(pw);
+
+      if (hash === PASSWORD_HASH) {
+        setSessionOk();
+        window.location.replace('./index.html');
+      } else {
+        msg.textContent = 'Wachtwoord klopt niet.';
+      }
+    });
+  </script>
+</body>
+</html>
