@@ -21,6 +21,18 @@
   <link rel="stylesheet" href="dropdown.css">
   <link rel="stylesheet" href="code-editor.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<script>
+(function () {
+  const STORAGE_KEY = 'ct_access_ok';
+  const until = Number(localStorage.getItem(STORAGE_KEY) || 0);
+
+  if (!until || Date.now() > until) {
+    // geen geldige sessie -> terug naar lockscreen
+    window.location.replace('./login.html');
+  }
+})();
+</script>
 </head>
 <body>
   <h1>Content tools</h1>
@@ -51,6 +63,10 @@
     <li data-tab="html">HTML invoer</li>
     <li data-tab="codeeditor">Code editor</li>
   </ul>
+  <br>
+  <button type="button" onclick="localStorage.removeItem('ct_access_ok'); location.href='./login.html';">
+  Uitloggen
+  </button>
   <div class="dark-toggle mobile-dark-toggle">
   <input type="checkbox" id="darkModeToggleMobile">
   <label for="darkModeToggleMobile">
