@@ -24,11 +24,13 @@
 
 <script>
 (function () {
+  const LOCK_ENABLED = false; // <-- zet op false om login uit te schakelen
+  if (!LOCK_ENABLED) return;
+
   const STORAGE_KEY = 'ct_access_ok';
   const until = Number(localStorage.getItem(STORAGE_KEY) || 0);
 
   if (!until || Date.now() > until) {
-    // geen geldige sessie -> terug naar lockscreen
     window.location.replace('./login.html');
   }
 })();
