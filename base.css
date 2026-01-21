@@ -65,6 +65,11 @@ button {
   width: 100%
 }
 
+button:hover {
+  background: #cccccc;
+  transform: translateY(-1px)
+}
+
 .previewArea {
   background: #f7f7f7;
   border: 1px solid #ccc;
