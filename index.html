@@ -24,7 +24,16 @@
 
 <script>
 (function () {
-  const LOCK_ENABLED = false; // <-- zet op false om login uit te schakelen
+  const LOCK_ENABLED = false; // ← false = login UIT, logout VERBORGEN
+
+  // 1) Logout knoppen tonen/verbergen
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.js-logout').forEach(btn => {
+      btn.style.display = LOCK_ENABLED ? '' : 'none';
+    });
+  });
+
+  // 2) Login guard
   if (!LOCK_ENABLED) return;
 
   const STORAGE_KEY = 'ct_access_ok';
@@ -98,7 +107,11 @@
     <li data-tab="codeeditor">Code editor</li>
   </ul>
   <br>
-  <button class="btn-clear" type="button" onclick="localStorage.removeItem('ct_access_ok'); location.href='./login.html';">Uitloggen
+  <button
+  class="btn-clear js-logout"
+  type="button"
+  onclick="localStorage.removeItem('ct_access_ok'); location.replace('./login.html');">
+  Uitloggen
   </button>
     <div class="dark-toggle sidebar-dark-toggle">
     <input type="checkbox" id="darkModeToggleSidebar">
