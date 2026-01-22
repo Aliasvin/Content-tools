@@ -222,7 +222,8 @@ body.dark-mode #tab-category .merken-section,
 body.dark-mode #tab-giftcards .output-tab5,
 body.dark-mode #tab-bulk-encrypt .log,
 body.dark-mode #tab-compare .compare-log,
-body.dark-mode #htmlPreview {
+body.dark-mode #htmlPreview,
+body.dark-mode .url-bulk-wrapper {
   background: #1e1e1e;
   color: #f5f5f5;
   border: 1px solid #333;
@@ -336,4 +337,3 @@ body.dark-mode .sidebar-dark-toggle label {
 body.dark-mode .sidebar-dark-toggle label::after {
   background: #222;
 }
-
