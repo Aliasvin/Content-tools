@@ -70,7 +70,7 @@
     <li data-tab="category">Categorie tekst</li>
     <li data-tab="giftcards">Cadeaukaarten</li>
     <li data-tab="actie-cms">Actie tekst</li>
-    <li data-tab="url-submaps">URL generator submap</li>
+    <li data-tab="url-submaps">URL generator subcategorie</li>
     <li data-tab="bulk-encrypt">Bulk encrypt</li>
     <li data-tab="compare">Excel vergelijking</li>
     <li data-tab="html">HTML invoer</li>
@@ -102,7 +102,7 @@
     <li data-tab="category">Categorie tekst</li>
     <li data-tab="giftcards">Cadeaukaarten</li>
     <li data-tab="actie-cms">Actie tekst</li>
-    <li data-tab="url-submaps">URL generator submap</li>
+    <li data-tab="url-submaps">URL generator subcategorie</li>
     <li data-tab="bulk-encrypt">Bulk encrypt</li>
     <li data-tab="compare">Excel vergelijking</li>
     <li data-tab="html">HTML invoer</li>
@@ -147,7 +147,7 @@
   <button type="button" class="dropdown-toggle" aria-expanded="false">Meer ▾</button>
   <div class="dropdown-menu" role="menu">
       <button class="tab-button" data-tab="actie-cms">Actie tekst</button>
-      <button class="tab-button" data-tab="url-submaps">URL generator submap</button>
+      <button class="tab-button" data-tab="url-submaps">URL generator subcategorie</button>
       <button class="tab-button" data-tab="bulk-encrypt">Bulk encryptie</button>
       <button class="tab-button" data-tab="compare">Excel vergelijking</button>
       <button class="tab-button" data-tab="html">HTML invoer</button>
@@ -195,8 +195,8 @@
       <p>Maak hier de tekst voor de actie. voor categorie-, product- en alle acties pagina.</p>
     </div>
     <div class="tool-card" data-tab="url-submaps">
-      <h3>URL generator submappen</h3>
-      <p>URL generator voor categorieën met submappen.</p>
+      <h3>URL generator subcategorieën</h3>
+      <p>URL generator voor categorieën met subcategorieën.</p>
     </div>
     <div class="tool-card" data-tab="bulk-encrypt">
       <h3>Bulk encrypt</h3>
@@ -515,19 +515,31 @@
 
 <div id="tab-url-submaps" class="tab-content">
 
-  <h2>URL generator met submappen</h2>
+  <h2>URL generator met subcategorieën</h2>
 
-  <!-- LIVE GENERATOR -->
+<!-- LIVE GENERATOR -->
   <div class="url-live-wrapper">
 
     <label>Hoofdgroep</label>
-    <input id="slug-hoofdgroep" type="text">
+    <select id="slug-hoofdgroep">
+      <option value="">-- Kies hoofdgroep --</option>
+      <option value="Accu gereedschap">Accu gereedschap</option>
+      <option value="Elektrisch gereedschap">Elektrisch gereedschap</option>
+      <option value="Handgereedschap">Handgereedschap</option>
+      <option value="Accessoires">Accessoires</option>
+    </select>
 
     <label>Subgroep 1</label>
     <input id="slug-sub1" type="text">
 
     <label>Subgroep 2</label>
     <input id="slug-sub2" type="text">
+
+    <label>Subgroep 3</label>
+    <input id="slug-sub3" type="text">
+
+    <label>Subgroep 4</label>
+    <input id="slug-sub4" type="text">
 
     <label>Productnaam (optioneel)</label>
     <input id="slug-product" type="text">
@@ -554,7 +566,7 @@
 
   <!-- BULK GENERATOR -->
   <div class="url-bulk-wrapper">
-    <h2>Bulk URL generator met submappen</h2>
+    <h2>Bulk URL generator met subcategorieën</h2>
 
             <label class="file-upload">
           <input type="file" id="bulkSubmapsFile" accept=".xlsx,.xls,.csv">

@@ -27,8 +27,10 @@ function processSegment(text) {
 }
 
 // Meta title generator
-function generateMetaTitle(h, s1, s2, p) {
+function generateMetaTitle(h, s1, s2, s3, s4, p) {
   if (p)  return `${p} kopen? Gratis verzending bij ToolMax`;
+  if (s4) return `${s4} kopen? Bekijk ons assortiment | ToolMax`;
+  if (s3) return `${s3} kopen? Bekijk ons assortiment | ToolMax`;
   if (s2) return `${s2} kopen? Bekijk ons assortiment | ToolMax`;
   if (s1) return `${s1} kopen? Bekijk ons aanbod | ToolMax`;
   if (h)  return `${h} kopen? ToolMax assortiment en deals`;
@@ -38,9 +40,11 @@ function generateURLSubmaps() {
   const hoofd = document.getElementById("slug-hoofdgroep").value;
   const sub1  = document.getElementById("slug-sub1").value;
   const sub2  = document.getElementById("slug-sub2").value;
+  const sub3  = document.getElementById("slug-sub3").value;
+  const sub4  = document.getElementById("slug-sub4").value;
   const prod  = document.getElementById("slug-product").value;
 
-  const segments = [hoofd, sub1, sub2, prod]
+  const segments = [hoofd, sub1, sub2, sub3, sub4, prod]
     .map(processSegment)
     .filter(Boolean);
 
@@ -80,9 +84,13 @@ function copySubmap(id) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  ["slug-hoofdgroep", "slug-sub1", "slug-sub2", "slug-product"]
+  ["slug-hoofdgroep", "slug-sub1", "slug-sub2", "slug-sub3", "slug-sub4", "slug-product"]
     .forEach(id => {
-      document.getElementById(id).addEventListener("input", generateURLSubmaps);
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener("input", generateURLSubmaps);
+      // select heeft soms alleen change nodig
+      if (el.tagName === "SELECT") el.addEventListener("change", generateURLSubmaps);
     });
 
   document.getElementById("copyButtonSub1").style.display = "none";
@@ -106,6 +114,8 @@ function generateBulkSubmapURLs() {
             <th>Hoofdgroep</th>
             <th>Subgroep 1</th>
             <th>Subgroep 2</th>
+            <th>Subgroep 3</th>
+            <th>Subgroep 4</th>
             <th>Productnaam</th>
             <th>Pad preview</th>
             <th>Slug</th>
@@ -119,25 +129,36 @@ function generateBulkSubmapURLs() {
     rows.forEach((row, i) => {
       if (i === 0) return;
 
-      const h  = row[0] || "";
-      const s1 = row[1] || "";
-      const s2 = row[2] || "";
-      const p  = row[3] || "";
+      let h  = row[0] || "";
+      let s1 = row[1] || "";
+      let s2 = row[2] || "";
+      let s3 = row[3] || "";
+      let s4 = row[4] || "";
+      let p  = row[5] || "";
 
-      const segments = [h, s1, s2, p]
+      // Backwards compatible: oude bulk-indeling had maar 4 kolommen (h, s1, s2, product)
+      if (row.length <= 4) {
+        p = row[3] || "";
+        s3 = "";
+        s4 = "";
+      }
+
+      const segments = [h, s1, s2, s3, s4, p]
         .map(processSegment)
         .filter(Boolean);
 
       const slugPath = segments.join("/");
       const url = slugPath ? "https://www.toolmax.nl/" + slugPath : "";
       const preview = segments.join(" → ");
-      const meta = generateMetaTitle(h, s1, s2, p);
+      const meta = generateMetaTitle(h, s1, s2, s3, s4, p);
 
       html += `
         <tr>
           <td>${h}</td>
           <td>${s1}</td>
           <td>${s2}</td>
+          <td>${s3}</td>
+          <td>${s4}</td>
           <td>${p}</td>
           <td>${preview}</td>
           <td>${slugPath}.html</td>
@@ -158,6 +179,8 @@ function clearLiveSubmapFields() {
   document.getElementById("slug-hoofdgroep").value = "";
   document.getElementById("slug-sub1").value = "";
   document.getElementById("slug-sub2").value = "";
+  document.getElementById("slug-sub3").value = "";
+  document.getElementById("slug-sub4").value = "";
   document.getElementById("slug-product").value = "";
 
   document.getElementById("result-submap").textContent = "";
