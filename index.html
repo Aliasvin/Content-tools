@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="compare.css">
   <link rel="stylesheet" href="dropdown.css">
   <link rel="stylesheet" href="code-editor.css">
+  <link rel="stylesheet" href="brandblocks.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <script>
@@ -73,6 +74,7 @@
     <li data-tab="url-submaps">URL generator subcategorie</li>
     <li data-tab="bulk-encrypt">Bulk encrypt</li>
     <li data-tab="compare">Excel vergelijking</li>
+    <li data-tab="brandblocks">Merk categorieblokken</li>
     <li data-tab="html">HTML invoer</li>
     <li data-tab="codeeditor">Code editor</li>
   </ul>
@@ -105,6 +107,7 @@
     <li data-tab="url-submaps">URL generator subcategorie</li>
     <li data-tab="bulk-encrypt">Bulk encrypt</li>
     <li data-tab="compare">Excel vergelijking</li>
+    <li data-tab="brandblocks">Merk categorieblokken</li>
     <li data-tab="html">HTML invoer</li>
     <li data-tab="codeeditor">Code editor</li>
   </ul>
@@ -150,6 +153,7 @@
       <button class="tab-button" data-tab="url-submaps">URL generator subcategorie</button>
       <button class="tab-button" data-tab="bulk-encrypt">Bulk encryptie</button>
       <button class="tab-button" data-tab="compare">Excel vergelijking</button>
+      <button class="tab-button" data-tab="brandblocks">Merk categorieblokken</button>
       <button class="tab-button" data-tab="html">HTML invoer</button>
       <button class="tab-button" data-tab="codeeditor">Code editor</button>
     </div>
@@ -205,6 +209,10 @@
     <div class="tool-card" data-tab="compare">
       <h3>Excel vergelijking</h3>
       <p>Vergelijk kolommen uit twee bestanden.</p>
+    </div>
+    <div class="tool-card" data-tab="brandblocks">
+      <h3>Merk categorieblokken</h3>
+      <p>Selecteer een merk, plak de afbeelding-URL en kopieer de JS-regel(s).</p>
     </div>
     <div class="tool-card" data-tab="html">
       <h3>HTML invoer</h3>
@@ -645,6 +653,35 @@
   <div id="compareResult" class="compare-log"></div>
 </div>
 
+  <!-- TAB: Merk categorieblokken -->
+<div id="tab-brandblocks" class="tab-content">
+  <h2>Merk categorieblokken</h2>
+  <p>Selecteer een merk, plak de afbeelding-URL en kopieer de JS-regel(s).
+  Als een merk meerdere IDs heeft, kun je ze hieronder selecteren.</p>
+
+  <div class="bb-grid">
+    <div>
+      <label for="bb-merk">Merk</label>
+      <select id="bb-merk"></select>
+    </div>
+
+    <div id="bb-ids"></div>
+
+    <div>
+      <label for="bb-img">Afbeelding URL</label>
+      <input id="bb-img" type="text" placeholder="https://www.toolmax.nl/resize/...webp">
+    </div>
+
+    <div class="bb-actions">
+      <button type="button" class="btn-copy bb-copy">Kopieer</button>
+      <button type="button" class="btn-clear bb-clear">Leegmaken</button>
+    </div>
+  </div>
+
+  <h3>Output</h3>
+  <pre id="bb-result" class="previewArea"></pre>
+</div>
+
   <!-- TAB: HTML invoer (live preview) -->
   <div id="tab-html" class="tab-content">
     <h2>HTML invoer</h2>
@@ -742,5 +779,6 @@
   <script src="compare.js"></script>
   <script src="dropdown.js"></script>
   <script src="code-editor.js"></script>
+  <script src="brandblocks.js"></script>
 </body>
 </html>
